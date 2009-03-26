@@ -1,5 +1,5 @@
 
-module Campaignmonitorapi
+module Campaigning
 
   # :stopdoc:
   VERSION = '1.0.0'
@@ -42,8 +42,8 @@ module Campaignmonitorapi
     Dir.glob(search_me).sort.each {|rb| require rb}
   end
 
-end  # module Campaignmonitorapi
+end  # module Campaigning
 
-Campaignmonitorapi.require_all_libs_relative_to(__FILE__)
+Campaigning.require_all_libs_relative_to(__FILE__)
 
 # EOF

@@ -14,16 +14,16 @@ rescue LoadError
 end
 
 ensure_in_path 'lib'
-require 'CampaignMonitorAPI'
+require 'campaigning'
 
 task :default => 'spec:run'
 
-PROJ.name = 'CampaignMonitorAPI'
+PROJ.name = 'campaigning'
 PROJ.authors = 'Marcelo V. F. Menezes'
 PROJ.email = 'gnumarcelo@gmail.com'
 PROJ.url = 'FIXME (project homepage)'
-PROJ.version = Campaignmonitorapi::VERSION
-PROJ.rubyforge.name = 'CampaignMonitorAPI'
+PROJ.version = Campaigning::VERSION
+PROJ.rubyforge.name = 'campaigning'
 
 PROJ.spec.opts << '--color'
 

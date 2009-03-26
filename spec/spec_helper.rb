@@ -1,6 +1,6 @@
 
 require File.expand_path(
-    File.join(File.dirname(__FILE__), %w[.. lib CampaignMonitorAPI]))
+    File.join(File.dirname(__FILE__), %w[.. lib campaigning]))
 
 Spec::Runner.configure do |config|
   # == Mock Framework
