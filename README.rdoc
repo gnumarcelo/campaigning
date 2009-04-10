@@ -1,0 +1,15 @@
+
+== THIS GEM IS UNDER DEVELOPMENT
+
+= campaigning
+
+This RubyGem provides access to the CampaignMonitor API(www.campaignmonitor.com/api) using SOAP.
+
+== Dependencies
+This gem requires the following gem's:
+-Soap4r (1.5.8)
+-Jeweler
+
+== Copyright
+
+Copyright (c) 2009 Marcelo Menezes. See LICENSE for details.
