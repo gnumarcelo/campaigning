@@ -1,49 +1,59 @@
+require 'soap/wsdlDriver'
+require 'net/http'
 
-module Campaigning
+require File.join(File.dirname(__FILE__), 'campaigning/client.rb')
 
-  # :stopdoc:
-  VERSION = '1.0.0'
-  LIBPATH = ::File.expand_path(::File.dirname(__FILE__)) + ::File::SEPARATOR
-  PATH = ::File.dirname(LIBPATH) + ::File::SEPARATOR
-  # :startdoc:
+class Campaigning
+ 
+  attr_reader :api_key, :api_url
+  
+  # Replace this API key with your own (http://www.campaignmonitor.com/api/)
+  def initialize(api_key=CAMPAIGN_MONITOR_API_KEY)
+    @api_key = api_key
+    @api_url = 'http://api.createsend.com/api/api.asmx'
+  end 
 
-  # Returns the version string for the library.
-  #
-  def self.version
-    VERSION
+
+  def clients
+    response = soap do |driver|
+       driver.GetClients(:ApiKey => @api_key)
+    end
+    #response.user_GetClientsResult.client.each{ |c| Client.new(c["ClientID"], c["Name"])}
+    if(response.user_GetClientsResult.client.is_a?(Array))
+      response.user_GetClientsResult.client.each{ |c| Client.new(c["ClientID"], c["Name"])}
+    elsif !response.empty?
+      [Client.new(response.user_GetClientsResult.client.clientID, response.user_GetClientsResult.client.name)]
+    else
+      []
+    end
+
   end
 
-  # Returns the library path for the module. If any arguments are given,
-  # they will be joined to the end of the libray path using
-  # <tt>File.join</tt>.
-  #
-  def self.libpath( *args )
-    args.empty? ? LIBPATH : ::File.join(LIBPATH, args.flatten)
+
+  def lists(client_id)
+    response = soap do |driver|
+       driver.GetClientLists(:ApiKey => @api_key, :ClientID => client_id)
+    end
+    #response.client_GetListsResult.list.each{ |l| puts "quanto???"}
+    if(response.client_GetListsResult.list.is_a?(Array))
+      puts "retornou um monte de listas!"
+    else
+      puts "retornou soh uma lista"
+    end
   end
 
-  # Returns the lpath for the module. If any arguments are given,
-  # they will be joined to the end of the path using
-  # <tt>File.join</tt>.
-  #
-  def self.path( *args )
-    args.empty? ? PATH : ::File.join(PATH, args.flatten)
+
+  def soap
+    driver = wsdl_driver_factory.create_rpc_driver
+    response = yield(driver)
+    driver.reset_stream
+    
+    response
   end
+  
+  protected
 
-  # Utility method used to require all files ending in .rb that lie in the
-  # directory below this file that has the same name as the filename passed
-  # in. Optionally, a specific _directory_ name can be passed in such that
-  # the _filename_ does not have to be equivalent to the directory.
-  #
-  def self.require_all_libs_relative_to( fname, dir = nil )
-    dir ||= ::File.basename(fname, '.*')
-    search_me = ::File.expand_path(
-        ::File.join(::File.dirname(fname), dir, '**', '*.rb'))
-
-    Dir.glob(search_me).sort.each {|rb| require rb}
-  end
-
-end  # module Campaigning
-
-Campaigning.require_all_libs_relative_to(__FILE__)
-
-# EOF
+    def wsdl_driver_factory
+      SOAP::WSDLDriverFactory.new("#{api_url}?wsdl")
+    end
+end
