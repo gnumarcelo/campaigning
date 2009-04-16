@@ -6,7 +6,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Marcelo Menezes"]
-  s.date = %q{2009-04-10}
+  s.date = %q{2009-04-16}
   s.email = %q{gnumarcelo@gmail.com}
   s.extra_rdoc_files = [
     "LICENSE",
@@ -18,10 +18,12 @@ Gem::Specification.new do |s|
     "Rakefile",
     "VERSION.yml",
     "lib/campaigning.rb",
-    "lib/campaigning/Result.rb",
     "lib/campaigning/apiClient.rb",
+    "lib/campaigning/campaigning.rb",
     "lib/campaigning/client.rb",
     "lib/campaigning/default.rb",
+    "lib/campaigning/defaultDriver.rb",
+    "lib/campaigning/defaultMappingRegistry.rb",
     "test/campaigning_test.rb",
     "test/test_helper.rb"
   ]
