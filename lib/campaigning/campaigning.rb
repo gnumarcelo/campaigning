@@ -1,5 +1,6 @@
 gem "soap4r", "~> 1.5.0"
-require File.expand_path(File.dirname(__FILE__)) + '/defaultDriver.rb'
+require File.expand_path(File.dirname(__FILE__)) + '/soap/defaultDriver.rb'
+require File.expand_path(File.dirname(__FILE__)) + '/types/client.rb'
 
 class Campaigning
   DefaultEndpointUrl = "http://api.createsend.com/api/api.asmx"
@@ -9,6 +10,9 @@ class Campaigning
   #self.soap = ::ApiSoap.new(DefaultEndpointUrl)
   # TODO: Consider change this to use something like "mattr_accessor" getter/setter methods at the class or module level.
   @@soap = ::ApiSoap.new(DefaultEndpointUrl)  
+  def soap
+    @@soap
+  end
   
   # Replace this API key with your own (http://www.campaignmonitor.com/api/)
   def initialize(api_key=CAMPAIGN_MONITOR_API_KEY)
@@ -30,13 +34,7 @@ class Campaigning
     handle_request response.user_GetClientsResult
   end
 
-  
-  def lists(client_id)
-    response = @@soap.getClientLists(:apiKey => @api_key, :clientID => client_id)
-    handle_request response.client_GetListsResult
-  end
-  
-  
+    
   def system_date
     handle_request @@soap.getSystemDate(:apiKey => @api_key).user_GetSystemDateResult
   end
@@ -47,6 +45,16 @@ class Campaigning
        raise response.code.to_s + " - " + response.message
     end
     response
+  end
+
+
+  ##
+  # Sets the wiredump device the drivers.
+  def setup_debug_mode(dev)
+    if dev == true
+      dev = STDERR
+    end
+    @@soap.wiredump_dev = dev
   end
 
 

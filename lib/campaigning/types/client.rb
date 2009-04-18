@@ -5,12 +5,15 @@ class Client
   attr_accessor :name
 
   def initialize(clientID = nil, name = nil)
-    @@cm = Campaigning.new
-    @clientID = clientID
-    @name = name
+    @cm = Campaigning.new
+    self.clientID = clientID
+    self.name = name
   end
   
+  # TODO: Refactor this method!
   def lists
-    cm.lists(self.clientID)
+    response = @cm.soap.getClientLists(:apiKey => CAMPAIGN_MONITOR_API_KEY, :clientID => self.clientID)
+    response.client_GetListsResult
   end
+  
 end

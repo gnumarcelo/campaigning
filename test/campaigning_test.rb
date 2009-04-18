@@ -12,16 +12,14 @@ class CampaigningTest < Test::Unit::TestCase
   
   def test_clients
     clients = @cm.clients
+    puts clients[0].methods
     assert clients.length > 0
     clients.each{ |c| puts c.clientID + " - " + c.name }
   end
-  
-  def test_lists
-    @cm_new = Campaigning.new
-    lists = @cm_new.lists(CLIENT_ID)
-    assert lists.length > 0
-    lists.each{ |l| puts l.listID + " - " + l.name }
-    #assert lists.length > 0
+
+  def test_client_lists
+    client = Client.new(CLIENT_ID)
+    assert client.lists.length > 0
   end
   
   def test_system_date
