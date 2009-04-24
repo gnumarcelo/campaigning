@@ -1,21 +1,23 @@
 require File.expand_path(File.dirname(__FILE__)) + '/default.rb'
 require 'soap/mapping'
 
+module Campaigning
+
 module DefaultMappingRegistry
   EncodedRegistry = ::SOAP::Mapping::EncodedRegistry.new
   LiteralRegistry = ::SOAP::Mapping::LiteralRegistry.new
   NsApi = "http://api.createsend.com/api/"
 
   EncodedRegistry.register(
-    :class => ArrayOfSubscriberCustomField,
+    :class => Campaigning::ArrayOfSubscriberCustomField,
     :schema_type => XSD::QName.new(NsApi, "ArrayOfSubscriberCustomField"),
     :schema_element => [
-      ["subscriberCustomField", ["SubscriberCustomField[]", XSD::QName.new(NsApi, "SubscriberCustomField")], [0, nil]]
+      ["subscriberCustomField", ["Campaigning::SubscriberCustomField[]", XSD::QName.new(NsApi, "SubscriberCustomField")], [0, nil]]
     ]
   )
 
   EncodedRegistry.register(
-    :class => SubscriberCustomField,
+    :class => Campaigning::SubscriberCustomField,
     :schema_type => XSD::QName.new(NsApi, "SubscriberCustomField"),
     :schema_element => [
       ["key", ["SOAP::SOAPString", XSD::QName.new(NsApi, "Key")], [0, 1]],
@@ -24,7 +26,7 @@ module DefaultMappingRegistry
   )
 
   EncodedRegistry.register(
-    :class => Result,
+    :class => Campaigning::Result,
     :schema_type => XSD::QName.new(NsApi, "Result"),
     :schema_element => [
       ["code", ["SOAP::SOAPInt", XSD::QName.new(NsApi, "Code")]],
@@ -33,7 +35,7 @@ module DefaultMappingRegistry
   )
 
   EncodedRegistry.register(
-    :class => Client,
+    :class => Campaigning::Client,
     :schema_type => XSD::QName.new(NsApi, "Client"),
     :schema_element => [
       ["clientID", ["SOAP::SOAPString", XSD::QName.new(NsApi, "ClientID")], [0, 1]],
@@ -42,7 +44,7 @@ module DefaultMappingRegistry
   )
 
   EncodedRegistry.register(
-    :class => CampaignSummary,
+    :class => Campaigning::CampaignSummary,
     :schema_type => XSD::QName.new(NsApi, "CampaignSummary"),
     :schema_element => [
       ["recipients", ["SOAP::SOAPInt", XSD::QName.new(NsApi, "Recipients")]],
@@ -54,7 +56,7 @@ module DefaultMappingRegistry
   )
 
   EncodedRegistry.register(
-    :class => SubscriberUnsubscribe,
+    :class => Campaigning::SubscriberUnsubscribe,
     :schema_type => XSD::QName.new(NsApi, "SubscriberUnsubscribe"),
     :schema_element => [
       ["emailAddress", ["SOAP::SOAPString", XSD::QName.new(NsApi, "EmailAddress")], [0, 1]],
@@ -63,7 +65,7 @@ module DefaultMappingRegistry
   )
 
   EncodedRegistry.register(
-    :class => SubscriberBounce,
+    :class => Campaigning::SubscriberBounce,
     :schema_type => XSD::QName.new(NsApi, "SubscriberBounce"),
     :schema_element => [
       ["emailAddress", ["SOAP::SOAPString", XSD::QName.new(NsApi, "EmailAddress")], [0, 1]],
@@ -73,7 +75,7 @@ module DefaultMappingRegistry
   )
 
   EncodedRegistry.register(
-    :class => SubscriberOpen,
+    :class => Campaigning::SubscriberOpen,
     :schema_type => XSD::QName.new(NsApi, "SubscriberOpen"),
     :schema_element => [
       ["emailAddress", ["SOAP::SOAPString", XSD::QName.new(NsApi, "EmailAddress")], [0, 1]],
@@ -83,25 +85,25 @@ module DefaultMappingRegistry
   )
 
   EncodedRegistry.register(
-    :class => SubscriberClick,
+    :class => Campaigning::SubscriberClick,
     :schema_type => XSD::QName.new(NsApi, "SubscriberClick"),
     :schema_element => [
       ["emailAddress", ["SOAP::SOAPString", XSD::QName.new(NsApi, "EmailAddress")], [0, 1]],
       ["listID", ["SOAP::SOAPString", XSD::QName.new(NsApi, "ListID")], [0, 1]],
-      ["clickedLinks", ["ArrayOfSubscriberClickedLink", XSD::QName.new(NsApi, "ClickedLinks")], [0, 1]]
+      ["clickedLinks", ["Campaigning::ArrayOfSubscriberClickedLink", XSD::QName.new(NsApi, "ClickedLinks")], [0, 1]]
     ]
   )
 
   EncodedRegistry.register(
-    :class => ArrayOfSubscriberClickedLink,
+    :class => Campaigning::ArrayOfSubscriberClickedLink,
     :schema_type => XSD::QName.new(NsApi, "ArrayOfSubscriberClickedLink"),
     :schema_element => [
-      ["subscriberClickedLink", ["SubscriberClickedLink[]", XSD::QName.new(NsApi, "SubscriberClickedLink")], [0, nil]]
+      ["subscriberClickedLink", ["Campaigning::SubscriberClickedLink[]", XSD::QName.new(NsApi, "SubscriberClickedLink")], [0, nil]]
     ]
   )
 
   EncodedRegistry.register(
-    :class => SubscriberClickedLink,
+    :class => Campaigning::SubscriberClickedLink,
     :schema_type => XSD::QName.new(NsApi, "SubscriberClickedLink"),
     :schema_element => [
       ["link", ["SOAP::SOAPString", XSD::QName.new(NsApi, "Link")], [0, 1]],
@@ -110,16 +112,16 @@ module DefaultMappingRegistry
   )
 
   EncodedRegistry.register(
-    :class => ClientDetail,
+    :class => Campaigning::ClientDetail,
     :schema_type => XSD::QName.new(NsApi, "ClientDetail"),
     :schema_element => [
-      ["basicDetails", ["ClientBasicDetails", XSD::QName.new(NsApi, "BasicDetails")], [0, 1]],
-      ["accessAndBilling", ["ClientAccessAndBilling", XSD::QName.new(NsApi, "AccessAndBilling")], [0, 1]]
+      ["basicDetails", ["Campaigning::ClientBasicDetails", XSD::QName.new(NsApi, "BasicDetails")], [0, 1]],
+      ["accessAndBilling", ["Campaigning::ClientAccessAndBilling", XSD::QName.new(NsApi, "AccessAndBilling")], [0, 1]]
     ]
   )
 
   EncodedRegistry.register(
-    :class => ClientBasicDetails,
+    :class => Campaigning::ClientBasicDetails,
     :schema_type => XSD::QName.new(NsApi, "ClientBasicDetails"),
     :schema_element => [
       ["clientID", ["SOAP::SOAPString", XSD::QName.new(NsApi, "ClientID")], [0, 1]],
@@ -132,7 +134,7 @@ module DefaultMappingRegistry
   )
 
   EncodedRegistry.register(
-    :class => ClientAccessAndBilling,
+    :class => Campaigning::ClientAccessAndBilling,
     :schema_type => XSD::QName.new(NsApi, "ClientAccessAndBilling"),
     :schema_element => [
       ["username", ["SOAP::SOAPString", XSD::QName.new(NsApi, "Username")], [0, 1]],
@@ -147,7 +149,7 @@ module DefaultMappingRegistry
   )
 
   EncodedRegistry.register(
-    :class => List,
+    :class => Campaigning::List,
     :schema_type => XSD::QName.new(NsApi, "List"),
     :schema_element => [
       ["listID", ["SOAP::SOAPString", XSD::QName.new(NsApi, "ListID")], [0, 1]],
@@ -156,7 +158,7 @@ module DefaultMappingRegistry
   )
 
   EncodedRegistry.register(
-    :class => Campaign,
+    :class => Campaigning::Campaign,
     :schema_type => XSD::QName.new(NsApi, "Campaign"),
     :schema_element => [
       ["campaignID", ["SOAP::SOAPString", XSD::QName.new(NsApi, "CampaignID")], [0, 1]],
@@ -167,18 +169,18 @@ module DefaultMappingRegistry
   )
 
   EncodedRegistry.register(
-    :class => ListCustomField,
+    :class => Campaigning::ListCustomField,
     :schema_type => XSD::QName.new(NsApi, "ListCustomField"),
     :schema_element => [
       ["fieldName", ["SOAP::SOAPString", XSD::QName.new(NsApi, "FieldName")], [0, 1]],
       ["key", ["SOAP::SOAPString", XSD::QName.new(NsApi, "Key")], [0, 1]],
-      ["dataType", ["SubscriberFieldDataType", XSD::QName.new(NsApi, "DataType")]],
-      ["fieldOptions", ["ArrayOfString", XSD::QName.new(NsApi, "FieldOptions")], [0, 1]]
+      ["dataType", ["Campaigning::SubscriberFieldDataType", XSD::QName.new(NsApi, "DataType")]],
+      ["fieldOptions", ["Campaigning::ArrayOfString", XSD::QName.new(NsApi, "FieldOptions")], [0, 1]]
     ]
   )
 
   EncodedRegistry.register(
-    :class => ArrayOfString,
+    :class => Campaigning::ArrayOfString,
     :schema_type => XSD::QName.new(NsApi, "ArrayOfString"),
     :schema_element => [
       ["string", "SOAP::SOAPString[]", [0, nil]]
@@ -186,7 +188,7 @@ module DefaultMappingRegistry
   )
 
   EncodedRegistry.register(
-    :class => ListDetail,
+    :class => Campaigning::ListDetail,
     :schema_type => XSD::QName.new(NsApi, "ListDetail"),
     :schema_element => [
       ["listID", ["SOAP::SOAPString", XSD::QName.new(NsApi, "ListID")], [0, 1]],
@@ -198,104 +200,104 @@ module DefaultMappingRegistry
   )
 
   EncodedRegistry.register(
-    :class => Subscriber,
+    :class => Campaigning::Subscriber,
     :schema_type => XSD::QName.new(NsApi, "Subscriber"),
     :schema_element => [
       ["emailAddress", ["SOAP::SOAPString", XSD::QName.new(NsApi, "EmailAddress")], [0, 1]],
       ["name", ["SOAP::SOAPString", XSD::QName.new(NsApi, "Name")], [0, 1]],
       ["date", ["SOAP::SOAPString", XSD::QName.new(NsApi, "Date")], [0, 1]],
       ["state", ["SOAP::SOAPString", XSD::QName.new(NsApi, "State")], [0, 1]],
-      ["customFields", ["ArrayOfSubscriberCustomField", XSD::QName.new(NsApi, "CustomFields")], [0, 1]]
+      ["customFields", ["Campaigning::ArrayOfSubscriberCustomField", XSD::QName.new(NsApi, "CustomFields")], [0, 1]]
     ]
   )
 
   EncodedRegistry.register(
-    :class => ArrayOfSubscriber,
+    :class => Campaigning::ArrayOfSubscriber,
     :schema_type => XSD::QName.new(NsApi, "ArrayOfSubscriber"),
     :schema_element => [
-      ["subscriber", ["Subscriber[]", XSD::QName.new(NsApi, "Subscriber")], [0, nil]]
+      ["subscriber", ["Campaigning::Subscriber[]", XSD::QName.new(NsApi, "Subscriber")], [0, nil]]
     ]
   )
 
   EncodedRegistry.register(
-    :class => ArrayOfListCustomField,
+    :class => Campaigning::ArrayOfListCustomField,
     :schema_type => XSD::QName.new(NsApi, "ArrayOfListCustomField"),
     :schema_element => [
-      ["listCustomField", ["ListCustomField[]", XSD::QName.new(NsApi, "ListCustomField")], [0, nil]]
+      ["listCustomField", ["Campaigning::ListCustomField[]", XSD::QName.new(NsApi, "ListCustomField")], [0, nil]]
     ]
   )
 
   EncodedRegistry.register(
-    :class => ArrayOfCampaign,
+    :class => Campaigning::ArrayOfCampaign,
     :schema_type => XSD::QName.new(NsApi, "ArrayOfCampaign"),
     :schema_element => [
-      ["campaign", ["Campaign[]", XSD::QName.new(NsApi, "Campaign")], [0, nil]]
+      ["campaign", ["Campaigning::Campaign[]", XSD::QName.new(NsApi, "Campaign")], [0, nil]]
     ]
   )
 
   EncodedRegistry.register(
-    :class => ArrayOfList,
+    :class => Campaigning::ArrayOfList,
     :schema_type => XSD::QName.new(NsApi, "ArrayOfList"),
     :schema_element => [
-      ["list", ["List[]", XSD::QName.new(NsApi, "List")], [0, nil]]
+      ["list", ["Campaigning::List[]", XSD::QName.new(NsApi, "List")], [0, nil]]
     ]
   )
 
   EncodedRegistry.register(
-    :class => ArrayOfSubscriberClick,
+    :class => Campaigning::ArrayOfSubscriberClick,
     :schema_type => XSD::QName.new(NsApi, "ArrayOfSubscriberClick"),
     :schema_element => [
-      ["subscriberClick", ["SubscriberClick[]", XSD::QName.new(NsApi, "SubscriberClick")], [0, nil]]
+      ["subscriberClick", ["Campaigning::SubscriberClick[]", XSD::QName.new(NsApi, "SubscriberClick")], [0, nil]]
     ]
   )
 
   EncodedRegistry.register(
-    :class => ArrayOfSubscriberOpen,
+    :class => Campaigning::ArrayOfSubscriberOpen,
     :schema_type => XSD::QName.new(NsApi, "ArrayOfSubscriberOpen"),
     :schema_element => [
-      ["subscriberOpen", ["SubscriberOpen[]", XSD::QName.new(NsApi, "SubscriberOpen")], [0, nil]]
+      ["subscriberOpen", ["Campaigning::SubscriberOpen[]", XSD::QName.new(NsApi, "SubscriberOpen")], [0, nil]]
     ]
   )
 
   EncodedRegistry.register(
-    :class => ArrayOfSubscriberBounce,
+    :class => Campaigning::ArrayOfSubscriberBounce,
     :schema_type => XSD::QName.new(NsApi, "ArrayOfSubscriberBounce"),
     :schema_element => [
-      ["subscriberBounce", ["SubscriberBounce[]", XSD::QName.new(NsApi, "SubscriberBounce")], [0, nil]]
+      ["subscriberBounce", ["Campaigning::SubscriberBounce[]", XSD::QName.new(NsApi, "SubscriberBounce")], [0, nil]]
     ]
   )
 
   EncodedRegistry.register(
-    :class => ArrayOfSubscriberUnsubscribe,
+    :class => Campaigning::ArrayOfSubscriberUnsubscribe,
     :schema_type => XSD::QName.new(NsApi, "ArrayOfSubscriberUnsubscribe"),
     :schema_element => [
-      ["subscriberUnsubscribe", ["SubscriberUnsubscribe[]", XSD::QName.new(NsApi, "SubscriberUnsubscribe")], [0, nil]]
+      ["subscriberUnsubscribe", ["Campaigning::SubscriberUnsubscribe[]", XSD::QName.new(NsApi, "SubscriberUnsubscribe")], [0, nil]]
     ]
   )
 
   EncodedRegistry.register(
-    :class => ArrayOfClient,
+    :class => Campaigning::ArrayOfClient,
     :schema_type => XSD::QName.new(NsApi, "ArrayOfClient"),
     :schema_element => [
-      ["client", ["Client[]", XSD::QName.new(NsApi, "Client")], [0, nil]]
+      ["client", ["Campaigning::Client[]", XSD::QName.new(NsApi, "Client")], [0, nil]]
     ]
   )
 
   EncodedRegistry.register(
-    :class => SubscriberFieldDataType,
+    :class => Campaigning::SubscriberFieldDataType,
     :schema_type => XSD::QName.new(NsApi, "SubscriberFieldDataType")
   )
 
   LiteralRegistry.register(
-    :class => ArrayOfSubscriberCustomField,
+    :class => Campaigning::ArrayOfSubscriberCustomField,
     :schema_type => XSD::QName.new(NsApi, "ArrayOfSubscriberCustomField"),
     :schema_element => [
-      ["subscriberCustomField", ["SubscriberCustomField[]", XSD::QName.new(NsApi, "SubscriberCustomField")], [0, nil]]
+      ["subscriberCustomField", ["Campaigning::SubscriberCustomField[]", XSD::QName.new(NsApi, "SubscriberCustomField")], [0, nil]]
     ]
   )
 
   LiteralRegistry.register(
-    :class => SubscriberCustomField,
+    :class => Campaigning::SubscriberCustomField,
     :schema_type => XSD::QName.new(NsApi, "SubscriberCustomField"),
     :schema_element => [
       ["key", ["SOAP::SOAPString", XSD::QName.new(NsApi, "Key")], [0, 1]],
@@ -304,7 +306,7 @@ module DefaultMappingRegistry
   )
 
   LiteralRegistry.register(
-    :class => Result,
+    :class => Campaigning::Result,
     :schema_type => XSD::QName.new(NsApi, "Result"),
     :schema_element => [
       ["code", ["SOAP::SOAPInt", XSD::QName.new(NsApi, "Code")]],
@@ -313,7 +315,7 @@ module DefaultMappingRegistry
   )
 
   LiteralRegistry.register(
-    :class => Client,
+    :class => Campaigning::Client,
     :schema_type => XSD::QName.new(NsApi, "Client"),
     :schema_element => [
       ["clientID", ["SOAP::SOAPString", XSD::QName.new(NsApi, "ClientID")], [0, 1]],
@@ -322,7 +324,7 @@ module DefaultMappingRegistry
   )
 
   LiteralRegistry.register(
-    :class => CampaignSummary,
+    :class => Campaigning::CampaignSummary,
     :schema_type => XSD::QName.new(NsApi, "CampaignSummary"),
     :schema_element => [
       ["recipients", ["SOAP::SOAPInt", XSD::QName.new(NsApi, "Recipients")]],
@@ -334,7 +336,7 @@ module DefaultMappingRegistry
   )
 
   LiteralRegistry.register(
-    :class => SubscriberUnsubscribe,
+    :class => Campaigning::SubscriberUnsubscribe,
     :schema_type => XSD::QName.new(NsApi, "SubscriberUnsubscribe"),
     :schema_element => [
       ["emailAddress", ["SOAP::SOAPString", XSD::QName.new(NsApi, "EmailAddress")], [0, 1]],
@@ -343,7 +345,7 @@ module DefaultMappingRegistry
   )
 
   LiteralRegistry.register(
-    :class => SubscriberBounce,
+    :class => Campaigning::SubscriberBounce,
     :schema_type => XSD::QName.new(NsApi, "SubscriberBounce"),
     :schema_element => [
       ["emailAddress", ["SOAP::SOAPString", XSD::QName.new(NsApi, "EmailAddress")], [0, 1]],
@@ -353,7 +355,7 @@ module DefaultMappingRegistry
   )
 
   LiteralRegistry.register(
-    :class => SubscriberOpen,
+    :class => Campaigning::SubscriberOpen,
     :schema_type => XSD::QName.new(NsApi, "SubscriberOpen"),
     :schema_element => [
       ["emailAddress", ["SOAP::SOAPString", XSD::QName.new(NsApi, "EmailAddress")], [0, 1]],
@@ -363,25 +365,25 @@ module DefaultMappingRegistry
   )
 
   LiteralRegistry.register(
-    :class => SubscriberClick,
+    :class => Campaigning::SubscriberClick,
     :schema_type => XSD::QName.new(NsApi, "SubscriberClick"),
     :schema_element => [
       ["emailAddress", ["SOAP::SOAPString", XSD::QName.new(NsApi, "EmailAddress")], [0, 1]],
       ["listID", ["SOAP::SOAPString", XSD::QName.new(NsApi, "ListID")], [0, 1]],
-      ["clickedLinks", ["ArrayOfSubscriberClickedLink", XSD::QName.new(NsApi, "ClickedLinks")], [0, 1]]
+      ["clickedLinks", ["Campaigning::ArrayOfSubscriberClickedLink", XSD::QName.new(NsApi, "ClickedLinks")], [0, 1]]
     ]
   )
 
   LiteralRegistry.register(
-    :class => ArrayOfSubscriberClickedLink,
+    :class => Campaigning::ArrayOfSubscriberClickedLink,
     :schema_type => XSD::QName.new(NsApi, "ArrayOfSubscriberClickedLink"),
     :schema_element => [
-      ["subscriberClickedLink", ["SubscriberClickedLink[]", XSD::QName.new(NsApi, "SubscriberClickedLink")], [0, nil]]
+      ["subscriberClickedLink", ["Campaigning::SubscriberClickedLink[]", XSD::QName.new(NsApi, "SubscriberClickedLink")], [0, nil]]
     ]
   )
 
   LiteralRegistry.register(
-    :class => SubscriberClickedLink,
+    :class => Campaigning::SubscriberClickedLink,
     :schema_type => XSD::QName.new(NsApi, "SubscriberClickedLink"),
     :schema_element => [
       ["link", ["SOAP::SOAPString", XSD::QName.new(NsApi, "Link")], [0, 1]],
@@ -390,16 +392,16 @@ module DefaultMappingRegistry
   )
 
   LiteralRegistry.register(
-    :class => ClientDetail,
+    :class => Campaigning::ClientDetail,
     :schema_type => XSD::QName.new(NsApi, "ClientDetail"),
     :schema_element => [
-      ["basicDetails", ["ClientBasicDetails", XSD::QName.new(NsApi, "BasicDetails")], [0, 1]],
-      ["accessAndBilling", ["ClientAccessAndBilling", XSD::QName.new(NsApi, "AccessAndBilling")], [0, 1]]
+      ["basicDetails", ["Campaigning::ClientBasicDetails", XSD::QName.new(NsApi, "BasicDetails")], [0, 1]],
+      ["accessAndBilling", ["Campaigning::ClientAccessAndBilling", XSD::QName.new(NsApi, "AccessAndBilling")], [0, 1]]
     ]
   )
 
   LiteralRegistry.register(
-    :class => ClientBasicDetails,
+    :class => Campaigning::ClientBasicDetails,
     :schema_type => XSD::QName.new(NsApi, "ClientBasicDetails"),
     :schema_element => [
       ["clientID", ["SOAP::SOAPString", XSD::QName.new(NsApi, "ClientID")], [0, 1]],
@@ -412,7 +414,7 @@ module DefaultMappingRegistry
   )
 
   LiteralRegistry.register(
-    :class => ClientAccessAndBilling,
+    :class => Campaigning::ClientAccessAndBilling,
     :schema_type => XSD::QName.new(NsApi, "ClientAccessAndBilling"),
     :schema_element => [
       ["username", ["SOAP::SOAPString", XSD::QName.new(NsApi, "Username")], [0, 1]],
@@ -427,7 +429,7 @@ module DefaultMappingRegistry
   )
 
   LiteralRegistry.register(
-    :class => List,
+    :class => Campaigning::List,
     :schema_type => XSD::QName.new(NsApi, "List"),
     :schema_element => [
       ["listID", ["SOAP::SOAPString", XSD::QName.new(NsApi, "ListID")], [0, 1]],
@@ -436,7 +438,7 @@ module DefaultMappingRegistry
   )
 
   LiteralRegistry.register(
-    :class => Campaign,
+    :class => Campaigning::Campaign,
     :schema_type => XSD::QName.new(NsApi, "Campaign"),
     :schema_element => [
       ["campaignID", ["SOAP::SOAPString", XSD::QName.new(NsApi, "CampaignID")], [0, 1]],
@@ -447,18 +449,18 @@ module DefaultMappingRegistry
   )
 
   LiteralRegistry.register(
-    :class => ListCustomField,
+    :class => Campaigning::ListCustomField,
     :schema_type => XSD::QName.new(NsApi, "ListCustomField"),
     :schema_element => [
       ["fieldName", ["SOAP::SOAPString", XSD::QName.new(NsApi, "FieldName")], [0, 1]],
       ["key", ["SOAP::SOAPString", XSD::QName.new(NsApi, "Key")], [0, 1]],
-      ["dataType", ["SubscriberFieldDataType", XSD::QName.new(NsApi, "DataType")]],
-      ["fieldOptions", ["ArrayOfString", XSD::QName.new(NsApi, "FieldOptions")], [0, 1]]
+      ["dataType", ["Campaigning::SubscriberFieldDataType", XSD::QName.new(NsApi, "DataType")]],
+      ["fieldOptions", ["Campaigning::ArrayOfString", XSD::QName.new(NsApi, "FieldOptions")], [0, 1]]
     ]
   )
 
   LiteralRegistry.register(
-    :class => ArrayOfString,
+    :class => Campaigning::ArrayOfString,
     :schema_type => XSD::QName.new(NsApi, "ArrayOfString"),
     :schema_element => [
       ["string", "SOAP::SOAPString[]", [0, nil]]
@@ -466,7 +468,7 @@ module DefaultMappingRegistry
   )
 
   LiteralRegistry.register(
-    :class => ListDetail,
+    :class => Campaigning::ListDetail,
     :schema_type => XSD::QName.new(NsApi, "ListDetail"),
     :schema_element => [
       ["listID", ["SOAP::SOAPString", XSD::QName.new(NsApi, "ListID")], [0, 1]],
@@ -478,136 +480,136 @@ module DefaultMappingRegistry
   )
 
   LiteralRegistry.register(
-    :class => Subscriber,
+    :class => Campaigning::Subscriber,
     :schema_type => XSD::QName.new(NsApi, "Subscriber"),
     :schema_element => [
       ["emailAddress", ["SOAP::SOAPString", XSD::QName.new(NsApi, "EmailAddress")], [0, 1]],
       ["name", ["SOAP::SOAPString", XSD::QName.new(NsApi, "Name")], [0, 1]],
       ["date", ["SOAP::SOAPString", XSD::QName.new(NsApi, "Date")], [0, 1]],
       ["state", ["SOAP::SOAPString", XSD::QName.new(NsApi, "State")], [0, 1]],
-      ["customFields", ["ArrayOfSubscriberCustomField", XSD::QName.new(NsApi, "CustomFields")], [0, 1]]
+      ["customFields", ["Campaigning::ArrayOfSubscriberCustomField", XSD::QName.new(NsApi, "CustomFields")], [0, 1]]
     ]
   )
 
   LiteralRegistry.register(
-    :class => ArrayOfSubscriber,
+    :class => Campaigning::ArrayOfSubscriber,
     :schema_type => XSD::QName.new(NsApi, "ArrayOfSubscriber"),
     :schema_element => [
-      ["subscriber", ["Subscriber[]", XSD::QName.new(NsApi, "Subscriber")], [0, nil]]
+      ["subscriber", ["Campaigning::Subscriber[]", XSD::QName.new(NsApi, "Subscriber")], [0, nil]]
     ]
   )
 
   LiteralRegistry.register(
-    :class => ArrayOfListCustomField,
+    :class => Campaigning::ArrayOfListCustomField,
     :schema_type => XSD::QName.new(NsApi, "ArrayOfListCustomField"),
     :schema_element => [
-      ["listCustomField", ["ListCustomField[]", XSD::QName.new(NsApi, "ListCustomField")], [0, nil]]
+      ["listCustomField", ["Campaigning::ListCustomField[]", XSD::QName.new(NsApi, "ListCustomField")], [0, nil]]
     ]
   )
 
   LiteralRegistry.register(
-    :class => ArrayOfCampaign,
+    :class => Campaigning::ArrayOfCampaign,
     :schema_type => XSD::QName.new(NsApi, "ArrayOfCampaign"),
     :schema_element => [
-      ["campaign", ["Campaign[]", XSD::QName.new(NsApi, "Campaign")], [0, nil]]
+      ["campaign", ["Campaigning::Campaign[]", XSD::QName.new(NsApi, "Campaign")], [0, nil]]
     ]
   )
 
   LiteralRegistry.register(
-    :class => ArrayOfList,
+    :class => Campaigning::ArrayOfList,
     :schema_type => XSD::QName.new(NsApi, "ArrayOfList"),
     :schema_element => [
-      ["list", ["List[]", XSD::QName.new(NsApi, "List")], [0, nil]]
+      ["list", ["Campaigning::List[]", XSD::QName.new(NsApi, "List")], [0, nil]]
     ]
   )
 
   LiteralRegistry.register(
-    :class => ArrayOfSubscriberClick,
+    :class => Campaigning::ArrayOfSubscriberClick,
     :schema_type => XSD::QName.new(NsApi, "ArrayOfSubscriberClick"),
     :schema_element => [
-      ["subscriberClick", ["SubscriberClick[]", XSD::QName.new(NsApi, "SubscriberClick")], [0, nil]]
+      ["subscriberClick", ["Campaigning::SubscriberClick[]", XSD::QName.new(NsApi, "SubscriberClick")], [0, nil]]
     ]
   )
 
   LiteralRegistry.register(
-    :class => ArrayOfSubscriberOpen,
+    :class => Campaigning::ArrayOfSubscriberOpen,
     :schema_type => XSD::QName.new(NsApi, "ArrayOfSubscriberOpen"),
     :schema_element => [
-      ["subscriberOpen", ["SubscriberOpen[]", XSD::QName.new(NsApi, "SubscriberOpen")], [0, nil]]
+      ["subscriberOpen", ["Campaigning::SubscriberOpen[]", XSD::QName.new(NsApi, "SubscriberOpen")], [0, nil]]
     ]
   )
 
   LiteralRegistry.register(
-    :class => ArrayOfSubscriberBounce,
+    :class => Campaigning::ArrayOfSubscriberBounce,
     :schema_type => XSD::QName.new(NsApi, "ArrayOfSubscriberBounce"),
     :schema_element => [
-      ["subscriberBounce", ["SubscriberBounce[]", XSD::QName.new(NsApi, "SubscriberBounce")], [0, nil]]
+      ["subscriberBounce", ["Campaigning::SubscriberBounce[]", XSD::QName.new(NsApi, "SubscriberBounce")], [0, nil]]
     ]
   )
 
   LiteralRegistry.register(
-    :class => ArrayOfSubscriberUnsubscribe,
+    :class => Campaigning::ArrayOfSubscriberUnsubscribe,
     :schema_type => XSD::QName.new(NsApi, "ArrayOfSubscriberUnsubscribe"),
     :schema_element => [
-      ["subscriberUnsubscribe", ["SubscriberUnsubscribe[]", XSD::QName.new(NsApi, "SubscriberUnsubscribe")], [0, nil]]
+      ["subscriberUnsubscribe", ["Campaigning::SubscriberUnsubscribe[]", XSD::QName.new(NsApi, "SubscriberUnsubscribe")], [0, nil]]
     ]
   )
 
   LiteralRegistry.register(
-    :class => ArrayOfClient,
+    :class => Campaigning::ArrayOfClient,
     :schema_type => XSD::QName.new(NsApi, "ArrayOfClient"),
     :schema_element => [
-      ["client", ["Client[]", XSD::QName.new(NsApi, "Client")], [0, nil]]
+      ["client", ["Campaigning::Client[]", XSD::QName.new(NsApi, "Client")], [0, nil]]
     ]
   )
 
   LiteralRegistry.register(
-    :class => SubscriberFieldDataType,
+    :class => Campaigning::SubscriberFieldDataType,
     :schema_type => XSD::QName.new(NsApi, "SubscriberFieldDataType")
   )
 
   LiteralRegistry.register(
-    :class => SubscriberAddWithCustomFields,
+    :class => Campaigning::SubscriberAddWithCustomFields,
     :schema_name => XSD::QName.new(NsApi, "Subscriber.AddWithCustomFields"),
     :schema_element => [
       ["apiKey", ["SOAP::SOAPString", XSD::QName.new(NsApi, "ApiKey")], [0, 1]],
       ["listID", ["SOAP::SOAPString", XSD::QName.new(NsApi, "ListID")], [0, 1]],
       ["email", ["SOAP::SOAPString", XSD::QName.new(NsApi, "Email")], [0, 1]],
       ["name", ["SOAP::SOAPString", XSD::QName.new(NsApi, "Name")], [0, 1]],
-      ["customFields", ["ArrayOfSubscriberCustomField", XSD::QName.new(NsApi, "CustomFields")], [0, 1]]
+      ["customFields", ["Campaigning::ArrayOfSubscriberCustomField", XSD::QName.new(NsApi, "CustomFields")], [0, 1]]
     ]
   )
 
   LiteralRegistry.register(
-    :class => SubscriberAddWithCustomFieldsResponse,
+    :class => Campaigning::SubscriberAddWithCustomFieldsResponse,
     :schema_name => XSD::QName.new(NsApi, "Subscriber.AddWithCustomFieldsResponse"),
     :schema_element => [
-      ["subscriber_AddWithCustomFieldsResult", ["Result", XSD::QName.new(NsApi, "Subscriber.AddWithCustomFieldsResult")], [0, 1]]
+      ["subscriber_AddWithCustomFieldsResult", ["Campaigning::Result", XSD::QName.new(NsApi, "Subscriber.AddWithCustomFieldsResult")], [0, 1]]
     ]
   )
 
   LiteralRegistry.register(
-    :class => SubscriberAddAndResubscribeWithCustomFields,
+    :class => Campaigning::SubscriberAddAndResubscribeWithCustomFields,
     :schema_name => XSD::QName.new(NsApi, "Subscriber.AddAndResubscribeWithCustomFields"),
     :schema_element => [
       ["apiKey", ["SOAP::SOAPString", XSD::QName.new(NsApi, "ApiKey")], [0, 1]],
       ["listID", ["SOAP::SOAPString", XSD::QName.new(NsApi, "ListID")], [0, 1]],
       ["email", ["SOAP::SOAPString", XSD::QName.new(NsApi, "Email")], [0, 1]],
       ["name", ["SOAP::SOAPString", XSD::QName.new(NsApi, "Name")], [0, 1]],
-      ["customFields", ["ArrayOfSubscriberCustomField", XSD::QName.new(NsApi, "CustomFields")], [0, 1]]
+      ["customFields", ["Campaigning::ArrayOfSubscriberCustomField", XSD::QName.new(NsApi, "CustomFields")], [0, 1]]
     ]
   )
 
   LiteralRegistry.register(
-    :class => SubscriberAddAndResubscribeWithCustomFieldsResponse,
+    :class => Campaigning::SubscriberAddAndResubscribeWithCustomFieldsResponse,
     :schema_name => XSD::QName.new(NsApi, "Subscriber.AddAndResubscribeWithCustomFieldsResponse"),
     :schema_element => [
-      ["subscriber_AddAndResubscribeWithCustomFieldsResult", ["Result", XSD::QName.new(NsApi, "Subscriber.AddAndResubscribeWithCustomFieldsResult")], [0, 1]]
+      ["subscriber_AddAndResubscribeWithCustomFieldsResult", ["Campaigning::Result", XSD::QName.new(NsApi, "Subscriber.AddAndResubscribeWithCustomFieldsResult")], [0, 1]]
     ]
   )
 
   LiteralRegistry.register(
-    :class => SubscriberAdd,
+    :class => Campaigning::SubscriberAdd,
     :schema_name => XSD::QName.new(NsApi, "Subscriber.Add"),
     :schema_element => [
       ["apiKey", ["SOAP::SOAPString", XSD::QName.new(NsApi, "ApiKey")], [0, 1]],
@@ -618,15 +620,15 @@ module DefaultMappingRegistry
   )
 
   LiteralRegistry.register(
-    :class => SubscriberAddResponse,
+    :class => Campaigning::SubscriberAddResponse,
     :schema_name => XSD::QName.new(NsApi, "Subscriber.AddResponse"),
     :schema_element => [
-      ["subscriber_AddResult", ["Result", XSD::QName.new(NsApi, "Subscriber.AddResult")], [0, 1]]
+      ["subscriber_AddResult", ["Campaigning::Result", XSD::QName.new(NsApi, "Subscriber.AddResult")], [0, 1]]
     ]
   )
 
   LiteralRegistry.register(
-    :class => SubscriberAddAndResubscribe,
+    :class => Campaigning::SubscriberAddAndResubscribe,
     :schema_name => XSD::QName.new(NsApi, "Subscriber.AddAndResubscribe"),
     :schema_element => [
       ["apiKey", ["SOAP::SOAPString", XSD::QName.new(NsApi, "ApiKey")], [0, 1]],
@@ -637,15 +639,15 @@ module DefaultMappingRegistry
   )
 
   LiteralRegistry.register(
-    :class => SubscriberAddAndResubscribeResponse,
+    :class => Campaigning::SubscriberAddAndResubscribeResponse,
     :schema_name => XSD::QName.new(NsApi, "Subscriber.AddAndResubscribeResponse"),
     :schema_element => [
-      ["subscriber_AddAndResubscribeResult", ["Result", XSD::QName.new(NsApi, "Subscriber.AddAndResubscribeResult")], [0, 1]]
+      ["subscriber_AddAndResubscribeResult", ["Campaigning::Result", XSD::QName.new(NsApi, "Subscriber.AddAndResubscribeResult")], [0, 1]]
     ]
   )
 
   LiteralRegistry.register(
-    :class => SubscriberUnsubscribe_,
+    :class => Campaigning::SubscriberUnsubscribe_,
     :schema_name => XSD::QName.new(NsApi, "Subscriber.Unsubscribe"),
     :schema_element => [
       ["apiKey", ["SOAP::SOAPString", XSD::QName.new(NsApi, "ApiKey")], [0, 1]],
@@ -655,15 +657,15 @@ module DefaultMappingRegistry
   )
 
   LiteralRegistry.register(
-    :class => SubscriberUnsubscribeResponse,
+    :class => Campaigning::SubscriberUnsubscribeResponse,
     :schema_name => XSD::QName.new(NsApi, "Subscriber.UnsubscribeResponse"),
     :schema_element => [
-      ["subscriber_UnsubscribeResult", ["Result", XSD::QName.new(NsApi, "Subscriber.UnsubscribeResult")], [0, 1]]
+      ["subscriber_UnsubscribeResult", ["Campaigning::Result", XSD::QName.new(NsApi, "Subscriber.UnsubscribeResult")], [0, 1]]
     ]
   )
 
   LiteralRegistry.register(
-    :class => SubscribersGetActive,
+    :class => Campaigning::SubscribersGetActive,
     :schema_name => XSD::QName.new(NsApi, "Subscribers.GetActive"),
     :schema_element => [
       ["apiKey", ["SOAP::SOAPString", XSD::QName.new(NsApi, "ApiKey")], [0, 1]],
@@ -673,7 +675,7 @@ module DefaultMappingRegistry
   )
 
   LiteralRegistry.register(
-    :class => SubscribersGetActiveResponse,
+    :class => Campaigning::SubscribersGetActiveResponse,
     :schema_name => XSD::QName.new(NsApi, "Subscribers.GetActiveResponse"),
     :schema_element => [
       ["subscribers_GetActiveResult", [nil, XSD::QName.new(NsApi, "Subscribers.GetActiveResult")], [0, 1]]
@@ -681,7 +683,7 @@ module DefaultMappingRegistry
   )
 
   LiteralRegistry.register(
-    :class => SubscribersGetUnsubscribed,
+    :class => Campaigning::SubscribersGetUnsubscribed,
     :schema_name => XSD::QName.new(NsApi, "Subscribers.GetUnsubscribed"),
     :schema_element => [
       ["apiKey", ["SOAP::SOAPString", XSD::QName.new(NsApi, "ApiKey")], [0, 1]],
@@ -691,7 +693,7 @@ module DefaultMappingRegistry
   )
 
   LiteralRegistry.register(
-    :class => SubscribersGetUnsubscribedResponse,
+    :class => Campaigning::SubscribersGetUnsubscribedResponse,
     :schema_name => XSD::QName.new(NsApi, "Subscribers.GetUnsubscribedResponse"),
     :schema_element => [
       ["subscribers_GetUnsubscribedResult", [nil, XSD::QName.new(NsApi, "Subscribers.GetUnsubscribedResult")], [0, 1]]
@@ -699,7 +701,7 @@ module DefaultMappingRegistry
   )
 
   LiteralRegistry.register(
-    :class => SubscribersGetBounced,
+    :class => Campaigning::SubscribersGetBounced,
     :schema_name => XSD::QName.new(NsApi, "Subscribers.GetBounced"),
     :schema_element => [
       ["apiKey", ["SOAP::SOAPString", XSD::QName.new(NsApi, "ApiKey")], [0, 1]],
@@ -709,7 +711,7 @@ module DefaultMappingRegistry
   )
 
   LiteralRegistry.register(
-    :class => SubscribersGetBouncedResponse,
+    :class => Campaigning::SubscribersGetBouncedResponse,
     :schema_name => XSD::QName.new(NsApi, "Subscribers.GetBouncedResponse"),
     :schema_element => [
       ["subscribers_GetBouncedResult", [nil, XSD::QName.new(NsApi, "Subscribers.GetBouncedResult")], [0, 1]]
@@ -717,7 +719,7 @@ module DefaultMappingRegistry
   )
 
   LiteralRegistry.register(
-    :class => SubscribersGetSingleSubscriber,
+    :class => Campaigning::SubscribersGetSingleSubscriber,
     :schema_name => XSD::QName.new(NsApi, "Subscribers.GetSingleSubscriber"),
     :schema_element => [
       ["apiKey", ["SOAP::SOAPString", XSD::QName.new(NsApi, "ApiKey")], [0, 1]],
@@ -727,7 +729,7 @@ module DefaultMappingRegistry
   )
 
   LiteralRegistry.register(
-    :class => SubscribersGetSingleSubscriberResponse,
+    :class => Campaigning::SubscribersGetSingleSubscriberResponse,
     :schema_name => XSD::QName.new(NsApi, "Subscribers.GetSingleSubscriberResponse"),
     :schema_element => [
       ["subscribers_GetSingleSubscriberResult", [nil, XSD::QName.new(NsApi, "Subscribers.GetSingleSubscriberResult")], [0, 1]]
@@ -735,7 +737,7 @@ module DefaultMappingRegistry
   )
 
   LiteralRegistry.register(
-    :class => SubscribersGetIsSubscribed,
+    :class => Campaigning::SubscribersGetIsSubscribed,
     :schema_name => XSD::QName.new(NsApi, "Subscribers.GetIsSubscribed"),
     :schema_element => [
       ["apiKey", ["SOAP::SOAPString", XSD::QName.new(NsApi, "ApiKey")], [0, 1]],
@@ -745,7 +747,7 @@ module DefaultMappingRegistry
   )
 
   LiteralRegistry.register(
-    :class => SubscribersGetIsSubscribedResponse,
+    :class => Campaigning::SubscribersGetIsSubscribedResponse,
     :schema_name => XSD::QName.new(NsApi, "Subscribers.GetIsSubscribedResponse"),
     :schema_element => [
       ["subscribers_GetIsSubscribedResult", [nil, XSD::QName.new(NsApi, "Subscribers.GetIsSubscribedResult")], [0, 1]]
@@ -753,7 +755,7 @@ module DefaultMappingRegistry
   )
 
   LiteralRegistry.register(
-    :class => ListCreate,
+    :class => Campaigning::ListCreate,
     :schema_name => XSD::QName.new(NsApi, "List.Create"),
     :schema_element => [
       ["apiKey", ["SOAP::SOAPString", XSD::QName.new(NsApi, "ApiKey")], [0, 1]],
@@ -766,7 +768,7 @@ module DefaultMappingRegistry
   )
 
   LiteralRegistry.register(
-    :class => ListCreateResponse,
+    :class => Campaigning::ListCreateResponse,
     :schema_name => XSD::QName.new(NsApi, "List.CreateResponse"),
     :schema_element => [
       ["list_CreateResult", [nil, XSD::QName.new(NsApi, "List.CreateResult")], [0, 1]]
@@ -774,7 +776,7 @@ module DefaultMappingRegistry
   )
 
   LiteralRegistry.register(
-    :class => ListUpdate,
+    :class => Campaigning::ListUpdate,
     :schema_name => XSD::QName.new(NsApi, "List.Update"),
     :schema_element => [
       ["apiKey", ["SOAP::SOAPString", XSD::QName.new(NsApi, "ApiKey")], [0, 1]],
@@ -787,15 +789,15 @@ module DefaultMappingRegistry
   )
 
   LiteralRegistry.register(
-    :class => ListUpdateResponse,
+    :class => Campaigning::ListUpdateResponse,
     :schema_name => XSD::QName.new(NsApi, "List.UpdateResponse"),
     :schema_element => [
-      ["list_UpdateResult", ["Result", XSD::QName.new(NsApi, "List.UpdateResult")], [0, 1]]
+      ["list_UpdateResult", ["Campaigning::Result", XSD::QName.new(NsApi, "List.UpdateResult")], [0, 1]]
     ]
   )
 
   LiteralRegistry.register(
-    :class => ListGetDetail,
+    :class => Campaigning::ListGetDetail,
     :schema_name => XSD::QName.new(NsApi, "List.GetDetail"),
     :schema_element => [
       ["apiKey", ["SOAP::SOAPString", XSD::QName.new(NsApi, "ApiKey")], [0, 1]],
@@ -804,7 +806,7 @@ module DefaultMappingRegistry
   )
 
   LiteralRegistry.register(
-    :class => ListGetDetailResponse,
+    :class => Campaigning::ListGetDetailResponse,
     :schema_name => XSD::QName.new(NsApi, "List.GetDetailResponse"),
     :schema_element => [
       ["list_GetDetailResult", [nil, XSD::QName.new(NsApi, "List.GetDetailResult")], [0, 1]]
@@ -812,7 +814,7 @@ module DefaultMappingRegistry
   )
 
   LiteralRegistry.register(
-    :class => ListDelete,
+    :class => Campaigning::ListDelete,
     :schema_name => XSD::QName.new(NsApi, "List.Delete"),
     :schema_element => [
       ["apiKey", ["SOAP::SOAPString", XSD::QName.new(NsApi, "ApiKey")], [0, 1]],
@@ -821,15 +823,15 @@ module DefaultMappingRegistry
   )
 
   LiteralRegistry.register(
-    :class => ListDeleteResponse,
+    :class => Campaigning::ListDeleteResponse,
     :schema_name => XSD::QName.new(NsApi, "List.DeleteResponse"),
     :schema_element => [
-      ["list_DeleteResult", ["Result", XSD::QName.new(NsApi, "List.DeleteResult")], [0, 1]]
+      ["list_DeleteResult", ["Campaigning::Result", XSD::QName.new(NsApi, "List.DeleteResult")], [0, 1]]
     ]
   )
 
   LiteralRegistry.register(
-    :class => ListGetCustomFields,
+    :class => Campaigning::ListGetCustomFields,
     :schema_name => XSD::QName.new(NsApi, "List.GetCustomFields"),
     :schema_element => [
       ["apiKey", ["SOAP::SOAPString", XSD::QName.new(NsApi, "ApiKey")], [0, 1]],
@@ -838,7 +840,7 @@ module DefaultMappingRegistry
   )
 
   LiteralRegistry.register(
-    :class => ListGetCustomFieldsResponse,
+    :class => Campaigning::ListGetCustomFieldsResponse,
     :schema_name => XSD::QName.new(NsApi, "List.GetCustomFieldsResponse"),
     :schema_element => [
       ["list_GetCustomFieldsResult", [nil, XSD::QName.new(NsApi, "List.GetCustomFieldsResult")], [0, 1]]
@@ -846,7 +848,7 @@ module DefaultMappingRegistry
   )
 
   LiteralRegistry.register(
-    :class => ListDeleteCustomField,
+    :class => Campaigning::ListDeleteCustomField,
     :schema_name => XSD::QName.new(NsApi, "List.DeleteCustomField"),
     :schema_element => [
       ["apiKey", ["SOAP::SOAPString", XSD::QName.new(NsApi, "ApiKey")], [0, 1]],
@@ -856,35 +858,35 @@ module DefaultMappingRegistry
   )
 
   LiteralRegistry.register(
-    :class => ListDeleteCustomFieldResponse,
+    :class => Campaigning::ListDeleteCustomFieldResponse,
     :schema_name => XSD::QName.new(NsApi, "List.DeleteCustomFieldResponse"),
     :schema_element => [
-      ["list_DeleteCustomFieldResult", ["Result", XSD::QName.new(NsApi, "List.DeleteCustomFieldResult")], [0, 1]]
+      ["list_DeleteCustomFieldResult", ["Campaigning::Result", XSD::QName.new(NsApi, "List.DeleteCustomFieldResult")], [0, 1]]
     ]
   )
 
   LiteralRegistry.register(
-    :class => ListCreateCustomField,
+    :class => Campaigning::ListCreateCustomField,
     :schema_name => XSD::QName.new(NsApi, "List.CreateCustomField"),
     :schema_element => [
       ["apiKey", ["SOAP::SOAPString", XSD::QName.new(NsApi, "ApiKey")], [0, 1]],
       ["listID", ["SOAP::SOAPString", XSD::QName.new(NsApi, "ListID")], [0, 1]],
       ["fieldName", ["SOAP::SOAPString", XSD::QName.new(NsApi, "FieldName")], [0, 1]],
-      ["dataType", ["SubscriberFieldDataType", XSD::QName.new(NsApi, "DataType")]],
+      ["dataType", ["Campaigning::SubscriberFieldDataType", XSD::QName.new(NsApi, "DataType")]],
       ["options", ["SOAP::SOAPString", XSD::QName.new(NsApi, "Options")], [0, 1]]
     ]
   )
 
   LiteralRegistry.register(
-    :class => ListCreateCustomFieldResponse,
+    :class => Campaigning::ListCreateCustomFieldResponse,
     :schema_name => XSD::QName.new(NsApi, "List.CreateCustomFieldResponse"),
     :schema_element => [
-      ["list_CreateCustomFieldResult", ["Result", XSD::QName.new(NsApi, "List.CreateCustomFieldResult")], [0, 1]]
+      ["list_CreateCustomFieldResult", ["Campaigning::Result", XSD::QName.new(NsApi, "List.CreateCustomFieldResult")], [0, 1]]
     ]
   )
 
   LiteralRegistry.register(
-    :class => ClientGetCampaigns,
+    :class => Campaigning::ClientGetCampaigns,
     :schema_name => XSD::QName.new(NsApi, "Client.GetCampaigns"),
     :schema_element => [
       ["apiKey", ["SOAP::SOAPString", XSD::QName.new(NsApi, "ApiKey")], [0, 1]],
@@ -893,7 +895,7 @@ module DefaultMappingRegistry
   )
 
   LiteralRegistry.register(
-    :class => ClientGetCampaignsResponse,
+    :class => Campaigning::ClientGetCampaignsResponse,
     :schema_name => XSD::QName.new(NsApi, "Client.GetCampaignsResponse"),
     :schema_element => [
       ["client_GetCampaignsResult", [nil, XSD::QName.new(NsApi, "Client.GetCampaignsResult")], [0, 1]]
@@ -901,7 +903,7 @@ module DefaultMappingRegistry
   )
 
   LiteralRegistry.register(
-    :class => ClientGetLists,
+    :class => Campaigning::ClientGetLists,
     :schema_name => XSD::QName.new(NsApi, "Client.GetLists"),
     :schema_element => [
       ["apiKey", ["SOAP::SOAPString", XSD::QName.new(NsApi, "ApiKey")], [0, 1]],
@@ -910,7 +912,7 @@ module DefaultMappingRegistry
   )
 
   LiteralRegistry.register(
-    :class => ClientGetListsResponse,
+    :class => Campaigning::ClientGetListsResponse,
     :schema_name => XSD::QName.new(NsApi, "Client.GetListsResponse"),
     :schema_element => [
       ["client_GetListsResult", [nil, XSD::QName.new(NsApi, "Client.GetListsResult")], [0, 1]]
@@ -918,7 +920,7 @@ module DefaultMappingRegistry
   )
 
   LiteralRegistry.register(
-    :class => ClientGetSegments,
+    :class => Campaigning::ClientGetSegments,
     :schema_name => XSD::QName.new(NsApi, "Client.GetSegments"),
     :schema_element => [
       ["apiKey", ["SOAP::SOAPString", XSD::QName.new(NsApi, "ApiKey")], [0, 1]],
@@ -927,7 +929,7 @@ module DefaultMappingRegistry
   )
 
   LiteralRegistry.register(
-    :class => ClientGetSegmentsResponse,
+    :class => Campaigning::ClientGetSegmentsResponse,
     :schema_name => XSD::QName.new(NsApi, "Client.GetSegmentsResponse"),
     :schema_element => [
       ["client_GetSegmentsResult", [nil, XSD::QName.new(NsApi, "Client.GetSegmentsResult")], [0, 1]]
@@ -935,7 +937,7 @@ module DefaultMappingRegistry
   )
 
   LiteralRegistry.register(
-    :class => ClientGetSuppressionList,
+    :class => Campaigning::ClientGetSuppressionList,
     :schema_name => XSD::QName.new(NsApi, "Client.GetSuppressionList"),
     :schema_element => [
       ["apiKey", ["SOAP::SOAPString", XSD::QName.new(NsApi, "ApiKey")], [0, 1]],
@@ -944,7 +946,7 @@ module DefaultMappingRegistry
   )
 
   LiteralRegistry.register(
-    :class => ClientGetSuppressionListResponse,
+    :class => Campaigning::ClientGetSuppressionListResponse,
     :schema_name => XSD::QName.new(NsApi, "Client.GetSuppressionListResponse"),
     :schema_element => [
       ["client_GetSuppressionListResult", [nil, XSD::QName.new(NsApi, "Client.GetSuppressionListResult")], [0, 1]]
@@ -952,7 +954,7 @@ module DefaultMappingRegistry
   )
 
   LiteralRegistry.register(
-    :class => ClientCreate,
+    :class => Campaigning::ClientCreate,
     :schema_name => XSD::QName.new(NsApi, "Client.Create"),
     :schema_element => [
       ["apiKey", ["SOAP::SOAPString", XSD::QName.new(NsApi, "ApiKey")], [0, 1]],
@@ -965,7 +967,7 @@ module DefaultMappingRegistry
   )
 
   LiteralRegistry.register(
-    :class => ClientCreateResponse,
+    :class => Campaigning::ClientCreateResponse,
     :schema_name => XSD::QName.new(NsApi, "Client.CreateResponse"),
     :schema_element => [
       ["client_CreateResult", [nil, XSD::QName.new(NsApi, "Client.CreateResult")], [0, 1]]
@@ -973,7 +975,7 @@ module DefaultMappingRegistry
   )
 
   LiteralRegistry.register(
-    :class => ClientUpdateBasics,
+    :class => Campaigning::ClientUpdateBasics,
     :schema_name => XSD::QName.new(NsApi, "Client.UpdateBasics"),
     :schema_element => [
       ["apiKey", ["SOAP::SOAPString", XSD::QName.new(NsApi, "ApiKey")], [0, 1]],
@@ -987,7 +989,7 @@ module DefaultMappingRegistry
   )
 
   LiteralRegistry.register(
-    :class => ClientUpdateBasicsResponse,
+    :class => Campaigning::ClientUpdateBasicsResponse,
     :schema_name => XSD::QName.new(NsApi, "Client.UpdateBasicsResponse"),
     :schema_element => [
       ["client_UpdateBasicsResult", [nil, XSD::QName.new(NsApi, "Client.UpdateBasicsResult")], [0, 1]]
@@ -995,7 +997,7 @@ module DefaultMappingRegistry
   )
 
   LiteralRegistry.register(
-    :class => ClientUpdateAccessAndBilling,
+    :class => Campaigning::ClientUpdateAccessAndBilling,
     :schema_name => XSD::QName.new(NsApi, "Client.UpdateAccessAndBilling"),
     :schema_element => [
       ["apiKey", ["SOAP::SOAPString", XSD::QName.new(NsApi, "ApiKey")], [0, 1]],
@@ -1012,15 +1014,15 @@ module DefaultMappingRegistry
   )
 
   LiteralRegistry.register(
-    :class => ClientUpdateAccessAndBillingResponse,
+    :class => Campaigning::ClientUpdateAccessAndBillingResponse,
     :schema_name => XSD::QName.new(NsApi, "Client.UpdateAccessAndBillingResponse"),
     :schema_element => [
-      ["client_UpdateAccessAndBillingResult", ["Result", XSD::QName.new(NsApi, "Client.UpdateAccessAndBillingResult")], [0, 1]]
+      ["client_UpdateAccessAndBillingResult", ["Campaigning::Result", XSD::QName.new(NsApi, "Client.UpdateAccessAndBillingResult")], [0, 1]]
     ]
   )
 
   LiteralRegistry.register(
-    :class => ClientGetDetail,
+    :class => Campaigning::ClientGetDetail,
     :schema_name => XSD::QName.new(NsApi, "Client.GetDetail"),
     :schema_element => [
       ["apiKey", ["SOAP::SOAPString", XSD::QName.new(NsApi, "ApiKey")], [0, 1]],
@@ -1029,7 +1031,7 @@ module DefaultMappingRegistry
   )
 
   LiteralRegistry.register(
-    :class => ClientGetDetailResponse,
+    :class => Campaigning::ClientGetDetailResponse,
     :schema_name => XSD::QName.new(NsApi, "Client.GetDetailResponse"),
     :schema_element => [
       ["client_GetDetailResult", [nil, XSD::QName.new(NsApi, "Client.GetDetailResult")], [0, 1]]
@@ -1037,7 +1039,7 @@ module DefaultMappingRegistry
   )
 
   LiteralRegistry.register(
-    :class => ClientDelete,
+    :class => Campaigning::ClientDelete,
     :schema_name => XSD::QName.new(NsApi, "Client.Delete"),
     :schema_element => [
       ["apiKey", ["SOAP::SOAPString", XSD::QName.new(NsApi, "ApiKey")], [0, 1]],
@@ -1046,15 +1048,15 @@ module DefaultMappingRegistry
   )
 
   LiteralRegistry.register(
-    :class => ClientDeleteResponse,
+    :class => Campaigning::ClientDeleteResponse,
     :schema_name => XSD::QName.new(NsApi, "Client.DeleteResponse"),
     :schema_element => [
-      ["client_DeleteResult", ["Result", XSD::QName.new(NsApi, "Client.DeleteResult")], [0, 1]]
+      ["client_DeleteResult", ["Campaigning::Result", XSD::QName.new(NsApi, "Client.DeleteResult")], [0, 1]]
     ]
   )
 
   LiteralRegistry.register(
-    :class => CampaignGetSubscriberClicks,
+    :class => Campaigning::CampaignGetSubscriberClicks,
     :schema_name => XSD::QName.new(NsApi, "Campaign.GetSubscriberClicks"),
     :schema_element => [
       ["apiKey", ["SOAP::SOAPString", XSD::QName.new(NsApi, "ApiKey")], [0, 1]],
@@ -1063,7 +1065,7 @@ module DefaultMappingRegistry
   )
 
   LiteralRegistry.register(
-    :class => CampaignGetSubscriberClicksResponse,
+    :class => Campaigning::CampaignGetSubscriberClicksResponse,
     :schema_name => XSD::QName.new(NsApi, "Campaign.GetSubscriberClicksResponse"),
     :schema_element => [
       ["campaign_GetSubscriberClicksResult", [nil, XSD::QName.new(NsApi, "Campaign.GetSubscriberClicksResult")], [0, 1]]
@@ -1071,7 +1073,7 @@ module DefaultMappingRegistry
   )
 
   LiteralRegistry.register(
-    :class => CampaignGetOpens,
+    :class => Campaigning::CampaignGetOpens,
     :schema_name => XSD::QName.new(NsApi, "Campaign.GetOpens"),
     :schema_element => [
       ["apiKey", ["SOAP::SOAPString", XSD::QName.new(NsApi, "ApiKey")], [0, 1]],
@@ -1080,7 +1082,7 @@ module DefaultMappingRegistry
   )
 
   LiteralRegistry.register(
-    :class => CampaignGetOpensResponse,
+    :class => Campaigning::CampaignGetOpensResponse,
     :schema_name => XSD::QName.new(NsApi, "Campaign.GetOpensResponse"),
     :schema_element => [
       ["campaign_GetOpensResult", [nil, XSD::QName.new(NsApi, "Campaign.GetOpensResult")], [0, 1]]
@@ -1088,7 +1090,7 @@ module DefaultMappingRegistry
   )
 
   LiteralRegistry.register(
-    :class => CampaignGetBounces,
+    :class => Campaigning::CampaignGetBounces,
     :schema_name => XSD::QName.new(NsApi, "Campaign.GetBounces"),
     :schema_element => [
       ["apiKey", ["SOAP::SOAPString", XSD::QName.new(NsApi, "ApiKey")], [0, 1]],
@@ -1097,7 +1099,7 @@ module DefaultMappingRegistry
   )
 
   LiteralRegistry.register(
-    :class => CampaignGetBouncesResponse,
+    :class => Campaigning::CampaignGetBouncesResponse,
     :schema_name => XSD::QName.new(NsApi, "Campaign.GetBouncesResponse"),
     :schema_element => [
       ["campaign_GetBouncesResult", [nil, XSD::QName.new(NsApi, "Campaign.GetBouncesResult")], [0, 1]]
@@ -1105,7 +1107,7 @@ module DefaultMappingRegistry
   )
 
   LiteralRegistry.register(
-    :class => CampaignGetUnsubscribes,
+    :class => Campaigning::CampaignGetUnsubscribes,
     :schema_name => XSD::QName.new(NsApi, "Campaign.GetUnsubscribes"),
     :schema_element => [
       ["apiKey", ["SOAP::SOAPString", XSD::QName.new(NsApi, "ApiKey")], [0, 1]],
@@ -1114,7 +1116,7 @@ module DefaultMappingRegistry
   )
 
   LiteralRegistry.register(
-    :class => CampaignGetUnsubscribesResponse,
+    :class => Campaigning::CampaignGetUnsubscribesResponse,
     :schema_name => XSD::QName.new(NsApi, "Campaign.GetUnsubscribesResponse"),
     :schema_element => [
       ["campaign_GetUnsubscribesResult", [nil, XSD::QName.new(NsApi, "Campaign.GetUnsubscribesResult")], [0, 1]]
@@ -1122,7 +1124,7 @@ module DefaultMappingRegistry
   )
 
   LiteralRegistry.register(
-    :class => CampaignGetSummary,
+    :class => Campaigning::CampaignGetSummary,
     :schema_name => XSD::QName.new(NsApi, "Campaign.GetSummary"),
     :schema_element => [
       ["apiKey", ["SOAP::SOAPString", XSD::QName.new(NsApi, "ApiKey")], [0, 1]],
@@ -1131,7 +1133,7 @@ module DefaultMappingRegistry
   )
 
   LiteralRegistry.register(
-    :class => CampaignGetSummaryResponse,
+    :class => Campaigning::CampaignGetSummaryResponse,
     :schema_name => XSD::QName.new(NsApi, "Campaign.GetSummaryResponse"),
     :schema_element => [
       ["campaign_GetSummaryResult", [nil, XSD::QName.new(NsApi, "Campaign.GetSummaryResult")], [0, 1]]
@@ -1139,7 +1141,7 @@ module DefaultMappingRegistry
   )
 
   LiteralRegistry.register(
-    :class => CampaignGetLists,
+    :class => Campaigning::CampaignGetLists,
     :schema_name => XSD::QName.new(NsApi, "Campaign.GetLists"),
     :schema_element => [
       ["apiKey", ["SOAP::SOAPString", XSD::QName.new(NsApi, "ApiKey")], [0, 1]],
@@ -1148,7 +1150,7 @@ module DefaultMappingRegistry
   )
 
   LiteralRegistry.register(
-    :class => CampaignGetListsResponse,
+    :class => Campaigning::CampaignGetListsResponse,
     :schema_name => XSD::QName.new(NsApi, "Campaign.GetListsResponse"),
     :schema_element => [
       ["campaign_GetListsResult", [nil, XSD::QName.new(NsApi, "Campaign.GetListsResult")], [0, 1]]
@@ -1156,7 +1158,7 @@ module DefaultMappingRegistry
   )
 
   LiteralRegistry.register(
-    :class => UserGetClients,
+    :class => Campaigning::UserGetClients,
     :schema_name => XSD::QName.new(NsApi, "User.GetClients"),
     :schema_element => [
       ["apiKey", ["SOAP::SOAPString", XSD::QName.new(NsApi, "ApiKey")], [0, 1]]
@@ -1164,7 +1166,7 @@ module DefaultMappingRegistry
   )
 
   LiteralRegistry.register(
-    :class => UserGetClientsResponse,
+    :class => Campaigning::UserGetClientsResponse,
     :schema_name => XSD::QName.new(NsApi, "User.GetClientsResponse"),
     :schema_element => [
       ["user_GetClientsResult", [nil, XSD::QName.new(NsApi, "User.GetClientsResult")], [0, 1]]
@@ -1172,7 +1174,7 @@ module DefaultMappingRegistry
   )
 
   LiteralRegistry.register(
-    :class => UserGetSystemDate,
+    :class => Campaigning::UserGetSystemDate,
     :schema_name => XSD::QName.new(NsApi, "User.GetSystemDate"),
     :schema_element => [
       ["apiKey", ["SOAP::SOAPString", XSD::QName.new(NsApi, "ApiKey")], [0, 1]]
@@ -1180,7 +1182,7 @@ module DefaultMappingRegistry
   )
 
   LiteralRegistry.register(
-    :class => UserGetSystemDateResponse,
+    :class => Campaigning::UserGetSystemDateResponse,
     :schema_name => XSD::QName.new(NsApi, "User.GetSystemDateResponse"),
     :schema_element => [
       ["user_GetSystemDateResult", [nil, XSD::QName.new(NsApi, "User.GetSystemDateResult")], [0, 1]]
@@ -1188,7 +1190,7 @@ module DefaultMappingRegistry
   )
 
   LiteralRegistry.register(
-    :class => UserGetTimezones,
+    :class => Campaigning::UserGetTimezones,
     :schema_name => XSD::QName.new(NsApi, "User.GetTimezones"),
     :schema_element => [
       ["apiKey", ["SOAP::SOAPString", XSD::QName.new(NsApi, "ApiKey")], [0, 1]]
@@ -1196,7 +1198,7 @@ module DefaultMappingRegistry
   )
 
   LiteralRegistry.register(
-    :class => UserGetTimezonesResponse,
+    :class => Campaigning::UserGetTimezonesResponse,
     :schema_name => XSD::QName.new(NsApi, "User.GetTimezonesResponse"),
     :schema_element => [
       ["user_GetTimezonesResult", [nil, XSD::QName.new(NsApi, "User.GetTimezonesResult")], [0, 1]]
@@ -1204,7 +1206,7 @@ module DefaultMappingRegistry
   )
 
   LiteralRegistry.register(
-    :class => UserGetCountries,
+    :class => Campaigning::UserGetCountries,
     :schema_name => XSD::QName.new(NsApi, "User.GetCountries"),
     :schema_element => [
       ["apiKey", ["SOAP::SOAPString", XSD::QName.new(NsApi, "ApiKey")], [0, 1]]
@@ -1212,7 +1214,7 @@ module DefaultMappingRegistry
   )
 
   LiteralRegistry.register(
-    :class => UserGetCountriesResponse,
+    :class => Campaigning::UserGetCountriesResponse,
     :schema_name => XSD::QName.new(NsApi, "User.GetCountriesResponse"),
     :schema_element => [
       ["user_GetCountriesResult", [nil, XSD::QName.new(NsApi, "User.GetCountriesResult")], [0, 1]]
@@ -1220,7 +1222,7 @@ module DefaultMappingRegistry
   )
 
   LiteralRegistry.register(
-    :class => CampaignCreate,
+    :class => Campaigning::CampaignCreate,
     :schema_name => XSD::QName.new(NsApi, "Campaign.Create"),
     :schema_element => [
       ["apiKey", ["SOAP::SOAPString", XSD::QName.new(NsApi, "ApiKey")], [0, 1]],
@@ -1232,13 +1234,13 @@ module DefaultMappingRegistry
       ["replyTo", ["SOAP::SOAPString", XSD::QName.new(NsApi, "ReplyTo")], [0, 1]],
       ["htmlUrl", ["SOAP::SOAPString", XSD::QName.new(NsApi, "HtmlUrl")], [0, 1]],
       ["textUrl", ["SOAP::SOAPString", XSD::QName.new(NsApi, "TextUrl")], [0, 1]],
-      ["subscriberListIDs", ["ArrayOfString", XSD::QName.new(NsApi, "SubscriberListIDs")], [0, 1]],
-      ["listSegments", ["ArrayOfList", XSD::QName.new(NsApi, "ListSegments")], [0, 1]]
+      ["subscriberListIDs", ["Campaigning::ArrayOfString", XSD::QName.new(NsApi, "SubscriberListIDs")], [0, 1]],
+      ["listSegments", ["Campaigning::ArrayOfList", XSD::QName.new(NsApi, "ListSegments")], [0, 1]]
     ]
   )
 
   LiteralRegistry.register(
-    :class => CampaignCreateResponse,
+    :class => Campaigning::CampaignCreateResponse,
     :schema_name => XSD::QName.new(NsApi, "Campaign.CreateResponse"),
     :schema_element => [
       ["campaign_CreateResult", [nil, XSD::QName.new(NsApi, "Campaign.CreateResult")], [0, 1]]
@@ -1246,7 +1248,7 @@ module DefaultMappingRegistry
   )
 
   LiteralRegistry.register(
-    :class => CampaignSend,
+    :class => Campaigning::CampaignSend,
     :schema_name => XSD::QName.new(NsApi, "Campaign.Send"),
     :schema_element => [
       ["apiKey", ["SOAP::SOAPString", XSD::QName.new(NsApi, "ApiKey")], [0, 1]],
@@ -1257,20 +1259,22 @@ module DefaultMappingRegistry
   )
 
   LiteralRegistry.register(
-    :class => CampaignSendResponse,
+    :class => Campaigning::CampaignSendResponse,
     :schema_name => XSD::QName.new(NsApi, "Campaign.SendResponse"),
     :schema_element => [
-      ["campaign_SendResult", ["Result", XSD::QName.new(NsApi, "Campaign.SendResult")], [0, 1]]
+      ["campaign_SendResult", ["Campaigning::Result", XSD::QName.new(NsApi, "Campaign.SendResult")], [0, 1]]
     ]
   )
 
   LiteralRegistry.register(
-    :class => Result,
+    :class => Campaigning::Result,
     :schema_name => XSD::QName.new(NsApi, "Result"),
     :schema_element => [
       ["code", ["SOAP::SOAPInt", XSD::QName.new(NsApi, "Code")]],
       ["message", ["SOAP::SOAPString", XSD::QName.new(NsApi, "Message")], [0, 1]]
     ]
   )
+
+end
 
 end

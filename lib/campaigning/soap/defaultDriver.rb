@@ -2,6 +2,8 @@ require File.expand_path(File.dirname(__FILE__)) + '/default.rb'
 require File.expand_path(File.dirname(__FILE__)) + '/defaultMappingRegistry.rb'
 require 'soap/rpc/driver'
 
+module Campaigning
+
 class ApiSoap < ::SOAP::RPC::Driver
   DefaultEndpointUrl = "http://api.createsend.com/api/api.asmx"
 
@@ -343,3 +345,5 @@ end
 
 
 
+
+end
