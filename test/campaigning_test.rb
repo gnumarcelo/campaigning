@@ -11,42 +11,42 @@ class CampaigningTest < Test::Unit::TestCase
     @cm = Connection.new
   end
     
-  #  
-  # def test_clients
-  #   clients = @cm.clients
-  #   assert clients.length > 0
-  #   clients.each{ |c| puts c.clientID + " - " + c.name }
-  # end
-  #  
-  #  
-  # def test_client_lists
-  #   client = Campaigning::Client.new(CLIENT_ID)
-  #   assert client.lists.length > 0
-  # end
-  # 
-  #  
-  # def test_client_create
-  #   client_created = Campaigning::Client.create(
-  #    :company_name => "Orange Company 11",
-  #    :contact_name => "Oswald Green11",
-  #    :email_address => "og13@user.com",
-  #    :country => "Ireland",
-  #    :time_zone => @cm.time_zones[1]
-  #   )
-  # end
-  # 
-  # 
-  # def test_client_delete
-  #   response = Campaigning::Client.delete(:client_id => "50a1893ea0a02fc94f2ee9563766e539")  
-  #   puts response.inspect
-  # end
-  # 
-  # 
-  # def test_client_segments
-  #   client = Campaigning::Client.new(CLIENT_TWO_ID)
-  #   assert client.segments.length > 0
-  #   puts client.segments.inspect
-  # end
+   
+  def test_clients
+    clients = @cm.clients
+    assert clients.length > 0
+    clients.each{ |c| puts c.clientID + " - " + c.name }
+  end
+   
+   
+  def test_client_lists
+    client = Campaigning::Client.new(CLIENT_ID)
+    assert client.lists.length > 0
+  end
+  
+   
+  def test_client_create
+    client_created = Campaigning::Client.create(
+     :company_name => "Orange Company 11",
+     :contact_name => "Oswald Green11",
+     :email_address => "og13@user.com",
+     :country => "Ireland",
+     :time_zone => @cm.time_zones[1]
+    )
+  end
+  
+  
+  def test_client_delete
+    response = Campaigning::Client.delete(:client_id => "50a1893ea0a02fc94f2ee9563766e539")  
+    puts response.inspect
+  end
+  
+  
+  def test_client_segments
+    client = Campaigning::Client.new(CLIENT_TWO_ID)
+    assert client.segments.length > 0
+    puts client.segments.inspect
+  end
 
   
   def test_find_client_by_name
@@ -55,18 +55,18 @@ class CampaigningTest < Test::Unit::TestCase
   end
 
 
-  # def test_user_get_time_zones
-  #   time_zones = @cm.time_zones
-  #   assert !time_zones.nil?
-  # end 
-  #   
-  #   
-  # def test_system_date
-  #   sys_date = @cm.system_date
-  #   assert !sys_date.nil?
-  #   puts sys_date
-  # end 
-  # 
+  def test_user_get_time_zones
+    time_zones = @cm.time_zones
+    assert !time_zones.nil?
+  end 
+    
+    
+  def test_system_date
+    sys_date = @cm.system_date
+    assert !sys_date.nil?
+    puts sys_date
+  end 
+   
 
   # 
   # def test_campaign_create
