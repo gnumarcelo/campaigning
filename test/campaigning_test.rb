@@ -37,7 +37,7 @@ class CampaigningTest < Test::Unit::TestCase
   
   
   def test_client_delete
-    response = Campaigning::Client.delete(:client_id => "50a1893ea0a02fc94f2ee9563766e539")  
+    response = Campaigning::Client.delete("50a1893ea0a02fc94f2ee9563766e539")  
     puts response.inspect
   end
   
@@ -47,7 +47,7 @@ class CampaigningTest < Test::Unit::TestCase
     assert client.segments.length > 0
     puts client.segments.inspect
   end
-
+  
   
   def test_find_client_by_name
     client = Campaigning::Client.find_by_name("Client One Company")

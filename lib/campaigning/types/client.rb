@@ -57,8 +57,12 @@ class Client
   end
   
   
-  def self.delete(param)
-    response = Connection.new.soap.deleteClient(:apiKey => CAMPAIGN_MONITOR_API_KEY, :clientID => param[:client_id])
+  def delete
+    Client.delete(@clientID)
+  end
+  
+  def self.delete(client_id)
+    response = Connection.new.soap.deleteClient(:apiKey => CAMPAIGN_MONITOR_API_KEY, :clientID => client_id)
     Connection.handle_request response.client_DeleteResult
   end
   
@@ -66,6 +70,12 @@ class Client
   def segments
     response = @cm.soap.getClientSegments(:apiKey => CAMPAIGN_MONITOR_API_KEY, :clientID => @clientID )
     Connection.handle_request response.client_GetSegmentsResult
+  end
+  
+  def campaigns
+    response = @cm.soap.getClientCampaigns(:apiKey => CAMPAIGN_MONITOR_API_KEY, :clientID => @clientID )
+    Connection.handle_request response.client_GetSegmentsResult
+    
   end
 
   

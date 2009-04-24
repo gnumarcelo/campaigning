@@ -18,7 +18,7 @@ puts "\n Here is how to create a new client: \n"
 client = Campaigning::Client.create(
   :company_name => "Orange Company",
   :contact_name => "Oswald Green",
-  :email_address => "og@user.com",
+  :email_address => "og@example.com",
   :country => "Ireland",
   :time_zone => "(GMT) Casablanca" #alternatively you can use "Campaigning.time_zones" to get valid time zones list
 )
