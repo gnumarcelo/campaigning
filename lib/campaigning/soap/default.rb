@@ -1,5 +1,8 @@
 require 'xsd/qname'
 
+module Campaigning
+
+
 # {http://api.createsend.com/api/}ArrayOfSubscriberCustomField
 class ArrayOfSubscriberCustomField < ::Array
 end
@@ -113,7 +116,7 @@ end
 # {http://api.createsend.com/api/}SubscriberClick
 #   emailAddress - SOAP::SOAPString
 #   listID - SOAP::SOAPString
-#   clickedLinks - ArrayOfSubscriberClickedLink
+#   clickedLinks - Campaigning::ArrayOfSubscriberClickedLink
 class SubscriberClick
   attr_accessor :emailAddress
   attr_accessor :listID
@@ -144,8 +147,8 @@ class SubscriberClickedLink
 end
 
 # {http://api.createsend.com/api/}ClientDetail
-#   basicDetails - ClientBasicDetails
-#   accessAndBilling - ClientAccessAndBilling
+#   basicDetails - Campaigning::ClientBasicDetails
+#   accessAndBilling - Campaigning::ClientAccessAndBilling
 class ClientDetail
   attr_accessor :basicDetails
   attr_accessor :accessAndBilling
@@ -247,8 +250,8 @@ end
 # {http://api.createsend.com/api/}ListCustomField
 #   fieldName - SOAP::SOAPString
 #   key - SOAP::SOAPString
-#   dataType - SubscriberFieldDataType
-#   fieldOptions - ArrayOfString
+#   dataType - Campaigning::SubscriberFieldDataType
+#   fieldOptions - Campaigning::ArrayOfString
 class ListCustomField
   attr_accessor :fieldName
   attr_accessor :key
@@ -294,7 +297,7 @@ end
 #   name - SOAP::SOAPString
 #   date - SOAP::SOAPString
 #   state - SOAP::SOAPString
-#   customFields - ArrayOfSubscriberCustomField
+#   customFields - Campaigning::ArrayOfSubscriberCustomField
 class Subscriber
   attr_accessor :emailAddress
   attr_accessor :name
@@ -360,7 +363,7 @@ end
 #   listID - SOAP::SOAPString
 #   email - SOAP::SOAPString
 #   name - SOAP::SOAPString
-#   customFields - ArrayOfSubscriberCustomField
+#   customFields - Campaigning::ArrayOfSubscriberCustomField
 class SubscriberAddWithCustomFields
   attr_accessor :apiKey
   attr_accessor :listID
@@ -378,7 +381,7 @@ class SubscriberAddWithCustomFields
 end
 
 # {http://api.createsend.com/api/}Subscriber.AddWithCustomFieldsResponse
-#   subscriber_AddWithCustomFieldsResult - Result
+#   subscriber_AddWithCustomFieldsResult - Campaigning::Result
 class SubscriberAddWithCustomFieldsResponse
   attr_accessor :subscriber_AddWithCustomFieldsResult
 
@@ -392,7 +395,7 @@ end
 #   listID - SOAP::SOAPString
 #   email - SOAP::SOAPString
 #   name - SOAP::SOAPString
-#   customFields - ArrayOfSubscriberCustomField
+#   customFields - Campaigning::ArrayOfSubscriberCustomField
 class SubscriberAddAndResubscribeWithCustomFields
   attr_accessor :apiKey
   attr_accessor :listID
@@ -410,7 +413,7 @@ class SubscriberAddAndResubscribeWithCustomFields
 end
 
 # {http://api.createsend.com/api/}Subscriber.AddAndResubscribeWithCustomFieldsResponse
-#   subscriber_AddAndResubscribeWithCustomFieldsResult - Result
+#   subscriber_AddAndResubscribeWithCustomFieldsResult - Campaigning::Result
 class SubscriberAddAndResubscribeWithCustomFieldsResponse
   attr_accessor :subscriber_AddAndResubscribeWithCustomFieldsResult
 
@@ -439,7 +442,7 @@ class SubscriberAdd
 end
 
 # {http://api.createsend.com/api/}Subscriber.AddResponse
-#   subscriber_AddResult - Result
+#   subscriber_AddResult - Campaigning::Result
 class SubscriberAddResponse
   attr_accessor :subscriber_AddResult
 
@@ -468,7 +471,7 @@ class SubscriberAddAndResubscribe
 end
 
 # {http://api.createsend.com/api/}Subscriber.AddAndResubscribeResponse
-#   subscriber_AddAndResubscribeResult - Result
+#   subscriber_AddAndResubscribeResult - Campaigning::Result
 class SubscriberAddAndResubscribeResponse
   attr_accessor :subscriber_AddAndResubscribeResult
 
@@ -494,7 +497,7 @@ class SubscriberUnsubscribe_
 end
 
 # {http://api.createsend.com/api/}Subscriber.UnsubscribeResponse
-#   subscriber_UnsubscribeResult - Result
+#   subscriber_UnsubscribeResult - Campaigning::Result
 class SubscriberUnsubscribeResponse
   attr_accessor :subscriber_UnsubscribeResult
 
@@ -694,7 +697,7 @@ class ListUpdate
 end
 
 # {http://api.createsend.com/api/}List.UpdateResponse
-#   list_UpdateResult - Result
+#   list_UpdateResult - Campaigning::Result
 class ListUpdateResponse
   attr_accessor :list_UpdateResult
 
@@ -740,7 +743,7 @@ class ListDelete
 end
 
 # {http://api.createsend.com/api/}List.DeleteResponse
-#   list_DeleteResult - Result
+#   list_DeleteResult - Campaigning::Result
 class ListDeleteResponse
   attr_accessor :list_DeleteResult
 
@@ -789,7 +792,7 @@ class ListDeleteCustomField
 end
 
 # {http://api.createsend.com/api/}List.DeleteCustomFieldResponse
-#   list_DeleteCustomFieldResult - Result
+#   list_DeleteCustomFieldResult - Campaigning::Result
 class ListDeleteCustomFieldResponse
   attr_accessor :list_DeleteCustomFieldResult
 
@@ -802,7 +805,7 @@ end
 #   apiKey - SOAP::SOAPString
 #   listID - SOAP::SOAPString
 #   fieldName - SOAP::SOAPString
-#   dataType - SubscriberFieldDataType
+#   dataType - Campaigning::SubscriberFieldDataType
 #   options - SOAP::SOAPString
 class ListCreateCustomField
   attr_accessor :apiKey
@@ -821,7 +824,7 @@ class ListCreateCustomField
 end
 
 # {http://api.createsend.com/api/}List.CreateCustomFieldResponse
-#   list_CreateCustomFieldResult - Result
+#   list_CreateCustomFieldResult - Campaigning::Result
 class ListCreateCustomFieldResponse
   attr_accessor :list_CreateCustomFieldResult
 
@@ -1033,7 +1036,7 @@ class ClientUpdateAccessAndBilling
 end
 
 # {http://api.createsend.com/api/}Client.UpdateAccessAndBillingResponse
-#   client_UpdateAccessAndBillingResult - Result
+#   client_UpdateAccessAndBillingResult - Campaigning::Result
 class ClientUpdateAccessAndBillingResponse
   attr_accessor :client_UpdateAccessAndBillingResult
 
@@ -1079,7 +1082,7 @@ class ClientDelete
 end
 
 # {http://api.createsend.com/api/}Client.DeleteResponse
-#   client_DeleteResult - Result
+#   client_DeleteResult - Campaigning::Result
 class ClientDeleteResponse
   attr_accessor :client_DeleteResult
 
@@ -1316,8 +1319,8 @@ end
 #   replyTo - SOAP::SOAPString
 #   htmlUrl - SOAP::SOAPString
 #   textUrl - SOAP::SOAPString
-#   subscriberListIDs - ArrayOfString
-#   listSegments - ArrayOfList
+#   subscriberListIDs - Campaigning::ArrayOfString
+#   listSegments - Campaigning::ArrayOfList
 class CampaignCreate
   attr_accessor :apiKey
   attr_accessor :clientID
@@ -1376,7 +1379,7 @@ class CampaignSend
 end
 
 # {http://api.createsend.com/api/}Campaign.SendResponse
-#   campaign_SendResult - Result
+#   campaign_SendResult - Campaigning::Result
 class CampaignSendResponse
   attr_accessor :campaign_SendResult
 
@@ -1390,4 +1393,7 @@ class AnyType < ::String
   def initialize(*arg)
     super
   end
+end
+
+
 end
