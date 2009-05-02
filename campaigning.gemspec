@@ -2,11 +2,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{campaigning}
-  s.version = "0.5.0"
+  s.version = "0.6.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Marcelo Menezes"]
-  s.date = %q{2009-04-24}
+  s.date = %q{2009-05-02}
   s.email = %q{gnumarcelo@gmail.com}
   s.extra_rdoc_files = [
     "LICENSE",
@@ -16,14 +16,18 @@ Gem::Specification.new do |s|
     "LICENSE",
     "README.rdoc",
     "Rakefile",
+    "TODO.txt",
     "VERSION.yml",
     "lib/campaigning.rb",
     "lib/campaigning/campaigning.rb",
+    "lib/campaigning/helpers/helpers.rb",
     "lib/campaigning/soap/default.rb",
     "lib/campaigning/soap/defaultDriver.rb",
     "lib/campaigning/soap/defaultMappingRegistry.rb",
     "lib/campaigning/types/campaign.rb",
     "lib/campaigning/types/client.rb",
+    "lib/campaigning/types/list.rb",
+    "lib/campaigning/types/subscriber.rb",
     "test/campaigning_test.rb",
     "test/test_helper.rb"
   ]
@@ -32,7 +36,7 @@ Gem::Specification.new do |s|
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
   s.rubygems_version = %q{1.3.2}
-  s.summary = %q{TODO}
+  s.summary = %q{This RubyGem provides access to the CampaignMonitor API(www.campaignmonitor.com/api) using SOAP.}
   s.test_files = [
     "test/campaigning_test.rb",
     "test/test_helper.rb"
