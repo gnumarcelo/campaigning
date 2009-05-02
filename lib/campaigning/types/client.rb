@@ -1,8 +1,11 @@
 # Client is defined in default.rb which is automatically generated.
 # In this file we add additional methods to the Client class.
+require File.expand_path(File.dirname(__FILE__)) + '/../helpers/helpers'
+
 module Campaigning
   
-class Client  
+class Client
+  include Helpers  
   attr_accessor :clientID
   attr_accessor :name  
 
@@ -13,69 +16,120 @@ class Client
   end
   
   
-  def create
-    hash = {
-      :companyName => @company_name,
-      :contactName => @contact_name,
-      :emailAddress => @email_address,
-      :country => @country,
-      :timezone => @time_zone
-    }
-    
-    # generate a hash
-    # send @cm.createClient request to campaign monitor
-    #@clientID = response.client_CreateResult
-  end
+  # def create
+  #   hash = {
+  #     :companyName => @company_name,
+  #     :contactName => @name,
+  #     :emailAddress => @email_address,
+  #     :country => @country,
+  #     :timezone => @time_zone
+  #   }
+  #   
+  #   generate a hash
+  #   send @cm.createClient request to campaign monitor
+  #   @clientID = response.client_CreateResult
+  # end
   
-
   def lists
     response = @cm.soap.getClientLists(:apiKey => CAMPAIGN_MONITOR_API_KEY, :clientID => @clientID)
-    Connection.handle_request response.client_GetListsResult # TODO: handle the request
+    lists = handle_request response.client_GetListsResult
+    lists.collect {|list| List.new(list.listID, list.name)}
   end
   
+  def find_list_by_name(list_name)
+    lists.find {|list| list_name == list.name}
+  end 
   
   # TODO: Refactor this method and increase performance? 
   # TODO: Tha campaign monitor permit two users with the same name, what to do? 
   def self.find_by_name(name)
-    response = Connection.new.soap.getClients(:apiKey => CAMPAIGN_MONITOR_API_KEY)
-    client_list = Connection.handle_request response.user_GetClientsResult
-    client_found = client_list.collect.detect { |client| client.name == name }
+    client_list = Helpers.handle_request Connection.new.clients  
+    client_found = client_list.find {|client| name == client.name}
     Client.new(client_found.clientID, client_found.name) if client_found
   end
   
-  
   def self.create(params)
-    response = Connection.new.soap.createClient(:apiKey => CAMPAIGN_MONITOR_API_KEY,
+    response = Connection.new.soap.createClient(
+      :apiKey => CAMPAIGN_MONITOR_API_KEY,
       :companyName => params[:company_name],
       :contactName => params[:contact_name],
       :emailAddress => params[:email_address],
       :country => params[:country],
       :timezone => params[:time_zone]
     )
-    new_client_id = Connection.handle_request response.client_CreateResult # TODO: handle the request
-    Client.new(new_client_id)
+    Client.new(Helpers.handle_request response.client_CreateResult)
   end
-  
   
   def delete
     Client.delete(@clientID)
+    self.clientID = nil
+    self.name = nil
   end
   
   def self.delete(client_id)
     response = Connection.new.soap.deleteClient(:apiKey => CAMPAIGN_MONITOR_API_KEY, :clientID => client_id)
-    Connection.handle_request response.client_DeleteResult
+    Helpers.handle_request response.client_DeleteResult
   end
-  
   
   def segments
     response = @cm.soap.getClientSegments(:apiKey => CAMPAIGN_MONITOR_API_KEY, :clientID => @clientID )
-    Connection.handle_request response.client_GetSegmentsResult
+    handle_request response.client_GetSegmentsResult
+  end
+  
+  # TODO: Refactor this method
+  def find_campaigns_by_subject(subject, params=nil)
+    arr = []
+    return campaigns.find {|campaign| subject == campaign.subject} if params[:unique] 
+    
+    campaigns.each { |campaign| arr << campaign if campaign.subject == subject }
+    arr
   end
   
   def campaigns
     response = @cm.soap.getClientCampaigns(:apiKey => CAMPAIGN_MONITOR_API_KEY, :clientID => @clientID )
-    Connection.handle_request response.client_GetSegmentsResult
-    
+    campaign_list = handle_request response.client_GetCampaignsResult
+    campaign_list.collect do |campaign|  
+      Campaign.new(campaign.campaignID, campaign.subject, campaign.sentDate, campaign.totalRecipients)
+    end
+  end
+  
+  def details
+    response = @cm.soap.getClientDetail(:apiKey => CAMPAIGN_MONITOR_API_KEY, :clientID => @clientID )
+    handle_request response.client_GetDetailResult
+  end
+  
+  def suppression_list
+    response = @cm.soap.getClientSuppressionList(:apiKey => CAMPAIGN_MONITOR_API_KEY, :clientID => @clientID )
+    handle_request response.client_GetSuppressionListResult    
+  end
+  
+  def update_access_and_billing(params)
+    response = @cm.soap.updateClientAccessAndBilling(
+     :apiKey => CAMPAIGN_MONITOR_API_KEY,
+     :clientID => @clientID,
+     :accessLevel => params[:access_level],
+     :username => params[:username],
+     :password => params[:password],
+     :billingType => params[:billing_type],
+     :currency => params[:currency],
+     :deliveryFee => params[:delivery_fee],
+     :costPerRecipient => params[:cost_per_recipient],
+     :designAndSpamTestFee => params[:design_and_spam_test_fee]
+    )
+    handle_request response.client_UpdateAccessAndBillingResult
+  end
+  
+  def update_basics(params)
+    response = @cm.soap.updateClientBasics(
+      :apiKey => CAMPAIGN_MONITOR_API_KEY,
+      :clientID => @clientID,
+      :companyName => params[:company_name],
+      :contactName => params[:contact_name],
+      :emailAddress => params[:email_address],
+      :country => params[:country],
+      :timezone => params[:time_zone]
+    )
+    handle_request response.client_UpdateBasicsResult
   end
 
   

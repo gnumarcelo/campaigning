@@ -43,10 +43,22 @@ client = Campaigning::Client.find_by_name("Client One Company")
 puts client.inspect
 
 
-#How to get all lists belonging to a client
+#How to get all Lists belonging to a client
 puts "\n How to get all lists belonging to a client: \n"
 client = Campaigning::Client.find_by_name("Client One Company")
 puts client.lists.inspect
+
+#How to get a List by it's name and belonging to a client
+puts "\n How to get all lists belonging to a client: \n"
+client = Campaigning::Client.find_by_name("Client One Company")
+list = client.find_list_by_name("My Friends")
+puts list.inspect
+
+
+#How to get all campaigns belonging to a client
+puts "\n How to get all campaigns belonging to a client: \n"
+client = Campaigning::Client.find_by_name("Client One Company")
+puts client.campaigns.inspect
 
 
 # client = Campaigning::Client.new

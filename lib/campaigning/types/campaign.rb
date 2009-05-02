@@ -1,8 +1,12 @@
 # Campaign is defined in soap/default.rb which is automatically generated.
 # In this file we add additional methods to the Campaign class.
+require File.expand_path(File.dirname(__FILE__)) + '/../helpers/helpers'
+
+
 module Campaigning
   
   class Campaign
+    include Helpers   
     attr_accessor :campaignID
     attr_accessor :subject
     attr_accessor :sentDate
@@ -16,8 +20,8 @@ module Campaigning
       @cm = Connection.new
     end
     
-    def create(params)  
-        response = @cm.soap.createCampaign(
+    def self.create(params)  
+        response = Connection.new.soap.createCampaign(
            :apiKey => CAMPAIGN_MONITOR_API_KEY,
            :clientID => params[:clientID],
            :campaignName => params[:campaignName],
@@ -31,25 +35,48 @@ module Campaigning
            :listSegments => params[:listSegments]
           )
 
-        response.campaign_CreateResult # TODO: Handle the request    
+        campaign_id = Helpers.handle_request response.campaign_CreateResult
+        Campaign.new campaign_id
     end
     
-    def create_old(clientID, campaignName, campaignSubject, fromName, fromEmail, replyTo, htmlUrl, textUrl, subscriberListIDs, listSegments)
-      response = @cm.soap.createCampaign(
-         :apiKey => CAMPAIGN_MONITOR_API_KEY,
-         :clientID => clientID,
-         :campaignName => campaignName,
-         :campaignSubject => campaignSubject,
-         :fromName => fromName,
-         :fromEmail => fromEmail,
-         :replyTo => replyTo,
-         :htmlUrl => htmlUrl,
-         :textUrl => textUrl,
-         :subscriberListIDs => subscriberListIDs,
-         :listSegments => listSegments
-        )
-      
-      response.campaign_CreateResult # TODO: Handle the request
+    def bounces
+      response = @cm.soap.getCampaignBounces(:apiKey => CAMPAIGN_MONITOR_API_KEY, :campaignID => @campaignID )
+      handle_request response.campaign_GetBouncesResult
+    end
+    
+    def lists
+      response = @cm.soap.getCampaignLists(:apiKey => CAMPAIGN_MONITOR_API_KEY, :campaignID => @campaignID )
+      handle_request response.campaign_GetListsResult
+    end
+    
+    def opens
+      response = @cm.soap.getCampaignOpens(:apiKey => CAMPAIGN_MONITOR_API_KEY, :campaignID => @campaignID )
+      handle_request response.campaign_GetOpensResult
+    end
+    
+    def subscriber_clicks
+      response = @cm.soap.getSubscriberClicks(:apiKey => CAMPAIGN_MONITOR_API_KEY, :campaignID => @campaignID )
+      handle_request response.campaign_GetSubscriberClicksResult
+    end
+    
+    def summary
+      response = @cm.soap.getCampaignSummary(:apiKey => CAMPAIGN_MONITOR_API_KEY, :campaignID => @campaignID )
+      handle_request response.campaign_GetSummaryResult
+    end
+    
+    def unsubscribes
+      response = @cm.soap.getCampaignUnsubscribes(:apiKey => CAMPAIGN_MONITOR_API_KEY, :campaignID => @campaignID )
+      handle_request response.campaign_GetUnsubscribesResult
+    end
+    
+    def send(params)
+      response = @cm.soap.sendCampaign(
+        :apiKey => CAMPAIGN_MONITOR_API_KEY,
+        :campaignID => @campaignID,
+        :confirmationEmail => params[:confirmation_email],
+        :sendDate => params[:send_date]
+         )
+      handle_request response.campaign_SendResult
     end
     
   end
