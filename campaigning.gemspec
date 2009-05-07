@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{campaigning}
-  s.version = "0.6.0"
+  s.version = "0.7.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Marcelo Menezes"]
@@ -37,7 +37,7 @@ Gem::Specification.new do |s|
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
   s.rubygems_version = %q{1.3.2}
-  s.summary = %q{This RubyGem provides access to the CampaignMonitor API(www.campaignmonitor.com/api) using SOAP.}
+  s.summary = %q{TODO}
   s.test_files = [
     "test/campaigning_test.rb",
     "test/test_helper.rb"
