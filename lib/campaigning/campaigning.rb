@@ -1,26 +1,32 @@
 gem "soap4r", "~> 1.5.0"
-require File.expand_path(File.dirname(__FILE__)) + '/soap/defaultDriver.rb'
+require File.expand_path(File.dirname(__FILE__)) + '/soap/generated/defaultDriver.rb'
 require File.expand_path(File.dirname(__FILE__)) + '/types/client.rb'
 require File.expand_path(File.dirname(__FILE__)) + '/types/campaign.rb'
 require File.expand_path(File.dirname(__FILE__)) + '/types/subscriber.rb'
 require File.expand_path(File.dirname(__FILE__)) + '/types/list.rb'
 require File.expand_path(File.dirname(__FILE__)) + '/helpers/helpers.rb'
+require File.expand_path(File.dirname(__FILE__)) + '/soap/soap_driver.rb'
 
-class Connection
+module Campaigning
+class Base
   include Helpers
-  DefaultEndpointUrl = "http://api.createsend.com/api/api.asmx"
   attr_reader :api_key 
   attr_reader :soap
 
-  def initialize(api_key=CAMPAIGN_MONITOR_API_KEY)
-    @api_key = api_key
-    @soap = Campaigning::ApiSoap.new(DefaultEndpointUrl)
-    setup_debug_mode true
+  def initialize(options = {})
+    options = {
+      :api_key => CAMPAIGN_MONITOR_API_KEY,
+      :debug => false
+    }.merge(options)
+    @api_key = options[:api_key]
+    @soap = Campaigning::SOAPDriver.instance.get_driver
+    setup_debug_mode options[:debug]
   end
 
   def clients
     response = soap.getClients(:apiKey => @api_key)
-    handle_request response.user_GetClientsResult
+    clients = handle_request response.user_GetClientsResult
+    clients.collect {|client| Client.new(client.clientID, client.name)}
   end
 
   def system_date
@@ -32,12 +38,8 @@ class Connection
   end
   
   def setup_debug_mode(dev)
-    dev = STDERR if dev == true
-    soap.wiredump_dev = dev
-  end
-
-  def endpoint_url(url)
-    soap.endpoint_url = url
+    Campaigning::SOAPDriver.instance.setup_debug_mode dev
   end
     
+end
 end

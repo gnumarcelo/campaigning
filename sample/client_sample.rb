@@ -4,7 +4,7 @@ require 'campaigning'
 CAMPAIGN_MONITOR_API_KEY  = '54cae7f3aa1f35cb3bb5bc41756d8b7f'
 
 # The first action you have to do to use the API is creating a new Connection
-camp_monitor = Connection.new
+camp_monitor = Campaigning::Base.new
 
 
 # Here is how to get a list of all clients...

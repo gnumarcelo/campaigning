@@ -8,10 +8,14 @@ CLIENT_TWO_ID = '730acd1e8d27d56bdb87e88685613d72'
 class CampaigningTest < Test::Unit::TestCase
   
   def setup
-    @cm = Connection.new
+    @cm = Campaigning::Base.new
   end
-
-   
+  
+  # def teardown
+  #   puts "Quantidade de Campaigning criados: #{Campaigning::Base.criados}"
+  # end
+  #  
+  #  
   # def test_clients
   #   clients = @cm.clients
   #   assert clients.length > 0
@@ -27,9 +31,9 @@ class CampaigningTest < Test::Unit::TestCase
   #  
   # def test_client_create
   #   client_created = Campaigning::Client.create(
-  #    :company_name => "Orange Company 14",
-  #    :contact_name => "Oswald Green11",
-  #    :email_address => "og1@user.com",
+  #    :company_name => "Orange Company 15",
+  #    :contact_name => "Oswald Green15",
+  #    :email_address => "og15@user.com",
   #    :country => "Ireland",
   #    :time_zone => @cm.time_zones[1]
   #   )
@@ -64,7 +68,7 @@ class CampaigningTest < Test::Unit::TestCase
   #   client = Campaigning::Client.find_by_name("Client One Company")
   #   puts client.campaigns.inspect
   # end
-  #  
+   
   # def test_get_client_details
   #   client = Campaigning::Client.find_by_name("Client Two ")
   #   puts client.details.inspect
@@ -122,8 +126,8 @@ class CampaigningTest < Test::Unit::TestCase
   #    assert !sys_date.nil?
   #    puts sys_date
   #  end 
-    
-  
+  #   
+  # 
   # def test_campaign_create
   #   client = Campaigning::Client.find_by_name("Client One Company")    
   #   response = Campaigning::Campaign.create(
@@ -156,19 +160,13 @@ class CampaigningTest < Test::Unit::TestCase
   #   client = Campaigning::Client.find_by_name("Client One Company")
   #   puts client.campaigns[0].opens
   # end
-  
+  # 
   # def test_campaign_find_campaigns_by_subject
   #   client = Campaigning::Client.find_by_name("Client One Company")
   #   campaigns = client.find_campaigns_by_subject("Campaign to BOUNCE")    
   #   assert campaign.length > 0
   # end
-  
-  # def test_campaign_find_campaigns_by_subject_unique
-  #   client = Campaigning::Client.find_by_name("Client One Company")
-  #   campaign = client.find_campaigns_by_subject("Campaign to BOUNCE")    
-  #   puts campaign.inspect
-  #   #assert campaign > 0
-  # end
+  # 
   # 
   # def test_campaign_subscriber_clicks
   #   client = Campaigning::Client.find_by_name("Client One Company")
@@ -206,7 +204,7 @@ class CampaigningTest < Test::Unit::TestCase
   #     :send_date => "2009-04-30 11:55:01" # Date format YYYY-MM-DD HH:MM:SS.
   #   ) 
   # end
-  # 
+  
   # def test_subscriber_add
   #   subscriber = Campaigning::Subscriber.new("robertf@test.com", "Robert Franklin")
   #   response = subscriber.add("ac52b645c048888a44c87b5f1ecf6b7d")
@@ -218,8 +216,8 @@ class CampaigningTest < Test::Unit::TestCase
   #   response = subscriber.add_and_resubscribe("ac52b645c048888a44c87b5f1ecf6b7d")
   #   assert response.code == 0
   # end
-  # 
-  # 
+  
+  
   # def test_subscriber_add_and_resubscribe_with_custom_fields
   #   subscriber = Campaigning::Subscriber.new("user_custon@test.com", "Mr. Custon")
   #   response = subscriber.add_and_resubscribe_with_custom_fields("ac52b645c048888a44c87b5f1ecf6b7d", :CityName => "Dublin", :SponsorName => "Some Sponsor")
@@ -252,11 +250,11 @@ class CampaigningTest < Test::Unit::TestCase
   #   assert response == false
   # end
   # 
-  def test_subscriber_get_single_subscriber
-    subscriber = Campaigning::Subscriber.get_single_subscriber("ac52b645c048888a44c87b5f1ecf6b7d", "user_custon2@test.com")
-    puts subscriber.inspect
-    assert subscriber.name != nil
-  end
+  # def test_subscriber_get_single_subscriber
+  #   subscriber = Campaigning::Subscriber.get_single_subscriber("ac52b645c048888a44c87b5f1ecf6b7d", "user_custon2@test.com")
+  #   puts subscriber.inspect
+  #   assert subscriber.name != nil
+  # end
   # 
   # def test_subscriber_get_unsubscribed
   #   subscriber_list = Campaigning::Subscriber.get_unsubscribed("ac52b645c048888a44c87b5f1ecf6b7d", DateTime.new(y=2009,m=4,d=01, h=01,min=00,s=00))
@@ -265,17 +263,17 @@ class CampaigningTest < Test::Unit::TestCase
   # end
   # 
   # 
-  # def test_list_create
-  #   client = Campaigning::Client.find_by_name("Client One Company")
-  #   list = Campaigning::List.create(
-  #     :client_id => client.clientID,
-  #     :title => "My new list creater by ruby list.create",
-  #     :unsubscribe_page => "",
-  #     :comfirm_opt_in => false,
-  #     :confirmation_success_page => ""
-  #   )
-  #   assert list.listID != nil
-  # end
+  def test_list_create
+    client = Campaigning::Client.find_by_name("Client One Company")
+    list = Campaigning::List.create(
+      :client_id => client.clientID,
+      :title => "New list to test",
+      :unsubscribe_page => "",
+      :comfirm_opt_in => false,
+      :confirmation_success_page => ""
+    )
+    assert list.listID != nil
+  end
   # 
   # def test_list_create_custom_field
   #   client = Campaigning::Client.find_by_name("Client One Company")
@@ -325,6 +323,6 @@ class CampaigningTest < Test::Unit::TestCase
   #   )
   #   assert result.code == 0
   # end
-  
+    
   
 end

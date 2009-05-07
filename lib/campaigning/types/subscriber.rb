@@ -18,11 +18,11 @@ class Subscriber
     @date = date
     @state = state
     @customFields = customFields
-    @cm = Connection.new
+    @soap = Campaigning::SOAPDriver.instance.get_driver
   end
   
   def add(list_id)
-    response = @cm.soap.addSubscriber(
+    response = @soap.addSubscriber(
       :apiKey => CAMPAIGN_MONITOR_API_KEY,
       :listID => list_id,
       :email => @emailAddress,
@@ -32,7 +32,7 @@ class Subscriber
   end
   
   def add_and_resubscribe(list_id)
-    response = @cm.soap.addAndResubscribe(
+    response = @soap.addAndResubscribe(
       :apiKey => CAMPAIGN_MONITOR_API_KEY,
       :listID => list_id,
       :email => @emailAddress,
@@ -42,18 +42,18 @@ class Subscriber
   end
   
   def add_and_resubscribe_with_custom_fields(list_id, custom_fields)
-    response = @cm.soap.addAndResubscribeWithCustomFields(
+    response = @soap.addAndResubscribeWithCustomFields(
     :apiKey => CAMPAIGN_MONITOR_API_KEY,
     :listID => list_id,
     :email => @emailAddress,
     :name => @name,
     :customFields => custom_fields_array(custom_fields)
     )
-    Helpers.handle_request response.subscriber_AddAndResubscribeWithCustomFieldsResult
+    handle_request response.subscriber_AddAndResubscribeWithCustomFieldsResult
   end
  
   def add_with_custom_fields(list_id, custom_fields)
-    response = @cm.soap.addSubscriberWithCustomFields(
+    response = @soap.addSubscriberWithCustomFields(
     :apiKey => CAMPAIGN_MONITOR_API_KEY,
     :listID => list_id,
     :email => @emailAddress,
@@ -64,17 +64,21 @@ class Subscriber
   end 
  
   def unsubscribe(list_id)
-    response = @cm.soap.unsubscribe(
+    Subscriber.unsubscribe(@emailAddress, list_id)
+  end
+  
+  def self.unsubscribe(email, list_id)
+    response = Campaigning::SOAPDriver.instance.get_driver.unsubscribe(
     :apiKey => CAMPAIGN_MONITOR_API_KEY,
     :listID => list_id,
-    :email => @emailAddress
+    :email => email
     )
-    handle_request response.subscriber_UnsubscribeResult
+    Helpers.handle_request response.subscriber_UnsubscribeResult
   end
   
   # TODO: May I move this method to List type?
   def self.active_subscribers(list_id, datetime)
-    response = Connection.new.soap.getSubscribers(
+    response = Campaigning::SOAPDriver.instance.get_driver.getSubscribers(
      :apiKey => CAMPAIGN_MONITOR_API_KEY,
      :listID => list_id,
      :date => datetime.strftime('%Y-%m-%d %H:%M:%S') # TODO: Move that to a helper method
@@ -84,7 +88,7 @@ class Subscriber
   
   # TODO: May I move this method to List type?
   def self.get_unsubscribed(list_id, datetime)
-    response = Connection.new.soap.getUnsubscribed(
+    response = Campaigning::SOAPDriver.instance.get_driver.getUnsubscribed(
      :apiKey => CAMPAIGN_MONITOR_API_KEY,
      :listID => list_id,
      :date => datetime.strftime('%Y-%m-%d %H:%M:%S') # TODO: Move that to a helper method
@@ -93,18 +97,22 @@ class Subscriber
   end
   
   def is_subscribed?(list_id)
-    response = @cm.soap.getIsSubscribed(
+    Subscriber.is_subscribed?(@emailAddress, list_id)
+  end
+  
+  def self.is_subscribed?(email, list_id)
+    response = Campaigning::SOAPDriver.instance.get_driver.getIsSubscribed(
      :apiKey => CAMPAIGN_MONITOR_API_KEY,
      :listID => list_id,
-     :email => @emailAddress
+     :email => email
     )
-    response = handle_request response.subscribers_GetIsSubscribedResult
+    response = Helpers.handle_request response.subscribers_GetIsSubscribedResult
     response == 'True' ? true : false
   end
   
   # TODO: Create a mehod to handle with custom fields returned like (names from "State Name" to "state_name")
   def self.get_single_subscriber(list_id, email_address)
-    response = Connection.new.soap.getSingleSubscriber(
+    response = Campaigning::SOAPDriver.instance.get_driver.getSingleSubscriber(
      :apiKey => CAMPAIGN_MONITOR_API_KEY,
      :listID => list_id,
      :emailAddress => email_address

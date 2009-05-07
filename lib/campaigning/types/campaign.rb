@@ -17,11 +17,11 @@ module Campaigning
       @subject = subject
       @sentDate = sentDate
       @totalRecipients = totalRecipients
-      @cm = Connection.new
+      @soap = Campaigning::SOAPDriver.instance.get_driver
     end
     
     def self.create(params)  
-        response = Connection.new.soap.createCampaign(
+        response = Campaigning::SOAPDriver.instance.get_driver.createCampaign(
            :apiKey => CAMPAIGN_MONITOR_API_KEY,
            :clientID => params[:clientID],
            :campaignName => params[:campaignName],
@@ -40,37 +40,37 @@ module Campaigning
     end
     
     def bounces
-      response = @cm.soap.getCampaignBounces(:apiKey => CAMPAIGN_MONITOR_API_KEY, :campaignID => @campaignID )
+      response = @soap.getCampaignBounces(:apiKey => CAMPAIGN_MONITOR_API_KEY, :campaignID => @campaignID )
       handle_request response.campaign_GetBouncesResult
     end
     
     def lists
-      response = @cm.soap.getCampaignLists(:apiKey => CAMPAIGN_MONITOR_API_KEY, :campaignID => @campaignID )
+      response = @soap.getCampaignLists(:apiKey => CAMPAIGN_MONITOR_API_KEY, :campaignID => @campaignID )
       handle_request response.campaign_GetListsResult
     end
     
     def opens
-      response = @cm.soap.getCampaignOpens(:apiKey => CAMPAIGN_MONITOR_API_KEY, :campaignID => @campaignID )
+      response = @soap.getCampaignOpens(:apiKey => CAMPAIGN_MONITOR_API_KEY, :campaignID => @campaignID )
       handle_request response.campaign_GetOpensResult
     end
     
     def subscriber_clicks
-      response = @cm.soap.getSubscriberClicks(:apiKey => CAMPAIGN_MONITOR_API_KEY, :campaignID => @campaignID )
+      response = @soap.getSubscriberClicks(:apiKey => CAMPAIGN_MONITOR_API_KEY, :campaignID => @campaignID )
       handle_request response.campaign_GetSubscriberClicksResult
     end
     
     def summary
-      response = @cm.soap.getCampaignSummary(:apiKey => CAMPAIGN_MONITOR_API_KEY, :campaignID => @campaignID )
+      response = @soap.getCampaignSummary(:apiKey => CAMPAIGN_MONITOR_API_KEY, :campaignID => @campaignID )
       handle_request response.campaign_GetSummaryResult
     end
     
     def unsubscribes
-      response = @cm.soap.getCampaignUnsubscribes(:apiKey => CAMPAIGN_MONITOR_API_KEY, :campaignID => @campaignID )
+      response = @soap.getCampaignUnsubscribes(:apiKey => CAMPAIGN_MONITOR_API_KEY, :campaignID => @campaignID )
       handle_request response.campaign_GetUnsubscribesResult
     end
     
     def send(params)
-      response = @cm.soap.sendCampaign(
+      response = @soap.sendCampaign(
         :apiKey => CAMPAIGN_MONITOR_API_KEY,
         :campaignID => @campaignID,
         :confirmationEmail => params[:confirmation_email],

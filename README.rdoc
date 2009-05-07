@@ -9,7 +9,7 @@ This gem requires the following gems
  
  Soap4r (1.5.8)
  
- Jeweler
+ Jeweler (http://technicalpickles.com/posts/craft-the-perfect-gem-with-jeweler)
 
 
 == Copyright

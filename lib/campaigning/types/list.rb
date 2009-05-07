@@ -13,31 +13,29 @@ module Campaigning
     def initialize(listID = nil, name = nil)
       @listID = listID
       @name = name
-      @cm = Connection.new
+      @soap = Campaigning::SOAPDriver.instance.get_driver
     end
 
     def self.create(params)
-      params = {:unsubscribe_page => "", :confirmation_success_page => ""}.merge! params      
-      response = Connection.new.soap.createList(
+      response = Campaigning::SOAPDriver.instance.get_driver.createList(
         :apiKey => CAMPAIGN_MONITOR_API_KEY,
         :clientID => params[:client_id],
         :title => params[:title],
-        :unsubscribePage => params[:unsubscribe_page],
+        :unsubscribePage => params.fetch(:unsubscribe_page, ""),
         :confirmOptIn => params[:comfirm_opt_in],
-        :confirmationSuccessPage => params[:confirmation_success_page] 
+        :confirmationSuccessPage => params.fetch(:confirmation_success_page, "")
       )
       new_list_id = Helpers.handle_request response.list_CreateResult
       List.new(new_list_id, params[:title])
     end
     
     def create_custom_field(params)      
-      params = {:options => ""}.merge! params
-      response = @cm.soap.createListCustomField(
+      response = @soap.createListCustomField(
         :apiKey => CAMPAIGN_MONITOR_API_KEY,
         :listID => @listID,
         :fieldName => params[:field_name],
         :dataType => params[:data_type],
-        :options => params[:options]
+        :options => params.fetch(:options, "") 
       )
       handle_request response.list_CreateCustomFieldResult
     end
@@ -48,35 +46,34 @@ module Campaigning
     end
 
     def self.delete(list_id)
-      response = Connection.new.soap.deleteList(:apiKey => CAMPAIGN_MONITOR_API_KEY, :listID => list_id)
+      response = Campaigning::SOAPDriver.instance.get_driver.deleteList(:apiKey => CAMPAIGN_MONITOR_API_KEY, :listID => list_id)
       Helpers.handle_request response.list_DeleteResult
     end
     
     def delete_custom_field(key)
-      response = @cm.soap.deleteListCustomField(:apiKey => CAMPAIGN_MONITOR_API_KEY, :listID => @listID, :key => '['+key+']')
+      response = @soap.deleteListCustomField(:apiKey => CAMPAIGN_MONITOR_API_KEY, :listID => @listID, :key => '['+key+']')
       handle_request response.list_DeleteCustomFieldResult
     end
     
     def custom_fields
-      response = @cm.soap.getListCustomFields(:apiKey => CAMPAIGN_MONITOR_API_KEY, :listID => @listID)
+      response = @soap.getListCustomFields(:apiKey => CAMPAIGN_MONITOR_API_KEY, :listID => @listID)
       handle_request response.list_GetCustomFieldsResult
     end
     
     def details
-      response = @cm.soap.getListDetail(:apiKey => CAMPAIGN_MONITOR_API_KEY, :listID => @listID)
+      response = @soap.getListDetail(:apiKey => CAMPAIGN_MONITOR_API_KEY, :listID => @listID)
       handle_request response.list_GetDetailResult
     end
     
     
     def update(params)
-      params = {:unsubscribe_page => "", :confirmation_success_page => ""}.merge! params      
-      response = @cm.soap.updateList(
+      response = @soap.updateList(
         :apiKey => CAMPAIGN_MONITOR_API_KEY,
         :listID => @listID,
         :title => params[:title],
-        :unsubscribePage => params[:unsubscribe_page],
+        :unsubscribePage => params.fetch(:unsubscribe_page, ""),
         :confirmOptIn => params[:comfirm_opt_in],
-        :confirmationSuccessPage => params[:confirmation_success_page] 
+        :confirmationSuccessPage => params.fetch(:confirmation_success_page, "") 
       )
       handle_request response.list_UpdateResult
     end
