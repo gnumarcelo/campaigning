@@ -16,21 +16,6 @@ class Client
     @soap = Campaigning::SOAPDriver.instance.get_driver
   end
   
-  
-  # def create
-  #   hash = {
-  #     :companyName => @company_name,
-  #     :contactName => @name,
-  #     :emailAddress => @email_address,
-  #     :country => @country,
-  #     :timezone => @time_zone
-  #   }
-  #   
-  #   generate a hash
-  #   send @cm.createClient request to campaign monitor
-  #   @clientID = response.client_CreateResult
-  # end
-  
   def lists
     response = @soap.getClientLists(:apiKey => CAMPAIGN_MONITOR_API_KEY, :clientID => @clientID)
     lists = handle_request response.client_GetListsResult

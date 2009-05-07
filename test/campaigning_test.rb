@@ -1,7 +1,7 @@
 require 'test_helper'
 
 # Replace this API key with your own (http://www.campaignmonitor.com/api/)
-CAMPAIGN_MONITOR_API_KEY  = '54cae7f3aa1f35cb3bb5bc41756d8b7f'
+CAMPAIGN_MONITOR_API_KEY  = '__PUT__YOUR__API__KEY__HERE__'
 CLIENT_ID = 'd7acfd4cd2ffffc2d86b8903d18a1276'
 CLIENT_TWO_ID = '730acd1e8d27d56bdb87e88685613d72'
 
@@ -10,12 +10,7 @@ class CampaigningTest < Test::Unit::TestCase
   def setup
     @cm = Campaigning::Base.new
   end
-  
-  # def teardown
-  #   puts "Quantidade de Campaigning criados: #{Campaigning::Base.criados}"
-  # end
-  #  
-  #  
+ 
   # def test_clients
   #   clients = @cm.clients
   #   assert clients.length > 0
@@ -58,10 +53,11 @@ class CampaigningTest < Test::Unit::TestCase
   # end
   # 
   # 
-  # def test_find_client_by_name
-  #   client = Campaigning::Client.find_by_name("Client One Company")
-  #   assert client != nil && client.name == "Client One Company"
-  # end
+  def test_find_client_by_name
+    client = Campaigning::Client.find_by_name("Client One Company")
+    puts client.inspect
+    # assert client != nil && client.name == "Client One Company"
+  end
   # 
   # 
   # def test_get_client_campaigns
@@ -263,17 +259,17 @@ class CampaigningTest < Test::Unit::TestCase
   # end
   # 
   # 
-  def test_list_create
-    client = Campaigning::Client.find_by_name("Client One Company")
-    list = Campaigning::List.create(
-      :client_id => client.clientID,
-      :title => "New list to test",
-      :unsubscribe_page => "",
-      :comfirm_opt_in => false,
-      :confirmation_success_page => ""
-    )
-    assert list.listID != nil
-  end
+  # def test_list_create
+  #   client = Campaigning::Client.find_by_name("Client One Company")
+  #   list = Campaigning::List.create(
+  #     :client_id => client.clientID,
+  #     :title => "New list to test",
+  #     :unsubscribe_page => "",
+  #     :comfirm_opt_in => false,
+  #     :confirmation_success_page => ""
+  #   )
+  #   assert list.listID != nil
+  # end
   # 
   # def test_list_create_custom_field
   #   client = Campaigning::Client.find_by_name("Client One Company")

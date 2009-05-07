@@ -1,17 +1,15 @@
 gem "soap4r", "~> 1.5.0"
-require File.expand_path(File.dirname(__FILE__)) + '/soap/generated/defaultDriver.rb'
+require File.expand_path(File.dirname(__FILE__)) + '/soap/soap_driver.rb'
 require File.expand_path(File.dirname(__FILE__)) + '/types/client.rb'
 require File.expand_path(File.dirname(__FILE__)) + '/types/campaign.rb'
 require File.expand_path(File.dirname(__FILE__)) + '/types/subscriber.rb'
 require File.expand_path(File.dirname(__FILE__)) + '/types/list.rb'
 require File.expand_path(File.dirname(__FILE__)) + '/helpers/helpers.rb'
-require File.expand_path(File.dirname(__FILE__)) + '/soap/soap_driver.rb'
 
 module Campaigning
 class Base
   include Helpers
   attr_reader :api_key 
-  attr_reader :soap
 
   def initialize(options = {})
     options = {
@@ -24,17 +22,17 @@ class Base
   end
 
   def clients
-    response = soap.getClients(:apiKey => @api_key)
+    response = @soap.getClients(:apiKey => @api_key)
     clients = handle_request response.user_GetClientsResult
     clients.collect {|client| Client.new(client.clientID, client.name)}
   end
 
   def system_date
-    handle_request soap.getSystemDate(:apiKey => @api_key).user_GetSystemDateResult
+    handle_request @soap.getSystemDate(:apiKey => @api_key).user_GetSystemDateResult
   end
   
   def time_zones
-    handle_request soap.getTimezones(:apiKey => @api_key).user_GetTimezonesResult
+    handle_request @soap.getTimezones(:apiKey => @api_key).user_GetTimezonesResult
   end
   
   def setup_debug_mode(dev)

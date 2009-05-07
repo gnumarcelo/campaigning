@@ -1,12 +1,12 @@
 require 'rubygems'
 require 'campaigning'
 
-CAMPAIGN_MONITOR_API_KEY  = '54cae7f3aa1f35cb3bb5bc41756d8b7f'
+CAMPAIGN_MONITOR_API_KEY  = '__PUT__YOUR__API__KEY__HERE__'
 
 # The first action you have to do to use the API is creating a new Campaign Monitor Base Class
 camp_monitor = Campaigning::Base.new
 
-#
+# SETUP FOR THIS SAMPLE ---------------------------------------------------------------------
 #Creating a list for sample execution
 client = Campaigning::Client.find_by_name("Client One Company")
 list = Campaigning::List.create(
@@ -16,27 +16,22 @@ list = Campaigning::List.create(
 )
 LIST_ID = list.listID
 puts "New list created: #{list.name} #{list.listID}"
-
 #Creating a Custom Field for sample execution
 client = Campaigning::Client.find_by_name("Client One Company")
 list = client.find_list_by_name "List for Subscriber Sample Exec"
-result = list.create_custom_field(
-  :field_name => "City Name" ,
-  :data_type => "Text"
-)
+result = list.create_custom_field(:field_name => "City Name", :data_type => "Text")
 puts "Custom field City Name created successfuly?: #{result.message}"
-
-result = list.create_custom_field(
-  :field_name => "Sponsor Name" ,
-  :data_type => "Text"
-)
+result = list.create_custom_field(:field_name => "Sponsor Name", :data_type => "Text")
 puts "Custom field Sponsor Name created successfuly?: #{result.message}"
+# /SETUP FOR THIS SAMPLE ---------------------------------------------------------------------
 
 
 
-EMAIL_1 = "em4@test.com.br"
-EMAIL_2 = "em5@test.com.br"
-EMAIL_3 = "em6@test.com.br"
+
+
+EMAIL_1 = "em4@example.com"
+EMAIL_2 = "em5@example.com"
+EMAIL_3 = "em6@example.com"
 
 #Here is how to add a subscriber (email address, name) to an existing subscriber list.
 subscriber = Campaigning::Subscriber.new(EMAIL_1, "Robert Franklin")
@@ -105,7 +100,9 @@ subscriber_list = Campaigning::Subscriber.get_unsubscribed(LIST_ID, DateTime.new
 puts "All subscriber that have unsubscribed from the list: #{subscriber_list.inspect}"
 
 
-##
+
+
+# TEARDOWN FOR THIS SAMPLE --------------------------------------------------------------------
 #Just deleting a list created for sample execution
 list = client.find_list_by_name "List for Subscriber Sample Exec"
 result = Campaigning::List.delete( list.listID )

@@ -24,7 +24,7 @@ module Campaigning
         :unsubscribePage => params.fetch(:unsubscribe_page, ""),
         :confirmOptIn => params[:comfirm_opt_in],
         :confirmationSuccessPage => params.fetch(:confirmation_success_page, "")
-      )
+      )      
       new_list_id = Helpers.handle_request response.list_CreateResult
       List.new(new_list_id, params[:title])
     end

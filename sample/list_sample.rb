@@ -1,10 +1,10 @@
 require 'rubygems'
 require 'campaigning'
 
-CAMPAIGN_MONITOR_API_KEY  = '54cae7f3aa1f35cb3bb5bc41756d8b7f'
+CAMPAIGN_MONITOR_API_KEY  = '__PUT__YOUR__API__KEY__HERE__'
 
 # The first action you have to do to use the API is creating a new Campaign Monitor Base Class
-camp_monitor = Campaigning::Base.new
+camp_monitor = Campaigning::Base.new(:debug => true)
 
 
 #Here is how to create a brand new subscriber list
@@ -29,6 +29,7 @@ puts "Here is my second new created List (without some params): #{list.name} #{l
 
 #Here is how to create a new custom field for a list
 client = Campaigning::Client.find_by_name("Client One Company")
+puts client.inspect
 list = client.find_list_by_name "List from Sample Exec"
 result = list.create_custom_field(
   :field_name => "Color" ,
