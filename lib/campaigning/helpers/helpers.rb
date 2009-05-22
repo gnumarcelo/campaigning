@@ -1,5 +1,5 @@
 module Campaigning
-module Helpers
+module Helpers #:nodoc:
   #Method responsable to handle all response from the API server and raising an exception when
   #the API returns an error code (different from 0 (zero) ).
   def handle_request(response)

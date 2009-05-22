@@ -3,7 +3,8 @@ require 'singleton'
 
 module Campaigning
   #A SOAPDriver is a singleton object responsable to supply a way to interact with the SOAP::RPC::Driver object.
-  class SOAPDriver #It could be a module
+  class SOAPDriver #:nodoc:
+    #It could be a module
     include Singleton
     DefaultEndpointUrl = "http://api.createsend.com/api/api.asmx"
     

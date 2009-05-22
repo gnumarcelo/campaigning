@@ -23,8 +23,8 @@ This gem requires the following gems:
 
 
 === Configuring your API key
-require 'campaigning'
-CAMPAIGN_MONITOR_API_KEY = '_put_here_your_api_key_'
+  require 'campaigning'
+  CAMPAIGN_MONITOR_API_KEY = '_put_here_your_api_key_'
 
 
 == Usage
@@ -52,6 +52,12 @@ Sample use of the Client class:
   )
 
 For further examples please check at the *sample* directory.
+
+
+== What if I found a BUG?
+
+If you found a bug in the Campaigning wrapper, it's easy to report it on the like below:  
+  http://github.com/gnumarcelo/campaigning/issues
 
 
 == Copyright

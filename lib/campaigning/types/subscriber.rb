@@ -171,7 +171,7 @@ class Subscriber
   
   protected
   
-    def custom_fields_array(custom_fields)
+    def custom_fields_array(custom_fields) #:nodoc:
       arr = []
       custom_fields.each do |key, value|
         arr << { :key => key, :value => value }

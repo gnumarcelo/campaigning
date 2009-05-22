@@ -29,6 +29,7 @@ module Campaigning
   end
   
   #This method turns on and off the API debug mode, which will display at the console all SOAP requests made to the API server.
+  #
   def self.setup_debug_mode(dev)
     Campaigning::SOAPDriver.instance.setup_debug_mode dev
   end    

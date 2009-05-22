@@ -233,7 +233,7 @@ module Campaigning
     
     protected
 
-      def custom_field_options(custom_fields)
+      def custom_field_options(custom_fields) #:nodoc:
         custom_fields.join("||").to_s
       end
 
