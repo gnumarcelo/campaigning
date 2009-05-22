@@ -3,9 +3,6 @@ require 'campaigning'
 
 CAMPAIGN_MONITOR_API_KEY  = '__PUT__YOUR__API__KEY__HERE__'
 
-# The first action you have to do to use the API is creating a new Campaign Monitor Base Class
-camp_monitor = Campaigning::Base.new
-
 
 # SETUP FOR THIS SAMPLE ---------------------------------------------------------------------
 #Creating a Client for this sample execution
@@ -27,9 +24,7 @@ list = Campaigning::List.create(
 # /SETUP FOR THIS SAMPLE ---------------------------------------------------------------------
 
 
-
-
-# Here is how to create a campaign
+# Here is how to create a campaign and send that campaign
 client = Campaigning::Client.find_by_name("Client to Sample")
 campaign = Campaigning::Campaign.create(
   :clientID => client.clientID,
@@ -38,13 +33,18 @@ campaign = Campaigning::Campaign.create(
   :fromName => "Mr. Gordon2",
   :fromEmail => "gordon2@example.com",
   :replyTo => "no-reply@example.com",
-  :htmlUrl => "http://marcosz.com.br/",
-  :textUrl => "http://www.google.com.br",
+  :htmlUrl => "http://www.mycompany.com/campaign_html",
+  :textUrl => "http://www.mycompany.com/campaign_text",
   :subscriberListIDs => [list.listID],
   :listSegments => client.segments
 )
 puts "New Campaign created is: #{campaign.inspect}"
-
+#After create a campaign you can send as follow:
+campaign.send(
+  :confirmation_email => "userhdhd@example.com",
+  :send_date => DateTime.now #To send a campaign immediately pass in “Immediately”.
+                             #This date should be in the users timezone and formatted as YYYY-MM-DD HH:MM:SS.
+)
 
 
 #Here is how to find a Campaign by subject.
@@ -106,18 +106,6 @@ client = Campaigning::Client.find_by_name("Client to Sample")
 campaign = client.campaigns[0].unsubscribes
 puts "all subscribers who unsubscribed for a given campaign: #{campaign.inspect}"
 
-
-# Here is how to schedule an existing campaign for sending.
-#The campaign must be imported with defined recipients.
-#For campaigns with more than 5 recipients the user must have sufficient credits or their credit card details saved
-#within the application for the campaign to be sent via the API.
-#For campaigns with 5 recipients or less the user must have enough test campaigns remaining in their API account.
-client = Campaigning::Client.find_by_name("Client to Sample")
-campaigns = client.find_campaigns_by_subject("Campaign by myself - OK")
-puts client.campaigns[0].send(
-  :confirmation_email => "userhdhd@example.com",
-  :send_date => DateTime.now # Date format YYYY-MM-DD HH:MM:SS.
-) 
 
 
 

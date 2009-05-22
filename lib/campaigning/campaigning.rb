@@ -7,37 +7,29 @@ require File.expand_path(File.dirname(__FILE__)) + '/types/list.rb'
 require File.expand_path(File.dirname(__FILE__)) + '/helpers/helpers.rb'
 
 module Campaigning
-class Base
   include Helpers
-  attr_reader :api_key 
 
-  def initialize(options = {})
-    options = {
-      :api_key => CAMPAIGN_MONITOR_API_KEY,
-      :debug => false
-    }.merge(options)
-    @api_key = options[:api_key]
-    @soap = Campaigning::SOAPDriver.instance.get_driver
-    setup_debug_mode options[:debug]
-  end
-
-  def clients
-    response = @soap.getClients(:apiKey => @api_key)
-    clients = handle_request response.user_GetClientsResult
-    clients.collect {|client| Client.new(client.clientID, client.name)}
-  end
-
-  def system_date
-    handle_request @soap.getSystemDate(:apiKey => @api_key).user_GetSystemDateResult
+  #Gets the server system time for your time zone.
+  #This is handy for when you are syncing your {Campaign Monitor}[http://www.campaignmonitor.com] lists with some other in-house list,
+  #allowing you accurately determine the time on our server when you carry out the synchronization.
+  def self.system_date
+    response = Campaigning::SOAPDriver.instance.get_driver.getSystemDate(:apiKey => CAMPAIGN_MONITOR_API_KEY)
+    dateTime = Helpers.handle_request response.user_GetSystemDateResult
   end
   
-  def time_zones
-    handle_request @soap.getTimezones(:apiKey => @api_key).user_GetTimezonesResult
+  #This method returns an Array of Strings representing all the available timezones.
+  def self.time_zones
+    Helpers.handle_request Campaigning::SOAPDriver.instance.get_driver.getTimezones(:apiKey => CAMPAIGN_MONITOR_API_KEY).user_GetTimezonesResult
   end
   
-  def setup_debug_mode(dev)
+  #This method returns an Array of Strings representing all the available countries.
+  def self.countries
+    response = Campaigning::SOAPDriver.instance.get_driver.getCountries(:apiKey => CAMPAIGN_MONITOR_API_KEY)
+    dateTime = Helpers.handle_request response.user_GetCountriesResult
+  end
+  
+  #This method turns on and off the API debug mode, which will display at the console all SOAP requests made to the API server.
+  def self.setup_debug_mode(dev)
     Campaigning::SOAPDriver.instance.setup_debug_mode dev
-  end
-    
-end
+  end    
 end

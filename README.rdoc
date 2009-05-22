@@ -1,15 +1,46 @@
-== THIS GEM IS UNDER DEVELOPMENT
-
-= campaigning
+= Campaigning
 
 This RubyGem provides access to the CampaignMonitor API(www.campaignmonitor.com/api) using SOAP.
 
-== Dependencies
-This gem requires the following gems
+
+== Pre-requisites
+An account with Campaign Monitor and the API Key (www.campaignmonitor.com).
+
+
+== Resources
+
+=== Dependencies
+
+This gem requires the following gems:
  
  Soap4r (1.5.8)
  
  Jeweler (http://technicalpickles.com/posts/craft-the-perfect-gem-with-jeweler)
+
+=== Installing
+
+  sudo gem install gnumarcelo-campaigning -s http://gems.github.com
+
+
+== How to play
+
+Just set a constant named *CAMPAIGN_MONITOR_API_KEY* with your Campaign monitor API key and start to play like the examples below:
+
+Sample use of the Client class:
+
+  #Here is how to get a list of all clients...
+  clients = Campaigning::Client.get_all_clients
+
+
+  #Here is how to create a brand new subscriber list for an Client
+  client = Campaigning::Client.find_by_name("Client One Company")
+  list = Campaigning::List.create(
+    :client_id => client.clientID,
+    :title => "List of people from Brazil",
+    :comfirm_opt_in => false
+  )
+
+For further examples please check at the *sample* directory.
 
 
 == Copyright
