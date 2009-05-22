@@ -15,6 +15,11 @@ time_zones = Campaigning.setup_debug_mode true
 puts "API set debug mode to true"
 
 
-#Here is how to get ll the time_zones
+#Here is how to get all the time_zones
 time_zones = Campaigning.time_zones
-puts "All the time_zones supported: #{clients.inspect}"
+puts "All the time_zones supported: #{time_zones.inspect}"
+
+
+#Here is how to get all countries supported by the API
+countries = Campaigning.countries
+puts "All supported countries: #{countries.inspect}"

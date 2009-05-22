@@ -2,56 +2,53 @@ require 'test_helper'
 
 # Replace this API key with your own (http://www.campaignmonitor.com/api/)
 CAMPAIGN_MONITOR_API_KEY  = '54cae7f3aa1f35cb3bb5bc41756d8b7f'
-CLIENT_ID = 'd7acfd4cd2ffffc2d86b8903d18a1276'
-CLIENT_TWO_ID = '730acd1e8d27d56bdb87e88685613d72'
+#CLIENT_ID = 'd7acfd4cd2ffffc2d86b8903d18a1276'
+#CLIENT_TWO_ID = '730acd1e8d27d56bdb87e88685613d72'
 
 class CampaigningTest < Test::Unit::TestCase
   
  
- # def test_campaigning_system_date
- #   date = Campaigning.system_date
- #   assert !date.nil?
- #   puts date
- # end
- # 
- # def test_user_get_time_zones
- #   time_zones = Campaigning.time_zones
- #   assert !time_zones.nil?
- # end 
+ def test_campaigning_system_date
+   date = Campaigning.system_date
+   assert !date.nil?
+ end
  
- # def test_user_countries
- #   countries = Campaigning.countries
- #   assert !countries.nil?
- # end
+ def test_user_get_time_zones
+   time_zones = Campaigning.time_zones
+   assert !time_zones.nil?
+ end 
  
-  # def test_client_get_all_clients
-  #   clients = Campaigning::Client.get_all_clients
-  #   assert clients.length > 0
-  #   clients.each{ |c| puts c.clientID + " - " + c.name }
-  # end
-  #  
-  #  
-  # def test_client_lists
-  #   client = Campaigning::Client.new(CLIENT_ID)
-  #   assert client.lists.length > 0
-  # end
+ def test_user_countries
+   countries = Campaigning.countries
+   assert !countries.nil?
+ end
+ 
+  def test_client_get_all_clients
+    clients = Campaigning::Client.get_all_clients
+    assert clients.length > 0
+    #clients.each{ |c| puts c.clientID + " - " + c.name }
+  end
+   
+  def test_client_lists
+    client = Campaigning::Client.find_by_name("Client One Company")    
+    assert client.lists.length > 0
+  end
   
    
-  # def test_client_create
-  #   client_created = Campaigning::Client.create(
-  #    :company_name => "Orange Company 15",
-  #    :contact_name => "Oswald Green15",
-  #    :email_address => "og15@user.com",
-  #    :country => "Ireland",
-  #    :time_zone => @cm.time_zones[1]
-  #   )
-  #   assert client_created.clientID != nil
-  # end
-  # 
-  # 
+  def test_client_create
+    client_created = Campaigning::Client.create(
+     :company_name => "My test client",
+     :contact_name => "Oswald Green15",
+     :email_address => "og15@user.com",
+     :country => "Ireland",
+     :time_zone => Campaigning.time_zones[1]
+    )
+    assert !client_created.clientID.nil?
+  end
+  
   # def test_client_delete
-  #   response = Campaigning::Client.delete("50a1893ea0a02fc94f2ee9563766e539")  
-  #   puts response.inspect
+  #   response = Campaigning::Client.delete(client_created.clientID)  
+  #   assert response.code == 0
   # end
   # 
   # def test_client_delete_itself
@@ -66,11 +63,11 @@ class CampaigningTest < Test::Unit::TestCase
   # end
   
   
-  # def test_find_client_by_name
-  #   client = Campaigning::Client.find_by_name("Client One Company")
-  #   puts client.inspect
-  #   # assert client != nil && client.name == "Client One Company"
-  # end
+  def test_find_client_by_name
+    client = Campaigning::Client.find_by_name("Client One Company")
+    puts client.inspect
+    assert !client.nil? && client.name == "Client One Company"
+  end
   
   
   # def test_get_client_campaigns
@@ -100,7 +97,7 @@ class CampaigningTest < Test::Unit::TestCase
     #       Design and Span test Fee: #{access_and_billing_details.designAndSpamTestFee} - \n
     #       Access Level: #{access_and_billing_details.accessLevel}"
     
-    puts client.details.inspect != nil
+    assert !client.details.nil?
     
   end 
   

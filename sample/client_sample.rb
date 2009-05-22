@@ -1,7 +1,7 @@
 require 'rubygems'
 require 'campaigning'
 
-CAMPAIGN_MONITOR_API_KEY  = '54cae7f3aa1f35cb3bb5bc41756d8b7f'
+CAMPAIGN_MONITOR_API_KEY  = '__PUT__YOUR__API__KEY__HERE__'
 
 
 # Here is how to get a list of all clients...
