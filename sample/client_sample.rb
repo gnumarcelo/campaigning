@@ -1,14 +1,11 @@
 require 'rubygems'
 require 'campaigning'
 
-CAMPAIGN_MONITOR_API_KEY  = '__PUT__YOUR__API__KEY__HERE__'
-
-# The first action you have to do to use the API is creating a new Connection
-camp_monitor = Campaigning::Base.new
+CAMPAIGN_MONITOR_API_KEY  = '54cae7f3aa1f35cb3bb5bc41756d8b7f'
 
 
 # Here is how to get a list of all clients...
-clients = camp_monitor.clients
+clients = Campaigning::Client.get_all_clients
 puts "All my clients: #{clients.inspect}"
 
 
@@ -16,11 +13,20 @@ puts "All my clients: #{clients.inspect}"
 client = Campaigning::Client.create(
   :company_name => "Company to Sample Client",
   :contact_name => "Oswald Green Sample",
-  :email_address => "og2@example.com",
+  :email_address => "og233@example.com",
   :country => "Ireland",
-  :time_zone => "(GMT) Casablanca" #alternatively you can use "Campaigning.time_zones" to get valid time zones list
+  :time_zone => "(GMT) Greenwich Mean Time : Dublin, Edinburgh, Lisbon, London" #alternatively you can use "Campaigning.time_zones" to get valid time zones list
 )
 puts "New Client created is: #{client.inspect}"
+
+client_two = Campaigning::Client.create(
+  :company_name => "Company Gordon",
+  :contact_name => "Mr. Gordon",
+  :email_address => "gordon3@example.com",
+  :country => "Ireland",
+  :time_zone => "(GMT) Greenwich Mean Time : Dublin, Edinburgh, Lisbon, London" #alternatively you can use "Campaigning.time_zones" to get valid time zones list
+)
+puts "Other new Client created is: #{client_two.inspect}"
 
 
 
@@ -52,13 +58,82 @@ list = client.find_list_by_name("List people from Chicago")
 puts "Lists belonging by his name: #{lists.inspect}"
 
 
-#How to get all campaigns belonging to a client
+#How to get a list of all campaigns that have been sent for a client.
 client = Campaigning::Client.find_by_name("Company to Sample Client")
 campaigns = client.campaigns
-puts "All Campaigns belonging to a Client: #{campaigns.inspect}"
+puts "Campaigns that have been sent for a client: #{campaigns.inspect}"
+
+
+#How to get a list of all subscriber segments for a client.
+client = Campaigning::Client.find_by_name("Company to Sample Client")
+puts "All subscriber segments for a client: #{client.segments.inspect}"
+
+
+#How to get all subscribers in the client-wide suppression list.
+client = Campaigning::Client.find_by_name("Company to Sample Client")
+puts "Client suppression list: #{client.suppression_list}"
+
+
+#How to update the access and billing settings of an existing client, leaving the basic details untouched.
+#Consult the API website for more information: http://www.campaignmonitor.com/api/method/client-updateaccessandbilling/
+client = Campaigning::Client.find_by_name("Company to Sample Client")
+response = client.update_access_and_billing(
+   :access_level => 5 ,
+   :username => "client_comp_s",
+   :password => "1234560",
+   :billing_type => "UserPaysOnClientsBehalf",
+   :currency => "USD",
+   :delivery_fee => 6.5,
+   :cost_per_recipient => 1.5 ,
+   :design_and_spam_test_fee => 5
+  )
+puts "Was the Client successfuly updated?: #{response.message}"
+
+
+#How to get the complete account and billing details for a particular client.
+client = Campaigning::Client.find_by_name("Company to Sample Client")
+#puts "Client details: #{client.details.inspect}"
+puts "Client details: "
+client_details = client.details
+basic_details = client_details.basicDetails
+access_and_billing_details = client_details.accessAndBilling
+puts "Basic details:"
+puts "Client ID: #{basic_details.clientID}\n
+      Company: #{basic_details.companyName}\n
+      Contact: #{basic_details.contactName}\n
+      Country: #{basic_details.country}\n
+      Timezone: #{basic_details.timezone}"
+
+puts "Access and Billing Details:"
+puts "Username: #{access_and_billing_details.username}\n 
+      Password: #{access_and_billing_details.password}\n
+      Billing Type: #{access_and_billing_details.billingType}\n
+      Currency: #{access_and_billing_details.currency}\n
+      Delivery Fee: #{access_and_billing_details.deliveryFee}\n
+      Cost per Recipient: #{access_and_billing_details.costPerRecipient}\n
+      Design and Span test Fee: #{access_and_billing_details.designAndSpamTestFee}\n
+      Access Level: #{access_and_billing_details.accessLevel}"
+
+
+
+#How to update the basic details of an existing client.
+#Please note that the client’s existing access and billing details will remain unchanged by a call to Client.update_basics.
+client_two = Campaigning::Client.find_by_name("Company Gordon")
+response = client.update_basics(
+  :company_name => "My new Company",
+  :contact_name => "Mr. Gordon Newman",
+  :email_address => "gordon-newman43@example.com",
+  :country => "Ireland",
+  :time_zone => "(GMT) Greenwich Mean Time : Dublin, Edinburgh, Lisbon, London"
+)
+puts "Was the other Client successfuly updated?: #{response.message}"
 
 
 # Here is how to delete a client
 result = Campaigning::Client.delete(client.clientID)  
 puts "Client deleted successfuly? #{result.message}"
+#Or you can use a instance method like:
+client = Campaigning::Client.find_by_name("My new Company")
+result = client.delete
+puts "Client two deleted successfuly? #{result.message}"
 

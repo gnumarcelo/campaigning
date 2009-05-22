@@ -3,8 +3,6 @@ require 'campaigning'
 
 CAMPAIGN_MONITOR_API_KEY  = '__PUT__YOUR__API__KEY__HERE__'
 
-# The first action you have to do to use the API is creating a new Campaign Monitor Base Class
-camp_monitor = Campaigning::Base.new
 
 # SETUP FOR THIS SAMPLE ---------------------------------------------------------------------
 #Creating a list for sample execution
@@ -69,14 +67,8 @@ puts "Was the subscriber WITH custom fields add and resubscribed tho the list: #
 result = Campaigning::Subscriber.unsubscribe(EMAIL_2, LIST_ID)
 #Or you can use a instance method like:
 subscriber = Campaigning::Subscriber.new(EMAIL_1)
-result = subscriber.unsubscribe(LIST_ID) # <-- List_ID
+result = subscriber.unsubscribe(LIST_ID)
 puts "Was the subscriber unsubscribed from the list: #{result.message}"
-
-
-#Here is how to get a list of all active subscribers for a list that have been added since the specified date.
-subscriber_list = Campaigning::Subscriber.active_subscribers(LIST_ID, DateTime.new(y=2009,m=5,d=01, h=01,min=00,s=00))
-result = subscriber_list.inspect
-puts "Here is all active subscribers from the list: #{result}"
 
 
 #Returns True or False as to the existence of the given email address in the list supplied. 
@@ -85,19 +77,6 @@ result = Campaigning::Subscriber.is_subscribed?(EMAIL_2, LIST_ID)
 subscriber = Campaigning::Subscriber.new(EMAIL_3)
 result = subscriber.is_subscribed?(LIST_ID)
 puts "Was the email subscribed in the list? #{result}"
-
-
-
-#This method returns all of a particular subscribers details, including email address, name, active/inactive status
-#and all custom field data.
-subscriber = Campaigning::Subscriber.get_single_subscriber(LIST_ID, EMAIL_3)
-puts "All subscriber details: #{subscriber.inspect}"
-
-
-
-#Gets a list of all subscribers for a list that have unsubscribed since the specified date.
-subscriber_list = Campaigning::Subscriber.get_unsubscribed(LIST_ID, DateTime.new(y=2009,m=4,d=01, h=01,min=00,s=00))
-puts "All subscriber that have unsubscribed from the list: #{subscriber_list.inspect}"
 
 
 

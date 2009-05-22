@@ -1,18 +1,31 @@
 require 'test_helper'
 
 # Replace this API key with your own (http://www.campaignmonitor.com/api/)
-CAMPAIGN_MONITOR_API_KEY  = '__PUT__YOUR__API__KEY__HERE__'
+CAMPAIGN_MONITOR_API_KEY  = '54cae7f3aa1f35cb3bb5bc41756d8b7f'
 CLIENT_ID = 'd7acfd4cd2ffffc2d86b8903d18a1276'
 CLIENT_TWO_ID = '730acd1e8d27d56bdb87e88685613d72'
 
 class CampaigningTest < Test::Unit::TestCase
   
-  def setup
-    @cm = Campaigning::Base.new
-  end
  
-  # def test_clients
-  #   clients = @cm.clients
+ # def test_campaigning_system_date
+ #   date = Campaigning.system_date
+ #   assert !date.nil?
+ #   puts date
+ # end
+ # 
+ # def test_user_get_time_zones
+ #   time_zones = Campaigning.time_zones
+ #   assert !time_zones.nil?
+ # end 
+ 
+ # def test_user_countries
+ #   countries = Campaigning.countries
+ #   assert !countries.nil?
+ # end
+ 
+  # def test_client_get_all_clients
+  #   clients = Campaigning::Client.get_all_clients
   #   assert clients.length > 0
   #   clients.each{ |c| puts c.clientID + " - " + c.name }
   # end
@@ -22,8 +35,8 @@ class CampaigningTest < Test::Unit::TestCase
   #   client = Campaigning::Client.new(CLIENT_ID)
   #   assert client.lists.length > 0
   # end
-  # 
-  #  
+  
+   
   # def test_client_create
   #   client_created = Campaigning::Client.create(
   #    :company_name => "Orange Company 15",
@@ -45,36 +58,57 @@ class CampaigningTest < Test::Unit::TestCase
   #   client = Campaigning::Client.find_by_name("Orange Company 7")
   #   client.delete
   # end
-  # 
+  
   # def test_client_segments
   #   client = Campaigning::Client.find_by_name("Client One Company")
   #   assert client.segments.length > 0
   #   puts client.segments.inspect
   # end
-  # 
-  # 
-  def test_find_client_by_name
-    client = Campaigning::Client.find_by_name("Client One Company")
-    puts client.inspect
-    # assert client != nil && client.name == "Client One Company"
-  end
-  # 
-  # 
+  
+  
+  # def test_find_client_by_name
+  #   client = Campaigning::Client.find_by_name("Client One Company")
+  #   puts client.inspect
+  #   # assert client != nil && client.name == "Client One Company"
+  # end
+  
+  
   # def test_get_client_campaigns
   #   client = Campaigning::Client.find_by_name("Client One Company")
   #   puts client.campaigns.inspect
   # end
    
-  # def test_get_client_details
-  #   client = Campaigning::Client.find_by_name("Client Two ")
-  #   puts client.details.inspect
-  # end 
-  # 
+  def test_get_client_details
+    client = Campaigning::Client.find_by_name("Client One Company")
+    # client_details = client.details
+    # basic_details = client_details.basicDetails
+    # access_and_billing_details = client_details.accessAndBilling
+    # puts "Basic details:"
+    # puts "Client ID: #{basic_details.clientID} - \n
+    #       Company: #{basic_details.companyName} - \n
+    #       Contact: #{basic_details.contactName} - \n
+    #       Country: #{basic_details.country} - \n
+    #       Timezone: #{basic_details.timezone}"
+    # 
+    # puts "Access and Billing Details:"
+    # puts "Username: #{access_and_billing_details.username} - \n 
+    #       Password: #{access_and_billing_details.password} - \n
+    #       Billing Type: #{access_and_billing_details.billingType} - \n
+    #       Currency: #{access_and_billing_details.currency} - \n
+    #       Delivery Fee: #{access_and_billing_details.deliveryFee} - \n
+    #       Cost per Recipient: #{access_and_billing_details.costPerRecipient} - \n
+    #       Design and Span test Fee: #{access_and_billing_details.designAndSpamTestFee} - \n
+    #       Access Level: #{access_and_billing_details.accessLevel}"
+    
+    puts client.details.inspect != nil
+    
+  end 
+  
   # def test_get_client_suppression_list
-  #   client = Campaigning::Client.find_by_name("Client Two ")
-  #   puts client.suppression_list
+  #   client = Campaigning::Client.find_by_name("Client One Company")
+  #   puts client.suppression_list.inspect
   # end
-  # 
+  
   # def test_client_update_access_and_billing
   #   client = Campaigning::Client.find_by_name("Client One Company")
   #   response = client.update_access_and_billing(
@@ -110,20 +144,6 @@ class CampaigningTest < Test::Unit::TestCase
   # end
 
   
-  # 
-  #  def test_user_get_time_zones
-  #    time_zones = @cm.time_zones
-  #    assert !time_zones.nil?
-  #  end 
-  #    
-  #    
-  #  def test_system_date
-  #    sys_date = @cm.system_date
-  #    assert !sys_date.nil?
-  #    puts sys_date
-  #  end 
-  #   
-  # 
   # def test_campaign_create
   #   client = Campaigning::Client.find_by_name("Client One Company")    
   #   response = Campaigning::Campaign.create(
@@ -149,7 +169,7 @@ class CampaigningTest < Test::Unit::TestCase
   #  
   # def test_campaign_lists
   #   client = Campaigning::Client.find_by_name("Client One Company")
-  #   puts client.campaigns[2].lists.inspect
+  #   client.campaigns[0].lists
   # end
   # 
   # def test_campaign_opens
@@ -164,9 +184,15 @@ class CampaigningTest < Test::Unit::TestCase
   # end
   # 
   # 
-  # def test_campaign_subscriber_clicks
+  # def test_campaign_summary
   #   client = Campaigning::Client.find_by_name("Client One Company")
-  #   puts client.campaigns[0].subscriber_clicks
+  #   # client.campaigns[2].subscriber_clicks.each do |subscriber|
+  #   #   puts "Subscriber: #{subscriber.emailAddress}"
+  #   #   subscriber.clickedLinks.each { |clicked| puts "Link: #{clicked.link} - Number of clicks: #{clicked.clicks}"}
+  #   # end
+  #   assert client.campaigns[2].subscriber_clicks != nil
+  #   assert client.campaigns[2].subscriber_clicks != []
+  #   
   # end
   # 
   #   
@@ -233,11 +259,6 @@ class CampaigningTest < Test::Unit::TestCase
   #   assert response.code == 0    
   # end
   # 
-  # def test_subscriber_actives
-  #   subscriber_list = Campaigning::Subscriber.active_subscribers("ac52b645c048888a44c87b5f1ecf6b7d", DateTime.new(y=2009,m=5,d=01, h=01,min=00,s=00))
-  #   puts subscriber_list.inspect
-  #   assert subscriber_list.length > 0    
-  # end
   # 
   # def test_subscriber_is_subscribed
   #   subscriber = Campaigning::Subscriber.new("user_to_test@test.com") # TODO: Change to get the Subscriber, not to CREATE a new one
@@ -246,19 +267,40 @@ class CampaigningTest < Test::Unit::TestCase
   #   assert response == false
   # end
   # 
-  # def test_subscriber_get_single_subscriber
-  #   subscriber = Campaigning::Subscriber.get_single_subscriber("ac52b645c048888a44c87b5f1ecf6b7d", "user_custon2@test.com")
+  # 
+  # def test_list_find_single_subscriber
+  #   client = Campaigning::Client.find_by_name("Client One Company")
+  #   list = client.find_list_by_name "My Friends"
+  #   subscriber = list.find_single_subscriber("user_custon2@test.com")
   #   puts subscriber.inspect
   #   assert subscriber.name != nil
-  # end
+  # end 
   # 
-  # def test_subscriber_get_unsubscribed
-  #   subscriber_list = Campaigning::Subscriber.get_unsubscribed("ac52b645c048888a44c87b5f1ecf6b7d", DateTime.new(y=2009,m=4,d=01, h=01,min=00,s=00))
+  # def test_list_find_unsubscribed
+  #   client = Campaigning::Client.find_by_name("Client One Company")
+  #   list = client.find_list_by_name "My Friends"
+  #   subscriber_list = list.find_unsubscribed(DateTime.new(y=2009,m=4,d=01, h=01,min=00,s=00))
   #   puts subscriber_list.inspect
   #   assert subscriber_list.length > 0    
   # end
   # 
-  # 
+  # def test_list_find_active_subscribers
+  #   client = Campaigning::Client.find_by_name("Client One Company")
+  #   list = client.find_list_by_name "My Friends"
+  #   subscriber_list = list.find_active_subscribers(DateTime.new(y=2009,m=5,d=01, h=01,min=00,s=00))        
+  #   assert subscriber_list.length > 0
+  # end
+ 
+  # def test_list_get_all_active_subscribers
+  #   client = Campaigning::Client.find_by_name("Client One Company")
+  #   list = client.find_list_by_name "My Friends"
+  #   subscriber_list = list.get_all_active_subscribers  
+  #   puts subscriber_list.inspect
+  #   assert subscriber_list.length > 0
+  # end 
+
+
+  
   # def test_list_create
   #   client = Campaigning::Client.find_by_name("Client One Company")
   #   list = Campaigning::List.create(

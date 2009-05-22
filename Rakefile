@@ -53,5 +53,7 @@ Rake::RDocTask.new do |rdoc|
   rdoc.title = "campaigning #{version}"
   rdoc.rdoc_files.include('README*')
   rdoc.rdoc_files.include('lib/**/*.rb')
+  rdoc.rdoc_files.exclude('lib/campaigning/soap/generated/*.rb')
+  rdoc.options << "--inline-source"
 end
 
