@@ -7,18 +7,18 @@ CAMPAIGN_MONITOR_API_KEY  = '__PUT__YOUR__API__KEY__HERE__'
 #Here is how to create a brand new subscriber list
 client = Campaigning::Client.find_by_name("Client One Company")
 list = Campaigning::List.create(
-  :client_id => client.clientID,
+  :clientID => client.clientID,
   :title => "List from Sample Exec",
-  :unsubscribe_page => "http://www.mycompany.com/campaign/ubsubscribe.html", #If not suplied or equals blank (""), default value will be used
-  :comfirm_opt_in => false,
-  :confirmation_success_page => "" #Default value will be used
+  :unsubscribePage => "http://www.mycompany.com/campaign/ubsubscribe.html", #If not suplied or equals blank (""), default value will be used
+  :confirmOptIn => false,
+  :confirmationSuccessPage => "" #Default value will be used
 )
 puts "Here is the new created List: #{list.name} #{list.listID}"
 #OR you can remove both optional parameters from the method call like below and default values will be used as well:
 list2 = Campaigning::List.create(
-  :client_id => client.clientID,
+  :clientID => client.clientID,
   :title => "List from Sample Exec2",
-  :comfirm_opt_in => false
+  :confirmOptIn => false
 )
 puts "Here is my second new created List (without some params): #{list.name} #{list.listID}"
 
@@ -47,14 +47,14 @@ client = Campaigning::Client.find_by_name("Client One Company")
 puts client.inspect
 list = client.find_list_by_name "List from Sample Exec"
 result = list.create_custom_field(
-  :field_name => "Color" ,
-  :data_type => "MultiSelectOne", #This must be one of Text, Number, MultiSelectOne, or MultiSelectMany
+  :fieldName => "Color" ,
+  :dataType => "MultiSelectOne", #This must be one of Text, Number, MultiSelectOne, or MultiSelectMany
   :options => %w[Blue Red Orange]
 )
 #Let's create one more custom field
 result1 = list.create_custom_field(
-  :field_name => "Contact Type" ,
-  :data_type => "MultiSelectOne",
+  :fieldName => "Contact Type" ,
+  :dataType => "MultiSelectOne",
   :options => %w[email post telephone]
 )
 puts "Was my Color custom field created successfuly? #{result.message}"
@@ -116,9 +116,9 @@ client = Campaigning::Client.find_by_name("Client One Company")
 list = client.find_list_by_name "List from Sample Exec"
 result = list.update(
   :title => "My new list created by ruby list_sample",
-  :unsubscribe_page => "", # Default will be used
-  :comfirm_opt_in => false,
-  :confirmation_success_page => "" #Default will be used
+  :unsubscribePage => "", # Default will be used
+  :confirmOptIn => false,
+  :confirmationSuccessPage => "" #Default will be used
 )
 puts "Was my list updated successfully?  #{result.message}"
 

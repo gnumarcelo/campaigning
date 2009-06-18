@@ -11,20 +11,20 @@ puts "All my clients: #{clients.inspect}"
 
 # Here is how to create a new client
 client = Campaigning::Client.create(
-  :company_name => "Company to Sample Client",
-  :contact_name => "Oswald Green Sample",
-  :email_address => "og233@example.com",
+  :companyName => "Company to Sample Client",
+  :contactName => "Oswald Green Sample",
+  :emailAddress => "og233@example.com",
   :country => "Ireland",
-  :time_zone => "(GMT) Greenwich Mean Time : Dublin, Edinburgh, Lisbon, London" #alternatively you can use "Campaigning.time_zones" to get valid time zones list
+  :timezone => "(GMT) Greenwich Mean Time : Dublin, Edinburgh, Lisbon, London" #alternatively you can use "Campaigning.timezones" to get valid time zones list
 )
 puts "New Client created is: #{client.inspect}"
 
 client_two = Campaigning::Client.create(
-  :company_name => "Company Gordon",
-  :contact_name => "Mr. Gordon",
-  :email_address => "gordon3@example.com",
+  :companyName => "Company Gordon",
+  :contactName => "Mr. Gordon",
+  :emailAddress => "gordon3@example.com",
   :country => "Ireland",
-  :time_zone => "(GMT) Greenwich Mean Time : Dublin, Edinburgh, Lisbon, London" #alternatively you can use "Campaigning.time_zones" to get valid time zones list
+  :timezone => "(GMT) Greenwich Mean Time : Dublin, Edinburgh, Lisbon, London" #alternatively you can use "Campaigning.timezones" to get valid time zones list
 )
 puts "Other new Client created is: #{client_two.inspect}"
 
@@ -34,9 +34,9 @@ puts "Other new Client created is: #{client_two.inspect}"
 #Creating a list for this sample execution
 client = Campaigning::Client.find_by_name("Company to Sample Client")
 list = Campaigning::List.create(
-  :client_id => client.clientID,
+  :clientID => client.clientID,
   :title => "List people from Chicago",
-  :comfirm_opt_in => false
+  :confirmOptIn => false
 )
 # /SETUP FOR THIS SAMPLE ---------------------------------------------------------------------
 
@@ -78,14 +78,14 @@ puts "Client suppression list: #{client.suppression_list}"
 #Consult the API website for more information: http://www.campaignmonitor.com/api/method/client-updateaccessandbilling/
 client = Campaigning::Client.find_by_name("Company to Sample Client")
 response = client.update_access_and_billing(
-   :access_level => 5 ,
+   :accessLevel => 5 ,
    :username => "client_comp_s",
    :password => "1234560",
-   :billing_type => "UserPaysOnClientsBehalf",
+   :billingType => "UserPaysOnClientsBehalf",
    :currency => "USD",
-   :delivery_fee => 6.5,
-   :cost_per_recipient => 1.5 ,
-   :design_and_spam_test_fee => 5
+   :deliveryFee => 6.5,
+   :costPerRecipient => 1.5 ,
+   :designAndSpamTestFee => 5
   )
 puts "Was the Client successfuly updated?: #{response.message}"
 
@@ -120,11 +120,11 @@ puts "Username: #{access_and_billing_details.username}\n
 #Please note that the client’s existing access and billing details will remain unchanged by a call to Client.update_basics.
 client_two = Campaigning::Client.find_by_name("Company Gordon")
 response = client.update_basics(
-  :company_name => "My new Company",
-  :contact_name => "Mr. Gordon Newman",
-  :email_address => "gordon-newman43@example.com",
+  :companyName => "My new Company",
+  :contactName => "Mr. Gordon Newman",
+  :emailAddress => "gordon-newman43@example.com",
   :country => "Ireland",
-  :time_zone => "(GMT) Greenwich Mean Time : Dublin, Edinburgh, Lisbon, London"
+  :timezone => "(GMT) Greenwich Mean Time : Dublin, Edinburgh, Lisbon, London"
 )
 puts "Was the other Client successfuly updated?: #{response.message}"
 

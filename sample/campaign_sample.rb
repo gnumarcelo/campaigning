@@ -7,19 +7,19 @@ CAMPAIGN_MONITOR_API_KEY  = '__PUT__YOUR__API__KEY__HERE__'
 # SETUP FOR THIS SAMPLE ---------------------------------------------------------------------
 #Creating a Client for this sample execution
 client = Campaigning::Client.create(
-  :company_name => "Client to Sample",
-  :contact_name => "Marcus Cesar",
-  :email_address => "og3@example.com",
+  :companyName => "Client to Sample",
+  :contactName => "Marcus Cesar",
+  :emailAddress => "og3@example.com",
   :country => "Ireland",
-  :time_zone => "(GMT) Casablanca" #alternatively you can use "Campaigning.time_zones" to get valid time zones list
+  :timezone => "(GMT) Casablanca" #alternatively you can use "Campaigning.timezones" to get valid time zones list
 )
 puts "New Client created is: #{client.inspect}"
 list = Campaigning::List.create(
-  :client_id => client.clientID,
+  :clientID => client.clientID,
   :title => "List from Sample Exec",
-  :unsubscribe_page => "http://www.mycompany.com/campaign/ubsubscribe.html", #If not suplied or equals blank (""), default value will be used
-  :comfirm_opt_in => false,
-  :confirmation_success_page => "" #Default value will be used
+  :unsubscribePage => "http://www.mycompany.com/campaign/ubsubscribe.html", #If not suplied or equals blank (""), default value will be used
+  :confirmOptIn => false,
+  :confirmationSuccessPage => "" #Default value will be used
 )
 # /SETUP FOR THIS SAMPLE ---------------------------------------------------------------------
 
@@ -41,8 +41,8 @@ campaign = Campaigning::Campaign.create(
 puts "New Campaign created is: #{campaign.inspect}"
 #After create a campaign you can send as follow:
 campaign.send(
-  :confirmation_email => "userhdhd@example.com",
-  :send_date => DateTime.now #To send a campaign immediately pass in “Immediately”.
+  :confirmationEmail => "userhdhd@example.com",
+  :sendDate => DateTime.now #To send a campaign immediately pass in “Immediately”.
                              #This date should be in the users timezone and formatted as YYYY-MM-DD HH:MM:SS.
 )
 

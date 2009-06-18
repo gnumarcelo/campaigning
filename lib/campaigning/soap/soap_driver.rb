@@ -19,8 +19,12 @@ module Campaigning
     #SOAP requests made to the API server.
     def setup_debug_mode(dev)
       dev = STDERR if dev == true
+      get_driver
       @driver.wiredump_dev = dev
     end
     
+    def set_endpoint_url(endpoint_url)
+      @driver = Campaigning::ApiSoap.new(endpoint_url)
+    end
   end
 end
