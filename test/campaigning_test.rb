@@ -1,51 +1,54 @@
 require 'test_helper'
 
 # Replace this API key with your own (http://www.campaignmonitor.com/api/)
-CAMPAIGN_MONITOR_API_KEY  = '54cae7f3aa1f35cb3bb5bc41756d8b7f'
-#CLIENT_ID = 'd7acfd4cd2ffffc2d86b8903d18a1276'
-#CLIENT_TWO_ID = '730acd1e8d27d56bdb87e88685613d72'
+CAMPAIGN_MONITOR_API_KEY  = '__PUT_YOUR_API_KEY_HERE__'
 
 class CampaigningTest < Test::Unit::TestCase
-  
- 
- def test_campaigning_system_date
-   date = Campaigning.system_date
-   assert !date.nil?
- end
- 
- def test_user_get_time_zones
-   time_zones = Campaigning.time_zones
-   assert !time_zones.nil?
- end 
- 
- def test_user_countries
-   countries = Campaigning.countries
-   assert !countries.nil?
- end
- 
+
+
+  def setup
+    #Campaigning.set_endpoint_url "http://127.0.0.1:8088/mockapiSoap"
+    #Campaigning.setup_debug_mode(true)
+  end
+
+  def test_campaigning_system_date
+    date = Campaigning.system_date
+    assert !date.nil?
+  end
+
+  def test_user_get_timezones
+    timezones = Campaigning.timezones
+    assert !timezones.nil?
+  end 
+
+  def test_user_countries
+    countries = Campaigning.countries
+    assert !countries.nil?
+  end
+
   def test_client_get_all_clients
     clients = Campaigning::Client.get_all_clients
     assert clients.length > 0
     #clients.each{ |c| puts c.clientID + " - " + c.name }
   end
-   
+
   def test_client_lists
     client = Campaigning::Client.find_by_name("Client One Company")    
     assert client.lists.length > 0
   end
-  
-   
-  def test_client_create
-    client_created = Campaigning::Client.create(
-     :company_name => "My test client",
-     :contact_name => "Oswald Green15",
-     :email_address => "og15@user.com",
-     :country => "Ireland",
-     :time_zone => Campaigning.time_zones[1]
-    )
-    assert !client_created.clientID.nil?
-  end
-  
+
+  #   
+  #  def test_client_create
+  #    client_created = Campaigning::Client.create(
+  #     :companyName => "My test client",
+  #     :contactName => "Oswald Green15",
+  #     :emailAddress => "og15@user.com",
+  #     :country => "Ireland",
+  #     :timezone => Campaigning.timezones[1]
+  #    )
+  #    assert !client_created.clientID.nil?
+  #  end
+  # 
   # def test_client_delete
   #   response = Campaigning::Client.delete(client_created.clientID)  
   #   assert response.code == 0
@@ -55,26 +58,24 @@ class CampaigningTest < Test::Unit::TestCase
   #   client = Campaigning::Client.find_by_name("Orange Company 7")
   #   client.delete
   # end
-  
-  # def test_client_segments
-  #   client = Campaigning::Client.find_by_name("Client One Company")
-  #   assert client.segments.length > 0
-  #   puts client.segments.inspect
-  # end
-  
-  
+
+  def test_client_segments
+    client = Campaigning::Client.find_by_name("Client One Company")
+    assert client.segments.length > 0
+  end
+
+
   def test_find_client_by_name
     client = Campaigning::Client.find_by_name("Client One Company")
-    puts client.inspect
     assert !client.nil? && client.name == "Client One Company"
   end
-  
-  
-  # def test_get_client_campaigns
-  #   client = Campaigning::Client.find_by_name("Client One Company")
-  #   puts client.campaigns.inspect
-  # end
-   
+
+
+  def test_get_client_campaigns
+    client = Campaigning::Client.find_by_name("Client One Company")
+    puts client.campaigns.inspect
+  end
+
   def test_get_client_details
     client = Campaigning::Client.find_by_name("Client One Company")
     # client_details = client.details
@@ -96,64 +97,63 @@ class CampaigningTest < Test::Unit::TestCase
     #       Cost per Recipient: #{access_and_billing_details.costPerRecipient} - \n
     #       Design and Span test Fee: #{access_and_billing_details.designAndSpamTestFee} - \n
     #       Access Level: #{access_and_billing_details.accessLevel}"
-    
-    assert !client.details.nil?
-    
-  end 
-  
-  # def test_get_client_suppression_list
-  #   client = Campaigning::Client.find_by_name("Client One Company")
-  #   puts client.suppression_list.inspect
-  # end
-  
-  # def test_client_update_access_and_billing
-  #   client = Campaigning::Client.find_by_name("Client One Company")
-  #   response = client.update_access_and_billing(
-  #      :access_level => 5 ,
-  #      :username => "client_one",
-  #      :password => "1234560",
-  #      :billing_type => "UserPaysOnClientsBehalf",
-  #      :currency => "USD",
-  #      :delivery_fee => 6.5,
-  #      :cost_per_recipient => 1.5 ,
-  #      :design_and_spam_test_fee => 5
-  #     )
-  #   assert response.code == 0
-  # end
-  # 
-  # def test_client_update_basics
-  #   client = Campaigning::Client.find_by_name("Client Two ")
-  #   response = client.update_basics(
-  #     :company_name => "My new Company",
-  #     :contact_name => "Mr. Gordon Newman",
-  #     :email_address => "gordon-newman@test.com",
-  #     :country => "Ireland",
-  #     :time_zone => @cm.time_zones[1]
-  #   )
-  #   assert response.code == 0
-  # end
-  # 
-  # def test_client_find_list_by_name
-  #   client = Campaigning::Client.find_by_name("Client One Company")
-  #   list = client.find_list_by_name "My Friends"
-  #   puts list.inspect
-  #   assert list.nil? == false
-  # end
 
-  
+    assert !client.details.nil?
+
+  end 
+
+  def test_get_client_suppression_list
+    client = Campaigning::Client.find_by_name("Client One Company")
+    puts client.suppression_list.inspect
+  end
+
+  def test_client_update_access_and_billing
+    client = Campaigning::Client.find_by_name("Client One Company")
+    response = client.update_access_and_billing(
+    :accessLevel => 5 ,
+    :username => "client_one",
+    :password => "1234560",
+    :billingType => "UserPaysOnClientsBehalf",
+    :currency => "USD",
+    :deliveryFee => 6.5,
+    :costPerRecipient => 1.5 ,
+    :designAndSpamTestFee => 5
+    )
+    assert response.code == 0
+  end
+
+  def test_client_update_basics
+    client = Campaigning::Client.find_by_name("Client Two")
+    response = client.update_basics(
+    :companyName => "My new Company",
+    :contactName => "Mr. Gordon Newman",
+    :emailAddress => "gordon-newman@test.com",
+    :country => "Ireland",
+    :timezone => Campaigning.timezones[1]
+    )
+    assert response.code == 0
+  end
+
+  def test_client_find_list_by_name
+    client = Campaigning::Client.find_by_name("Client One Company")
+    list = client.find_list_by_name "My Friends"
+    assert list.nil? == false
+  end
+
+
   # def test_campaign_create
   #   client = Campaigning::Client.find_by_name("Client One Company")    
   #   response = Campaigning::Campaign.create(
-  #     :clientID => client.clientID,
-  #     :campaignName => "Campaign by myself RUBY TO DELETE - CODEEEEE",
-  #     :campaignSubject => "Campaign by myself - OK - CODEEEEE",
-  #     :fromName => "Mr. Gordon2",
-  #     :fromEmail => "gordon2@test.com",
-  #     :replyTo => "no-reply@test.com",
-  #     :htmlUrl => "http://www.campaignmonitor.com/api/method/campaign-create/",
-  #     :textUrl => "http://www.google.com.br",
-  #     :subscriberListIDs => ["ac52b645c048888a44c87b5f1ecf6b7d"],
-  #     :listSegments => client.segments
+  #   :clientID => client.clientID,
+  #   :campaignName => "Campaign by myself RUBY TO DELETE - CODEEEEE",
+  #   :campaignSubject => "Campaign by myself - OK - CODEEEEE",
+  #   :fromName => "Mr. Gordon2",
+  #   :fromEmail => "gordon2@test.com",
+  #   :replyTo => "no-reply@test.com",
+  #   :htmlUrl => "http://www.campaignmonitor.com/api/method/campaign-create/",
+  #   :textUrl => "http://www.google.com.br",
+  #   :subscriberListIDs => ["ac52b645c048888a44c87b5f1ecf6b7d"],
+  #   :listSegments => client.segments
   #   )
   #   puts response.inspect
   # end
@@ -163,7 +163,7 @@ class CampaigningTest < Test::Unit::TestCase
   #   client = Campaigning::Client.find_by_name("Client One Company")
   #   puts client.campaigns[1].bounces.inspect
   # end
-  #  
+  # 
   # def test_campaign_lists
   #   client = Campaigning::Client.find_by_name("Client One Company")
   #   client.campaigns[0].lists
@@ -189,10 +189,10 @@ class CampaigningTest < Test::Unit::TestCase
   #   # end
   #   assert client.campaigns[2].subscriber_clicks != nil
   #   assert client.campaigns[2].subscriber_clicks != []
-  #   
+  # 
   # end
   # 
-  #   
+  # 
   # def test_campaign_summary
   #   client = Campaigning::Client.find_by_name("Client One Company")
   #   puts client.campaigns[1].summary
@@ -206,24 +206,24 @@ class CampaigningTest < Test::Unit::TestCase
   # def test_campaign_send
   #   client = Campaigning::Client.find_by_name("Client One Company")
   #   response = Campaigning::Campaign.create(
-  #     :clientID => client.clientID,
-  #     :campaignName => "Campaign by myself RUBY NEW CREATED",
-  #     :campaignSubject => "Campaign by myself - OK",
-  #     :fromName => "Mr. Gordon2",
-  #     :fromEmail => "gordon2@test.com",
-  #     :replyTo => "no-reply@test.com",
-  #     :htmlUrl => "http://www.campaignmonitor.com/api/method/campaign-create/",
-  #     :textUrl => "http://www.google.com",
-  #     :subscriberListIDs => ["ac52b645c048888a44c87b5f1ecf6b7d"],
-  #     :listSegments => client.segments
+  #   :clientID => client.clientID,
+  #   :campaignName => "Campaign by myself RUBY NEW CREATED",
+  #   :campaignSubject => "Campaign by myself - OK",
+  #   :fromName => "Mr. Gordon2",
+  #   :fromEmail => "gordon2@test.com",
+  #   :replyTo => "no-reply@test.com",
+  #   :htmlUrl => "http://www.campaignmonitor.com/api/method/campaign-create/",
+  #   :textUrl => "http://www.google.com",
+  #   :subscriberListIDs => ["ac52b645c048888a44c87b5f1ecf6b7d"],
+  #   :listSegments => client.segments
   #   )
-  #   
+  # 
   #   puts client.campaigns[0].send(
-  #     :confirmation_email => "userhdhd@test.com",
-  #     :send_date => "2009-04-30 11:55:01" # Date format YYYY-MM-DD HH:MM:SS.
+  #   :confirmationEmail => "userhdhd@test.com",
+  #   :sendDate => "2009-04-30 11:55:01" # Date format YYYY-MM-DD HH:MM:SS.
   #   ) 
   # end
-  
+  # 
   # def test_subscriber_add
   #   subscriber = Campaigning::Subscriber.new("robertf@test.com", "Robert Franklin")
   #   response = subscriber.add("ac52b645c048888a44c87b5f1ecf6b7d")
@@ -235,8 +235,8 @@ class CampaigningTest < Test::Unit::TestCase
   #   response = subscriber.add_and_resubscribe("ac52b645c048888a44c87b5f1ecf6b7d")
   #   assert response.code == 0
   # end
-  
-  
+  # 
+  # 
   # def test_subscriber_add_and_resubscribe_with_custom_fields
   #   subscriber = Campaigning::Subscriber.new("user_custon@test.com", "Mr. Custon")
   #   response = subscriber.add_and_resubscribe_with_custom_fields("ac52b645c048888a44c87b5f1ecf6b7d", :CityName => "Dublin", :SponsorName => "Some Sponsor")
@@ -287,7 +287,7 @@ class CampaigningTest < Test::Unit::TestCase
   #   subscriber_list = list.find_active_subscribers(DateTime.new(y=2009,m=5,d=01, h=01,min=00,s=00))        
   #   assert subscriber_list.length > 0
   # end
- 
+  # 
   # def test_list_get_all_active_subscribers
   #   client = Campaigning::Client.find_by_name("Client One Company")
   #   list = client.find_list_by_name "My Friends"
@@ -295,17 +295,17 @@ class CampaigningTest < Test::Unit::TestCase
   #   puts subscriber_list.inspect
   #   assert subscriber_list.length > 0
   # end 
-
-
-  
+  # 
+  # 
+  # 
   # def test_list_create
   #   client = Campaigning::Client.find_by_name("Client One Company")
   #   list = Campaigning::List.create(
-  #     :client_id => client.clientID,
-  #     :title => "New list to test",
-  #     :unsubscribe_page => "",
-  #     :comfirm_opt_in => false,
-  #     :confirmation_success_page => ""
+  #   :clientID => client.clientID,
+  #   :title => "New list to test",
+  #   :unsubscribePage => "",
+  #   :confirmOptIn => false,
+  #   :confirmationSuccessPage => ""
   #   )
   #   assert list.listID != nil
   # end
@@ -314,9 +314,9 @@ class CampaigningTest < Test::Unit::TestCase
   #   client = Campaigning::Client.find_by_name("Client One Company")
   #   list = client.find_list_by_name "My Friends"
   #   result = list.create_custom_field(
-  #     :field_name => "Country" ,
-  #     :data_type => "MultiSelectOne",
-  #     :options => %w[Brazil Ireland England]
+  #   :fieldName => "Country" ,
+  #   :dataType => "MultiSelectOne",
+  #   :options => %w[Brazil Ireland England]
   #   )
   #   assert result.code == 0
   # end
@@ -351,13 +351,13 @@ class CampaigningTest < Test::Unit::TestCase
   #   client = Campaigning::Client.find_by_name("Client One Company")
   #   list = client.find_list_by_name "My Friends"
   #   result = list.update(
-  #     :title => "NEW TITLE : My new list created by ruby list.create",
-  #     :unsubscribe_page => "",
-  #     :comfirm_opt_in => false,
-  #     :confirmation_success_page => ""
+  #   :title => "NEW TITLE : My new list created by ruby list.create",
+  #   :unsubscribePage => "",
+  #   :confirmOptIn => false,
+  #   :confirmationSuccessPage => ""
   #   )
   #   assert result.code == 0
   # end
-    
-  
+
+
 end

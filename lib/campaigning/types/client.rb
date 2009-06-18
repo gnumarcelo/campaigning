@@ -24,7 +24,7 @@ class Client
   #*Error*: An Exception containing the cause of the error will be raised.
   def lists
     response = @soap.getClientLists(:apiKey => CAMPAIGN_MONITOR_API_KEY, :clientID => @clientID)
-    lists = handle_request response.client_GetListsResult
+    lists = handle_response response.client_GetListsResult
     lists.collect {|list| List.new(list.listID, list.name)}
   end
   
@@ -69,7 +69,7 @@ class Client
   #*Error*: An Exception containing the cause of the error will be raised.
   def self.get_all_clients
     response = Campaigning::SOAPDriver.instance.get_driver.getClients(:apiKey => CAMPAIGN_MONITOR_API_KEY)
-    clients = Helpers.handle_request response.user_GetClientsResult
+    clients = handle_response response.user_GetClientsResult
     clients.collect {|client| Client.new(client.clientID, client.name)}
   end
   
@@ -78,13 +78,13 @@ class Client
   #means of a subsequent call to Campaigning::Client#update_access_and_billing.
   #
   #Available _params_ argument are:
-  #   * :company_name - The client company name.
-  #   * :contact_name - The personal name of the principle contact for this client.
-  #   * :email_address - An email address to which this client will be sent application-related emails.
+  #   * :companyName - The client company name.
+  #   * :contactName - The personal name of the principle contact for this client.
+  #   * :emailAddress - An email address to which this client will be sent application-related emails.
   #   * :country - This client's country. A valid country list is available in http://www.campaignmonitor.com/api/countries/ or by
   #                using the API procedure Campaigning.countries
-  #   * :time_zone - Client timezone for tracking and reporting data. A valid timezone list is available here or by using the API
-  #                  procedure Campaigning.time_zones.
+  #   * :timezone - Client timezone for tracking and reporting data. A valid timezone list is available here or by using the API
+  #                  procedure Campaigning.timezones.
   #*Return*:
   #
   #*Success*: Upon a successful call, this method will return a Campaigning::Client object representing the newly created client.
@@ -93,13 +93,13 @@ class Client
   def self.create(params)
     response = Campaigning::SOAPDriver.instance.get_driver.createClient(
       :apiKey => CAMPAIGN_MONITOR_API_KEY,
-      :companyName => params[:company_name],
-      :contactName => params[:contact_name],
-      :emailAddress => params[:email_address],
+      :companyName => params[:companyName],
+      :contactName => params[:contactName],
+      :emailAddress => params[:emailAddress],
       :country => params[:country],
-      :timezone => params[:time_zone]
+      :timezone => params[:timezone]
     )
-    Client.new( Helpers.handle_request(response.client_CreateResult), params[:company_name] )
+    Client.new( handle_response(response.client_CreateResult), params[:companyName] )
   end
   
   #Deletes a client from your account.
@@ -126,7 +126,7 @@ class Client
   #*Error*: An Exception containing the cause of the error will be raised.
   def self.delete(client_id)
     response = Campaigning::SOAPDriver.instance.get_driver.deleteClient(:apiKey => CAMPAIGN_MONITOR_API_KEY, :clientID => client_id)
-    Helpers.handle_request response.client_DeleteResult
+    handle_response response.client_DeleteResult
   end
   
   #Gets a list of all subscriber segments for a client.
@@ -139,7 +139,7 @@ class Client
   #*Error*: An Exception containing the cause of the error will be raised.
   def segments # TODO: Verify the type return for this method.
     response = @soap.getClientSegments(:apiKey => CAMPAIGN_MONITOR_API_KEY, :clientID => @clientID )
-    handle_request response.client_GetSegmentsResult
+    handle_response response.client_GetSegmentsResult
   end
   
   #This method finds campaigns by a given subject, since the subject isn't unique, it returns an collection of
@@ -170,7 +170,7 @@ class Client
   #*Error*: An Exception containing the cause of the error will be raised.
   def campaigns
     response = @soap.getClientCampaigns(:apiKey => CAMPAIGN_MONITOR_API_KEY, :clientID => @clientID )    
-    campaign_list = handle_request response.client_GetCampaignsResult
+    campaign_list = handle_response response.client_GetCampaignsResult
     campaign_list.collect do |campaign|  
       Campaign.new(campaign.campaignID, campaign.subject, campaign.sentDate, campaign.totalRecipients)
     end
@@ -207,7 +207,7 @@ class Client
   #*Error*: An Exception containing the cause of the error will be raised.
   def details
     response = @soap.getClientDetail(:apiKey => CAMPAIGN_MONITOR_API_KEY, :clientID => @clientID )    
-    handle_request response.client_GetDetailResult
+    handle_response response.client_GetDetailResult
   end
   
   #Gets all subscribers in the client-wide suppression list.
@@ -219,7 +219,7 @@ class Client
   #*Error*: An Exception containing the cause of the error will be raised.
   def suppression_list
     response = @soap.getClientSuppressionList(:apiKey => CAMPAIGN_MONITOR_API_KEY, :clientID => @clientID )
-    handle_request response.client_GetSuppressionListResult    
+    handle_response response.client_GetSuppressionListResult    
   end
   
   #Update the access and billing settings of an existing client, leaving the basic details untouched.
@@ -229,23 +229,23 @@ class Client
   #and will be fully described along with each parameter.
   #
   #Available _params_ argument are:
-  #   * :access_level - An integer describing the client's ability to access different areas of the application. Influences the significance
+  #   * :accessLevel - An integer describing the client's ability to access different areas of the application. Influences the significance
   #                     and requirements of the following parameters. See http://www.campaignmonitor.com/api/method/client-updateaccessandbilling/#accesslevels
   #                     for a full description of available levels.
   #   * :username - Client login username. Not required and ignored if AccessLevel is set to 0.
   #   * :password - Client login password. Not required and ignored if AccessLevel is set to 0.
-  #   * :billing_type - Client billing type, only required if :access_level is set to allow the client to create and send campaigns
-  #   * :currency - Billing currency for this client, only required if :billing_type is set to either ClientPaysAtStandardRate or
+  #   * :billingType - Client billing type, only required if :accessLevel is set to allow the client to create and send campaigns
+  #   * :currency - Billing currency for this client, only required if :billingType is set to either ClientPaysAtStandardRate or
   #                 ClientPaysWithMarkup. See full details: http://www.campaignmonitor.com/api/method/client-updateaccessandbilling/#currencies.
-  #   * :delivery_fee - Flat rate delivery fee to be charged to the client for each campaign sent, expressed in the chosen currency's
+  #   * :deliveryFee - Flat rate delivery fee to be charged to the client for each campaign sent, expressed in the chosen currency's
   #                     major unit, but without the currency symbol (for example, sending "6.5" means "$6.50" if USD is used). Only
   #                     required if BillingType is set to ClientPaysWithMarkup, in which case it should be at least equal to the standard rate.
   #                     Further detail is available at http://help.campaignmonitor.com/topic.aspx?t=118.
-  #   * :cost_per_recipient - Additional cost added to the campaign for each email address the campaign is sent to, expressed in the chosen
+  #   * :costPerRecipient - Additional cost added to the campaign for each email address the campaign is sent to, expressed in the chosen
   #                           currency's minor unit (for example, sending "1.5" means 1.5 cents per email address if USD is used). Only required
   #                           if BillingType is set to ClientPaysWithMarkup, in which case it should be at least equal to the standard cost/recipient
   #                           rate. Further detail is available at http://help.campaignmonitor.com/topic.aspx?t=118.
-  #   * :design_and_spam_test_fee - Expressed in the chosen currency's major unit (for example, sending "10" means "$10" if USD is used). Only required
+  #   * :designAndSpamTestFee - Expressed in the chosen currency's major unit (for example, sending "10" means "$10" if USD is used). Only required
   #                                 if BillingType is set to ClientPaysWithMarkup and client has access to design and spam tests, in which case the fee
   #                                 should be equal to or higher than the standard rate (identical to the standard DeliveryFee for that currency).  
   #
@@ -263,16 +263,16 @@ class Client
     response = @soap.updateClientAccessAndBilling(
      :apiKey => CAMPAIGN_MONITOR_API_KEY,
      :clientID => @clientID,
-     :accessLevel => params[:access_level],
+     :accessLevel => params[:accessLevel],
      :username => params.fetch(:username, ""),
      :password => params.fetch(:password, ""),
-     :billingType => params.fetch(:billing_type, ""),
+     :billingType => params.fetch(:billingType, ""),
      :currency => params.fetch(:currency, ""),
-     :deliveryFee => params.fetch(:delivery_fee, ""),
-     :costPerRecipient => params.fetch(:cost_per_recipient, ""),
-     :designAndSpamTestFee => params.fetch(:design_and_spam_test_fee, "")
+     :deliveryFee => params.fetch(:deliveryFee, ""),
+     :costPerRecipient => params.fetch(:costPerRecipient, ""),
+     :designAndSpamTestFee => params.fetch(:designAndSpamTestFee, "")
     )
-    handle_request response.client_UpdateAccessAndBillingResult
+    handle_response response.client_UpdateAccessAndBillingResult
   end
   
   #Updates the basic details of an existing client.
@@ -280,12 +280,12 @@ class Client
   #access and billing details will remain unchanged by a call to this method.
   #
   #Available _params_ argument are:
-  #   * :company_name - The client company name.
-  #   * :contact_name - The personal name of the principle contact for this client.
-  #   * :email_address - An email address to which this client will be sent application-related emails.
+  #   * :companyName - The client company name.
+  #   * :contactName - The personal name of the principle contact for this client.
+  #   * :emailAddress - An email address to which this client will be sent application-related emails.
   #   * :country - This client's country.
-  #   * :time_zone - Client timezone for tracking and reporting data. Valid timezone strings are obtainable by means of the
-  #                  API procedure Campaigning.time_zones.
+  #   * :timezone - Client timezone for tracking and reporting data. Valid timezone strings are obtainable by means of the
+  #                  API procedure Campaigning.timezones.
   #
   #*Return*:
   #
@@ -297,13 +297,13 @@ class Client
     response = @soap.updateClientBasics(
       :apiKey => CAMPAIGN_MONITOR_API_KEY,
       :clientID => @clientID,
-      :companyName => params[:company_name],
-      :contactName => params[:contact_name],
-      :emailAddress => params[:email_address],
+      :companyName => params[:companyName],
+      :contactName => params[:contactName],
+      :emailAddress => params[:emailAddress],
       :country => params[:country],
-      :timezone => params[:time_zone]
+      :timezone => params[:timezone]
     )
-    handle_request response.client_UpdateBasicsResult
+    handle_response response.client_UpdateBasicsResult
   end
 
   

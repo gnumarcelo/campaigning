@@ -8,18 +8,18 @@ CAMPAIGN_MONITOR_API_KEY  = '__PUT__YOUR__API__KEY__HERE__'
 #Creating a list for sample execution
 client = Campaigning::Client.find_by_name("Client One Company")
 list = Campaigning::List.create(
-  :client_id => client.clientID,
+  :clientID => client.clientID,
   :title => "List for Subscriber Sample Exec",
-  :comfirm_opt_in => false
+  :confirmOptIn => false
 )
 LIST_ID = list.listID
 puts "New list created: #{list.name} #{list.listID}"
 #Creating a Custom Field for sample execution
 client = Campaigning::Client.find_by_name("Client One Company")
 list = client.find_list_by_name "List for Subscriber Sample Exec"
-result = list.create_custom_field(:field_name => "City Name", :data_type => "Text")
+result = list.create_custom_field(:fieldName => "City Name", :dataType => "Text")
 puts "Custom field City Name created successfuly?: #{result.message}"
-result = list.create_custom_field(:field_name => "Sponsor Name", :data_type => "Text")
+result = list.create_custom_field(:fieldName => "Sponsor Name", :dataType => "Text")
 puts "Custom field Sponsor Name created successfuly?: #{result.message}"
 # /SETUP FOR THIS SAMPLE ---------------------------------------------------------------------
 

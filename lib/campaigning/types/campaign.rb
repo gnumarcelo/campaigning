@@ -58,7 +58,7 @@ module Campaigning
            :listSegments => params[:listSegments]
           )
 
-        campaign_id = Helpers.handle_request response.campaign_CreateResult
+        campaign_id = handle_response response.campaign_CreateResult
         Campaign.new campaign_id
     end
     
@@ -73,7 +73,7 @@ module Campaigning
     #*Error*: An Exception containing the cause of the error will be raised.
     def bounces
       response = @soap.getCampaignBounces(:apiKey => CAMPAIGN_MONITOR_API_KEY, :campaignID => @campaignID )
-      handle_request response.campaign_GetBouncesResult
+      handle_response response.campaign_GetBouncesResult
     end
     
     #Returns an array of Campaigning::List objects that a given campaign was sent to.
@@ -85,8 +85,7 @@ module Campaigning
     #*Error*: An Exception containing the cause of the error will be raised.
     def lists
       response = @soap.getCampaignLists(:apiKey => CAMPAIGN_MONITOR_API_KEY, :campaignID => @campaignID )
-      lists = handle_request response.campaign_GetListsResult
-      puts "LISTAS!!!!!!!!!!" + lists.inspect
+      lists = handle_response response.campaign_GetListsResult
       lists.collect do |list|  
         List.new(list.listID, list.name)
       end
@@ -103,7 +102,7 @@ module Campaigning
     #*Error*: An Exception containing the cause of the error will be raised.
     def opens
       response = @soap.getCampaignOpens(:apiKey => CAMPAIGN_MONITOR_API_KEY, :campaignID => @campaignID )
-      handle_request response.campaign_GetOpensResult
+      handle_response response.campaign_GetOpensResult
     end
     
     #Gets a list of all subscribers who clicked a link for a given campaign, the ID of the list they belong to,
@@ -128,7 +127,7 @@ module Campaigning
     #*Error*: An Exception containing the cause of the error will be raised.
     def subscriber_clicks
       response = @soap.getSubscriberClicks(:apiKey => CAMPAIGN_MONITOR_API_KEY, :campaignID => @campaignID )
-      handle_request response.campaign_GetSubscriberClicksResult
+      handle_response response.campaign_GetSubscriberClicksResult
     end
     
     #Gets a statistical summary, including number of recipients and open count, for a given campaign.
@@ -142,7 +141,7 @@ module Campaigning
     #*Error*: An Exception containing the cause of the error will be raised.
     def summary
       response = @soap.getCampaignSummary(:apiKey => CAMPAIGN_MONITOR_API_KEY, :campaignID => @campaignID )
-      handle_request response.campaign_GetSummaryResult
+      handle_response response.campaign_GetSummaryResult
     end
     
     #Gets a list of all subscribers who unsubscribed for a given campaign.
@@ -155,7 +154,7 @@ module Campaigning
     #*Error*: An Exception containing the cause of the error will be raised.
     def unsubscribes
       response = @soap.getCampaignUnsubscribes(:apiKey => CAMPAIGN_MONITOR_API_KEY, :campaignID => @campaignID )
-      handle_request response.campaign_GetUnsubscribesResult
+      handle_response response.campaign_GetUnsubscribesResult
     end
     
     #Schedules an existing campaign for sending.
@@ -166,8 +165,8 @@ module Campaigning
     #For further information about credits for campaigns please check at: http://www.campaignmonitor.com/api/method/campaign-send/
     #
     #Available _params_ argument are:
-    #   * :confirmation_email - The email address that the confirmation email that the campaign has been sent will go to.
-    #   * :send_date - The date the campaign should be scheduled to be sent. To send a campaign immediately pass in "Immediately".
+    #   * :confirmationEmail - The email address that the confirmation email that the campaign has been sent will go to.
+    #   * :sendDate - The date the campaign should be scheduled to be sent. To send a campaign immediately pass in "Immediately".
     #                  This date should be in the users timezone and formatted as YYYY-MM-DD HH:MM:SS.
     #
     #*Return*:
@@ -178,10 +177,10 @@ module Campaigning
       response = @soap.sendCampaign(
         :apiKey => CAMPAIGN_MONITOR_API_KEY,
         :campaignID => @campaignID,
-        :confirmationEmail => params[:confirmation_email],
-        :sendDate => params[:send_date]
+        :confirmationEmail => params[:confirmationEmail],
+        :sendDate => params[:sendDate]
          )
-      handle_request response.campaign_SendResult
+      handle_response response.campaign_SendResult
     end
     
   end

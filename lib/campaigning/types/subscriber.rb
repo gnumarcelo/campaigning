@@ -43,7 +43,7 @@ class Subscriber
       :email => @emailAddress,
       :name => @name
      )
-    handle_request response.subscriber_AddResult
+    handle_response response.subscriber_AddResult
   end
   
   #Adds a subscriber (email address, name) to an existing subscriber list. If the subscriber (email address) already exists,
@@ -68,7 +68,7 @@ class Subscriber
       :email => @emailAddress,
       :name => @name
      )
-    handle_request response.subscriber_AddAndResubscribeResult
+    handle_response response.subscriber_AddAndResubscribeResult
   end
   
   
@@ -95,7 +95,7 @@ class Subscriber
     :name => @name,
     :customFields => custom_fields_array(custom_fields)
     )
-    handle_request response.subscriber_AddAndResubscribeWithCustomFieldsResult
+    handle_response response.subscriber_AddAndResubscribeWithCustomFieldsResult
   end
  
   #Adds a subscriber to a subscriber list, including adding custom field data for the subscriber. If the subscriber (email address)
@@ -121,7 +121,7 @@ class Subscriber
     :name => @name,
     :customFields => custom_fields_array(custom_fields)
     )
-    handle_request response.subscriber_AddWithCustomFieldsResult
+    handle_response response.subscriber_AddWithCustomFieldsResult
   end 
  
   #Changes the status of an Active Subscriber to an Unsubscribed Subscriber who will no longer receive
@@ -148,7 +148,7 @@ class Subscriber
     :listID => list_id,
     :email => email
     )
-    Helpers.handle_request response.subscriber_UnsubscribeResult
+    handle_response response.subscriber_UnsubscribeResult
   end
   
   #Returns True or False as to the existence of the given email address in the list supplied.
@@ -163,7 +163,7 @@ class Subscriber
      :listID => list_id,
      :email => email
     )
-    response = Helpers.handle_request response.subscribers_GetIsSubscribedResult
+    response = handle_response response.subscribers_GetIsSubscribedResult
     response == 'True' ? true : false
   end
 

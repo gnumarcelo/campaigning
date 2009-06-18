@@ -19,13 +19,13 @@ module Campaigning
     #Creates a brand new subscriber list
     #
     #Available _params_ argument are:
-    #   * :client_id - The ID of the client who will owner of the list.
+    #   * :clientID - The ID of the client who will owner of the list.
     #   * :title - The list title. Must be unique for this client.
-    #   * :unsubscribe_page - The URL to which subscribers will be directed when unsubscribing from the list.
+    #   * :unsubscribePage - The URL to which subscribers will be directed when unsubscribing from the list.
     #                         If left blank or omitted a generic unsubscribe page is used.
-    #   * :comfirm_opt_in - Either true or false depending on whether the list requires email confirmation or not. Please see
+    #   * :confirmOptIn - Either true or false depending on whether the list requires email confirmation or not. Please see
     #                       the help documentation for more details of what this means.
-    #   * :confirmation_success_page - Successful email confirmations will be redirected to this URL. Ignored if ConfirmOptIn
+    #   * :confirmationSuccessPage - Successful email confirmations will be redirected to this URL. Ignored if ConfirmOptIn
     #                                  is false. If left blank or omitted a generic confirmation page is used.
     #*Return*:
     #
@@ -35,21 +35,21 @@ module Campaigning
     def self.create(params)
       response = Campaigning::SOAPDriver.instance.get_driver.createList(
         :apiKey => CAMPAIGN_MONITOR_API_KEY,
-        :clientID => params[:client_id],
+        :clientID => params[:clientID],
         :title => params[:title],
-        :unsubscribePage => params.fetch(:unsubscribe_page, ""),
-        :confirmOptIn => params[:comfirm_opt_in],
-        :confirmationSuccessPage => params.fetch(:confirmation_success_page, "")
+        :unsubscribePage => params.fetch(:unsubscribePage, ""),
+        :confirmOptIn => params[:confirmOptIn],
+        :confirmationSuccessPage => params.fetch(:confirmationSuccessPage, "")
       )      
-      new_list_id = Helpers.handle_request response.list_CreateResult
+      new_list_id = handle_response response.list_CreateResult
       List.new(new_list_id, params[:title])
     end
     
     #Creates a new custom field for a list
     #
     #Available _params_ argument are:
-    #   * :field_name - The Name for the new Custom Field. This will be used to generate the custom fields Key.
-    #   * :data_type - The Data Type for the new Custom Field. This must be one of Text, Number, MultiSelectOne, or MultiSelectMany
+    #   * :fieldName - The Name for the new Custom Field. This will be used to generate the custom fields Key.
+    #   * :dataType - The Data Type for the new Custom Field. This must be one of Text, Number, MultiSelectOne, or MultiSelectMany
     #   * :options - The available options for a multi-valued custom field. Options should be an Array of Strings, like: %w[Brazil Ireland England].
     #                You can't pass this field for Text and Number custom fields
     #
@@ -63,11 +63,11 @@ module Campaigning
       response = @soap.createListCustomField(
         :apiKey => CAMPAIGN_MONITOR_API_KEY,
         :listID => @listID,
-        :fieldName => params[:field_name],
-        :dataType => params[:data_type],
+        :fieldName => params[:fieldName],
+        :dataType => params[:dataType],
         :options => params.fetch(:options, "") 
       )
-      handle_request response.list_CreateCustomFieldResult
+      handle_response response.list_CreateCustomFieldResult
     end
     
     #Deletes a list
@@ -93,7 +93,7 @@ module Campaigning
     #*Error*: An Exception containing the cause of the error will be raised.
     def self.delete(list_id)
       response = Campaigning::SOAPDriver.instance.get_driver.deleteList(:apiKey => CAMPAIGN_MONITOR_API_KEY, :listID => list_id)
-      Helpers.handle_request response.list_DeleteResult
+      handle_response response.list_DeleteResult
     end
     
     #Deletes a custom field from a list
@@ -106,7 +106,7 @@ module Campaigning
     #*Error*: An Exception containing the cause of the error will be raised.
     def delete_custom_field(key)
       response = @soap.deleteListCustomField(:apiKey => CAMPAIGN_MONITOR_API_KEY, :listID => @listID, :key => '['+key+']')
-      handle_request response.list_DeleteCustomFieldResult
+      handle_response response.list_DeleteCustomFieldResult
     end
     
     #Gets all the Custom Fields available for a list
@@ -119,7 +119,7 @@ module Campaigning
     #*Error*: An Exception containing the cause of the error will be raised.
     def custom_fields
       response = @soap.getListCustomFields(:apiKey => CAMPAIGN_MONITOR_API_KEY, :listID => @listID)
-      handle_request response.list_GetCustomFieldsResult
+      handle_response response.list_GetCustomFieldsResult
     end
     
     #Gets a list's configuration detail
@@ -132,7 +132,7 @@ module Campaigning
     #*Error*: An Exception containing the cause of the error will be raised.
     def details
       response = @soap.getListDetail(:apiKey => CAMPAIGN_MONITOR_API_KEY, :listID => @listID)
-      handle_request response.list_GetDetailResult
+      handle_response response.list_GetDetailResult
     end
   
     #Gets a list of all active subscribers for a list.
@@ -162,7 +162,7 @@ module Campaigning
        :listID => @listID,
        :date =>joined_at.strftime('%Y-%m-%d %H:%M:%S')
       )
-      handle_request response.subscribers_GetActiveResult
+      handle_response response.subscribers_GetActiveResult
     end
 
     #Gets a list of all subscribers for a list that have unsubscribed since the specified date.
@@ -182,7 +182,7 @@ module Campaigning
        :listID => @listID,
        :date => unjoined_at.strftime('%Y-%m-%d %H:%M:%S') # TODO: Move that to a helper method
       )
-      handle_request response.subscribers_GetUnsubscribedResult
+      handle_response response.subscribers_GetUnsubscribedResult
     end
     
     #This method returns all of a particular subscribers details, including email address, name, active/inactive
@@ -199,18 +199,18 @@ module Campaigning
        :listID => @listID,
        :emailAddress => email_address
       )
-      handle_request response.subscribers_GetSingleSubscriberResult
+      handle_response response.subscribers_GetSingleSubscriberResult
     end
         
     #Update a subscriber list’s details
     #
     #Available _params_ argument are:
     #   * :title - The list title, as it will be shown in the application and through the API.
-    #   * :unsubscribe_page - The URL to which subscribers will be directed when unsubscribing from the list.
+    #   * :unsubscribePage - The URL to which subscribers will be directed when unsubscribing from the list.
     #                         If left blank or omitted a generic unsubscribe page is used.
-    #   * :comfirm_opt_in - Either true or false depending on whether the list requires email confirmation or not. Please see
+    #   * :confirmOptIn - Either true or false depending on whether the list requires email confirmation or not. Please see
     #                       the help documentation for more details of what this means.
-    #   * :confirmation_success_page - Successful email confirmations will be redirected to this URL. Ignored if ConfirmOptIn
+    #   * :confirmationSuccessPage - Successful email confirmations will be redirected to this URL. Ignored if ConfirmOptIn
     #                                  is false. If left blank or omitted a generic confirmation page is used.
     #
     #*Return*:
@@ -224,11 +224,11 @@ module Campaigning
         :apiKey => CAMPAIGN_MONITOR_API_KEY,
         :listID => @listID,
         :title => params[:title],
-        :unsubscribePage => params.fetch(:unsubscribe_page, ""),
-        :confirmOptIn => params[:comfirm_opt_in],
-        :confirmationSuccessPage => params.fetch(:confirmation_success_page, "") 
+        :unsubscribePage => params.fetch(:unsubscribePage, ""),
+        :confirmOptIn => params[:confirmOptIn],
+        :confirmationSuccessPage => params.fetch(:confirmationSuccessPage, "") 
       )
-      handle_request response.list_UpdateResult
+      handle_response response.list_UpdateResult
     end
     
     protected
