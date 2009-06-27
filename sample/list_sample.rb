@@ -6,7 +6,7 @@ CAMPAIGN_MONITOR_API_KEY  = '__PUT__YOUR__API__KEY__HERE__'
 
 #Here is how to create a brand new subscriber list
 client = Campaigning::Client.find_by_name("Client One Company")
-list = Campaigning::List.create(
+list = Campaigning::List.create!(
   :clientID => client.clientID,
   :title => "List from Sample Exec",
   :unsubscribePage => "http://www.mycompany.com/campaign/ubsubscribe.html", #If not suplied or equals blank (""), default value will be used
@@ -15,7 +15,7 @@ list = Campaigning::List.create(
 )
 puts "Here is the new created List: #{list.name} #{list.listID}"
 #OR you can remove both optional parameters from the method call like below and default values will be used as well:
-list2 = Campaigning::List.create(
+list2 = Campaigning::List.create!(
   :clientID => client.clientID,
   :title => "List from Sample Exec2",
   :confirmOptIn => false
@@ -30,12 +30,12 @@ EMAIL_2 = "mrgree@example.com"
 
 #Here is how to add a subscriber (email address, name) to an existing subscriber list.
 subscriber = Campaigning::Subscriber.new(EMAIL_1, "Robert Franklin Jr.")
-result = subscriber.add(list.listID)
+result = subscriber.add!(list.listID)
 puts "Was the subscriber add tho the list: #{result.message}"
 
 #Here is how to add and resubscribe a Subscriber to an existing subscriber list.
 subscriber = Campaigning::Subscriber.new(EMAIL_2, "Nora Green Mor")
-result = subscriber.add_and_resubscribe(list.listID)
+result = subscriber.add_and_resubscribe!(list.listID)
 puts "Was the subscriber add and resubscribed tho the list: #{result.message}"
 
 # /SETUP FOR THIS SAMPLE ---------------------------------------------------------------------
@@ -46,13 +46,13 @@ puts "Was the subscriber add and resubscribed tho the list: #{result.message}"
 client = Campaigning::Client.find_by_name("Client One Company")
 puts client.inspect
 list = client.find_list_by_name "List from Sample Exec"
-result = list.create_custom_field(
+result = list.create_custom_field!(
   :fieldName => "Color" ,
   :dataType => "MultiSelectOne", #This must be one of Text, Number, MultiSelectOne, or MultiSelectMany
   :options => %w[Blue Red Orange]
 )
 #Let's create one more custom field
-result1 = list.create_custom_field(
+result1 = list.create_custom_field!(
   :fieldName => "Contact Type" ,
   :dataType => "MultiSelectOne",
   :options => %w[email post telephone]
@@ -72,10 +72,10 @@ puts "Here is all my Custom fields from the given list:  #{result.inspect}"
 #How to delete a custom field from a list
 client = Campaigning::Client.find_by_name("Client One Company")
 list = client.find_list_by_name "List from Sample Exec"    
-result = list.delete_custom_field("Color")
+result = list.delete_custom_field!("Color")
 puts "Was my Color custom field deleted successfuly? #{result.message}"
 #Deleting my Contact Type custom Field
-result = list.delete_custom_field("ContactType")
+result = list.delete_custom_field!("ContactType")
 puts "Was my Contact Type custom field deleted successfuly? #{result.message}"  
   
   
@@ -114,7 +114,7 @@ puts "Here is my list configuration details:  #{result.inspect}"
 #Here is hot to update a subscriber list’s details
 client = Campaigning::Client.find_by_name("Client One Company")
 list = client.find_list_by_name "List from Sample Exec"
-result = list.update(
+result = list.update!(
   :title => "My new list created by ruby list_sample",
   :unsubscribePage => "", # Default will be used
   :confirmOptIn => false,
@@ -141,13 +141,13 @@ puts "Subscriber details: #{subscriber.inspect}"
 #Here is how to delete a list
 client = Campaigning::Client.find_by_name("Client One Company")
 list = client.find_list_by_name "My new list created by ruby list_sample"
-result = Campaigning::List.delete(list.listID)
+result = Campaigning::List.delete!(list.listID)
 puts "Was my list deleted successfully?  #{result.message}"
 
 
 #Deleting another list (instance method)
 list = client.find_list_by_name "List from Sample Exec2" 
-list.delete
+list.delete!
 puts "Was my second list deleted successfully: #{list.listID}"
 
 

@@ -1,17 +1,21 @@
+require File.expand_path(File.dirname(__FILE__)) + '/soap/generated/defaultDriver.rb'
 module Campaigning
-  module Helpers #:nodoc:
+  module ModuleMixin #:nodoc:
+    #DefaultEndpointUrl = "http://api.createsend.com/api/api.asmx"
+    @@soap = Campaigning::ApiSoap.new
+
     def self.included(base)
       base.extend(ClassMethods) # Make all ClassMethods methods avaiable to the object including this module.
       private :handle_response
     end
-     
+
     def handle_response(response)
       self.class.handle_response(response)
     end
-    
+
     # All methods above will became Object methods
     module ClassMethods #:nodoc:
-      
+
       #Method responsable to handle all response from the API server and raising an exception when
       #the API returns an error code (different from 0 (zero) ).
       def handle_response(response)
@@ -20,7 +24,7 @@ module Campaigning
         end
         response
       end
-      
+
     end
 
   end

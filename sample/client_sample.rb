@@ -10,7 +10,7 @@ puts "All my clients: #{clients.inspect}"
 
 
 # Here is how to create a new client
-client = Campaigning::Client.create(
+client = Campaigning::Client.create!(
   :companyName => "Company to Sample Client",
   :contactName => "Oswald Green Sample",
   :emailAddress => "og233@example.com",
@@ -19,7 +19,7 @@ client = Campaigning::Client.create(
 )
 puts "New Client created is: #{client.inspect}"
 
-client_two = Campaigning::Client.create(
+client_two = Campaigning::Client.create!(
   :companyName => "Company Gordon",
   :contactName => "Mr. Gordon",
   :emailAddress => "gordon3@example.com",
@@ -33,7 +33,7 @@ puts "Other new Client created is: #{client_two.inspect}"
 # SETUP FOR THIS SAMPLE ---------------------------------------------------------------------
 #Creating a list for this sample execution
 client = Campaigning::Client.find_by_name("Company to Sample Client")
-list = Campaigning::List.create(
+list = Campaigning::List.create!(
   :clientID => client.clientID,
   :title => "List people from Chicago",
   :confirmOptIn => false
@@ -77,7 +77,7 @@ puts "Client suppression list: #{client.suppression_list}"
 #How to update the access and billing settings of an existing client, leaving the basic details untouched.
 #Consult the API website for more information: http://www.campaignmonitor.com/api/method/client-updateaccessandbilling/
 client = Campaigning::Client.find_by_name("Company to Sample Client")
-response = client.update_access_and_billing(
+response = client.update_access_and_billing!(
    :accessLevel => 5 ,
    :username => "client_comp_s",
    :password => "1234560",
@@ -117,9 +117,9 @@ puts "Username: #{access_and_billing_details.username}\n
 
 
 #How to update the basic details of an existing client.
-#Please note that the client’s existing access and billing details will remain unchanged by a call to Client.update_basics.
+#Please note that the client’s existing access and billing details will remain unchanged by a call to Client.update_basics!.
 client_two = Campaigning::Client.find_by_name("Company Gordon")
-response = client.update_basics(
+response = client.update_basics!(
   :companyName => "My new Company",
   :contactName => "Mr. Gordon Newman",
   :emailAddress => "gordon-newman43@example.com",
@@ -130,10 +130,10 @@ puts "Was the other Client successfuly updated?: #{response.message}"
 
 
 # Here is how to delete a client
-result = Campaigning::Client.delete(client.clientID)  
+result = Campaigning::Client.delete!(client.clientID)  
 puts "Client deleted successfuly? #{result.message}"
 #Or you can use a instance method like:
 client = Campaigning::Client.find_by_name("My new Company")
-result = client.delete
+result = client.delete!
 puts "Client two deleted successfuly? #{result.message}"
 

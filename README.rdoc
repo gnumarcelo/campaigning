@@ -45,7 +45,7 @@ Sample use of the Client class:
 
   #Here is how to create a brand new subscriber list for an Client
   client = Campaigning::Client.find_by_name("Client One Company")
-  list = Campaigning::List.create(
+  list = Campaigning::List.create!(
     :clientID => client.clientID,
     :title => "List of people from Brazil",
     :confirmOptIn => false

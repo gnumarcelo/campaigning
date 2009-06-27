@@ -1,12 +1,11 @@
 # Campaign is defined in soap/default.rb which is automatically generated.
 # In this file we add additional methods to the Campaign class.
-require File.expand_path(File.dirname(__FILE__)) + '/../helpers/helpers'
+require File.expand_path(File.dirname(__FILE__)) + '/module_mixin'
 
 
 module Campaigning
-  
   class Campaign
-    include Helpers   
+    include ModuleMixin   
     attr_accessor :campaignID
     attr_accessor :subject
     attr_accessor :sentDate
@@ -17,7 +16,6 @@ module Campaigning
       @subject = subject
       @sentDate = sentDate
       @totalRecipients = totalRecipients
-      @soap = Campaigning::SOAPDriver.instance.get_driver
     end
     
     #Creates a campaign for an existing client. This campaign will be imported and ready to send to the subscribers in
@@ -43,8 +41,8 @@ module Campaigning
     #*Success*: Upon a successful call, this method will return a Campaigning::Campaign object which was recently created.
     #
     #*Error*: An Exception containing the cause of the error will be raised.    
-    def self.create(params)  
-        response = Campaigning::SOAPDriver.instance.get_driver.createCampaign(
+    def self.create!(params)  
+        response = @@soap.createCampaign(
            :apiKey => CAMPAIGN_MONITOR_API_KEY,
            :clientID => params[:clientID],
            :campaignName => params[:campaignName],
@@ -72,7 +70,7 @@ module Campaigning
     #
     #*Error*: An Exception containing the cause of the error will be raised.
     def bounces
-      response = @soap.getCampaignBounces(:apiKey => CAMPAIGN_MONITOR_API_KEY, :campaignID => @campaignID )
+      response = @@soap.getCampaignBounces(:apiKey => CAMPAIGN_MONITOR_API_KEY, :campaignID => @campaignID )
       handle_response response.campaign_GetBouncesResult
     end
     
@@ -84,7 +82,7 @@ module Campaigning
     #
     #*Error*: An Exception containing the cause of the error will be raised.
     def lists
-      response = @soap.getCampaignLists(:apiKey => CAMPAIGN_MONITOR_API_KEY, :campaignID => @campaignID )
+      response = @@soap.getCampaignLists(:apiKey => CAMPAIGN_MONITOR_API_KEY, :campaignID => @campaignID )
       lists = handle_response response.campaign_GetListsResult
       lists.collect do |list|  
         List.new(list.listID, list.name)
@@ -101,7 +99,7 @@ module Campaigning
     #
     #*Error*: An Exception containing the cause of the error will be raised.
     def opens
-      response = @soap.getCampaignOpens(:apiKey => CAMPAIGN_MONITOR_API_KEY, :campaignID => @campaignID )
+      response = @@soap.getCampaignOpens(:apiKey => CAMPAIGN_MONITOR_API_KEY, :campaignID => @campaignID )
       handle_response response.campaign_GetOpensResult
     end
     
@@ -126,7 +124,7 @@ module Campaigning
     #
     #*Error*: An Exception containing the cause of the error will be raised.
     def subscriber_clicks
-      response = @soap.getSubscriberClicks(:apiKey => CAMPAIGN_MONITOR_API_KEY, :campaignID => @campaignID )
+      response = @@soap.getSubscriberClicks(:apiKey => CAMPAIGN_MONITOR_API_KEY, :campaignID => @campaignID )
       handle_response response.campaign_GetSubscriberClicksResult
     end
     
@@ -140,7 +138,7 @@ module Campaigning
     #
     #*Error*: An Exception containing the cause of the error will be raised.
     def summary
-      response = @soap.getCampaignSummary(:apiKey => CAMPAIGN_MONITOR_API_KEY, :campaignID => @campaignID )
+      response = @@soap.getCampaignSummary(:apiKey => CAMPAIGN_MONITOR_API_KEY, :campaignID => @campaignID )
       handle_response response.campaign_GetSummaryResult
     end
     
@@ -153,7 +151,7 @@ module Campaigning
     #
     #*Error*: An Exception containing the cause of the error will be raised.
     def unsubscribes
-      response = @soap.getCampaignUnsubscribes(:apiKey => CAMPAIGN_MONITOR_API_KEY, :campaignID => @campaignID )
+      response = @@soap.getCampaignUnsubscribes(:apiKey => CAMPAIGN_MONITOR_API_KEY, :campaignID => @campaignID )
       handle_response response.campaign_GetUnsubscribesResult
     end
     
@@ -173,8 +171,8 @@ module Campaigning
     #Upon a successful call, this method will return a Result object with the newly create Campaign's ID as the Code.
     #
     #*Error*: An Exception containing the cause of the error will be raised.
-    def send(params)
-      response = @soap.sendCampaign(
+    def send!(params)
+      response = @@soap.sendCampaign(
         :apiKey => CAMPAIGN_MONITOR_API_KEY,
         :campaignID => @campaignID,
         :confirmationEmail => params[:confirmationEmail],

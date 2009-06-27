@@ -6,7 +6,7 @@ CAMPAIGN_MONITOR_API_KEY  = '__PUT__YOUR__API__KEY__HERE__'
 
 # SETUP FOR THIS SAMPLE ---------------------------------------------------------------------
 #Creating a Client for this sample execution
-client = Campaigning::Client.create(
+client = Campaigning::Client.create!(
   :companyName => "Client to Sample",
   :contactName => "Marcus Cesar",
   :emailAddress => "og3@example.com",
@@ -14,7 +14,7 @@ client = Campaigning::Client.create(
   :timezone => "(GMT) Casablanca" #alternatively you can use "Campaigning.timezones" to get valid time zones list
 )
 puts "New Client created is: #{client.inspect}"
-list = Campaigning::List.create(
+list = Campaigning::List.create!(
   :clientID => client.clientID,
   :title => "List from Sample Exec",
   :unsubscribePage => "http://www.mycompany.com/campaign/ubsubscribe.html", #If not suplied or equals blank (""), default value will be used
@@ -26,7 +26,7 @@ list = Campaigning::List.create(
 
 # Here is how to create a campaign and send that campaign
 client = Campaigning::Client.find_by_name("Client to Sample")
-campaign = Campaigning::Campaign.create(
+campaign = Campaigning::Campaign.create!(
   :clientID => client.clientID,
   :campaignName => "Campaign created for Campaign Sample",
   :campaignSubject => "Campaign by myself - OK",
@@ -40,7 +40,7 @@ campaign = Campaigning::Campaign.create(
 )
 puts "New Campaign created is: #{campaign.inspect}"
 #After create a campaign you can send as follow:
-campaign.send(
+campaign.send!(
   :confirmationEmail => "userhdhd@example.com",
   :sendDate => DateTime.now #To send a campaign immediately pass in “Immediately”.
                              #This date should be in the users timezone and formatted as YYYY-MM-DD HH:MM:SS.
@@ -112,5 +112,5 @@ puts "all subscribers who unsubscribed for a given campaign: #{campaign.inspect}
 # TEARDOWN FOR THIS SAMPLE --------------------------------------------------------------------
 # Deleting a client created for this sample
 client = Campaigning::Client.find_by_name("Client to Sample")
-result = Campaigning::Client.delete(client.clientID)  
+result = Campaigning::Client.delete!(client.clientID)  
 puts "Client deleted successfuly? #{result.message}"

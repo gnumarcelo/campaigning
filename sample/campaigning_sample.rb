@@ -11,7 +11,7 @@ puts "API get the system date from the API server: #{date_time.inspect}"
 
 
 #Here is how to set the debug mode for the SOAP requests
-timezones = Campaigning.setup_debug_mode true
+timezones = Campaigning.set_debug_mode! true
 puts "API set debug mode to true"
 
 
