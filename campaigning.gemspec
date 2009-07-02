@@ -27,7 +27,11 @@ Gem::Specification.new do |s|
     "lib/campaigning/soap/generated/defaultDriver.rb",
     "lib/campaigning/soap/generated/defaultMappingRegistry.rb",
     "lib/campaigning/subscriber.rb",
+    "test/campaign_test.rb",
     "test/campaigning_test.rb",
+    "test/client_test.rb",
+    "test/list_test.rb",
+    "test/subscriber_test.rb",
     "test/test_helper.rb"
   ]
   s.has_rdoc = true
@@ -37,7 +41,11 @@ Gem::Specification.new do |s|
   s.rubygems_version = %q{1.3.2}
   s.summary = %q{TODO}
   s.test_files = [
+    "test/campaign_test.rb",
     "test/campaigning_test.rb",
+    "test/client_test.rb",
+    "test/list_test.rb",
+    "test/subscriber_test.rb",
     "test/test_helper.rb"
   ]
 
