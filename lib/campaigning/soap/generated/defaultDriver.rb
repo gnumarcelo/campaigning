@@ -311,6 +311,14 @@ class ApiSoap < ::SOAP::RPC::Driver
       { :request_style =>  :document, :request_use =>  :literal,
         :response_style => :document, :response_use => :literal,
         :faults => {} }
+    ],
+    [ "http://api.createsend.com/api/Campaign.Delete",
+      "deleteCampaign",
+      [ ["in", "parameters", ["::SOAP::SOAPElement", "http://api.createsend.com/api/", "Campaign.Delete"]],
+        ["out", "parameters", ["::SOAP::SOAPElement", "http://api.createsend.com/api/", "Campaign.DeleteResponse"]] ],
+      { :request_style =>  :document, :request_use =>  :literal,
+        :response_style => :document, :response_use => :literal,
+        :faults => {} }
     ]
   ]
 

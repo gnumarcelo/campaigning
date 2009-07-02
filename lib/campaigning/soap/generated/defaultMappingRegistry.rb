@@ -1267,6 +1267,23 @@ module DefaultMappingRegistry
   )
 
   LiteralRegistry.register(
+    :class => Campaigning::CampaignDelete,
+    :schema_name => XSD::QName.new(NsApi, "Campaign.Delete"),
+    :schema_element => [
+      ["apiKey", ["SOAP::SOAPString", XSD::QName.new(NsApi, "ApiKey")], [0, 1]],
+      ["campaignID", ["SOAP::SOAPString", XSD::QName.new(NsApi, "CampaignID")], [0, 1]]
+    ]
+  )
+
+  LiteralRegistry.register(
+    :class => Campaigning::CampaignDeleteResponse,
+    :schema_name => XSD::QName.new(NsApi, "Campaign.DeleteResponse"),
+    :schema_element => [
+      ["campaign_DeleteResult", ["Campaigning::Result", XSD::QName.new(NsApi, "Campaign.DeleteResult")], [0, 1]]
+    ]
+  )
+
+  LiteralRegistry.register(
     :class => Campaigning::Result,
     :schema_name => XSD::QName.new(NsApi, "Result"),
     :schema_element => [

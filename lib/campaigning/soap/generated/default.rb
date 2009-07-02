@@ -1388,6 +1388,29 @@ class CampaignSendResponse
   end
 end
 
+# {http://api.createsend.com/api/}Campaign.Delete
+#   apiKey - SOAP::SOAPString
+#   campaignID - SOAP::SOAPString
+class CampaignDelete
+  attr_accessor :apiKey
+  attr_accessor :campaignID
+
+  def initialize(apiKey = nil, campaignID = nil)
+    @apiKey = apiKey
+    @campaignID = campaignID
+  end
+end
+
+# {http://api.createsend.com/api/}Campaign.DeleteResponse
+#   campaign_DeleteResult - Campaigning::Result
+class CampaignDeleteResponse
+  attr_accessor :campaign_DeleteResult
+
+  def initialize(campaign_DeleteResult = nil)
+    @campaign_DeleteResult = campaign_DeleteResult
+  end
+end
+
 # {http://api.createsend.com/api/}anyType
 class AnyType < ::String
   def initialize(*arg)

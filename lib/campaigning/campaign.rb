@@ -59,6 +59,32 @@ module Campaigning
         campaign_id = handle_response response.campaign_CreateResult
         Campaign.new campaign_id
     end
+ 
+    #Deletes an existing campaign.
+    #
+    #*Return*:
+    #
+    #*Success*: Upon a successful call, this method will return a Campaigning::Result object wich consists of a +code+ and +message+ fields
+    #containing a successful message.
+    #
+    #*Error*: An Exception containing the cause of the error will be raised. 
+    def delete!
+      Campaign.delete!(@campaignID)
+      self.campaignID, self.subject, self.sentDate, self.totalRecipients  = nil, nil, nil, nil
+    end
+
+    #Deletes an existing campaign.
+    #
+    #*Return*:
+    #
+    #*Success*: Upon a successful call, this method will return a Campaigning::Result object wich consists of a +code+ and +message+ fields
+    #containing a successful message.
+    #
+    #*Error*: An Exception containing the cause of the error will be raised.
+    def self.delete!(campaign_id)
+      response = @@soap.deleteCampaign(:apiKey => CAMPAIGN_MONITOR_API_KEY, :campaignID => list_id)
+      handle_response response.campaign_DeleteResult
+    end
     
     #Gets a list of all subscribers who bounced for a given campaign, and the type of bounce (H=Hard Bounce, S=Soft Bounce).
     #

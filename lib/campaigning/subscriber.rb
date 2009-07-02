@@ -98,7 +98,7 @@ module Campaigning
     #containing a successful message.
     #
     #*Error*: An Exception containing the cause of the error will be raised.
-    def unsubscribe(list_id)
+    def unsubscribe!(list_id)
       Subscriber.unsubscribe!(@emailAddress, list_id)
     end
 
