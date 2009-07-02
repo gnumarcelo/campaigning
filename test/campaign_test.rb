@@ -1,7 +1,7 @@
 require 'test_helper'
 
 # Replace this API key with your own (http://www.campaignmonitor.com/api/)
-CAMPAIGN_MONITOR_API_KEY  = '54cae7f3aa1f35cb3bb5bc41756d8b7f'
+CAMPAIGN_MONITOR_API_KEY  = '__PUT_YOUR_API_KEY_HERE__'
 
 class CampaignTest < Test::Unit::TestCase
 
@@ -25,7 +25,6 @@ class CampaignTest < Test::Unit::TestCase
     :subscriberListIDs => ["ac52b645c048888a44c87b5f1ecf6b7d"],
     :listSegments => client.segments
     )
-    Campaigning::Campaign.delete!(response)
     puts response.inspect
   end
   
