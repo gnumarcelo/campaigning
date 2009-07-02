@@ -136,7 +136,13 @@ module Campaigning
     def custom_fields_array(custom_fields) #:nodoc:
       arr = []
       custom_fields.each do |key, value|
-        arr << { :key => key, :value => value }
+        if value.is_a? Array
+          value.each do |v|
+            arr << {:key => key, :value => v}
+          end
+        else
+          arr << { :key => key, :value => value }
+        end
       end
       arr
     end
