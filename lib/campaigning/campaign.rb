@@ -82,7 +82,7 @@ module Campaigning
     #
     #*Error*: An Exception containing the cause of the error will be raised.
     def self.delete!(campaign_id)
-      response = @@soap.deleteCampaign(:apiKey => CAMPAIGN_MONITOR_API_KEY, :campaignID => list_id)
+      response = @@soap.deleteCampaign(:apiKey => CAMPAIGN_MONITOR_API_KEY, :campaignID => campaign_id)
       handle_response response.campaign_DeleteResult
     end
     

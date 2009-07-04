@@ -11,27 +11,27 @@ class CampaignTest < Test::Unit::TestCase
     Campaigning.set_debug_mode(:on)
   end
 
-  def test_campaign_create
-    client = Campaigning::Client.find_by_name("Client One Company")    
-    response = Campaigning::Campaign.create!(
-    :clientID => client.clientID,
-    :campaignName => "Campaign by Campaigning TO DELETE - CODEE",
-    :campaignSubject => "Campaign by myself - OK - CODEE",
-    :fromName => "Mr. Gordon23",
-    :fromEmail => "gordon23@test.com",
-    :replyTo => "no-reply@test.com",
-    :htmlUrl => "http://www.google.com.br",
-    :textUrl => "http://www.google.com.br",
-    :subscriberListIDs => ["ac52b645c048888a44c87b5f1ecf6b7d"],
-    :listSegments => client.segments
-    )
-    puts response.inspect
-  end
+  # def test_campaign_create
+  #   client = Campaigning::Client.find_by_name("Client One Company")    
+  #   response = Campaigning::Campaign.create!(
+  #   :clientID => client.clientID,
+  #   :campaignName => "Campaign by Campaigning TO DELETE - CODEE",
+  #   :campaignSubject => "Campaign by myself - OK - CODEE",
+  #   :fromName => "Mr. Gordon23",
+  #   :fromEmail => "gordon23@test.com",
+  #   :replyTo => "no-reply@test.com",
+  #   :htmlUrl => "http://gnumarcelo.github.com",
+  #   :textUrl => "http://gnumarcelo.github.com",
+  #   :subscriberListIDs => ["ac52b645c048888a44c87b5f1ecf6b7d"],
+  #   :listSegments => client.segments
+  #   )
+  #   puts response.inspect
+  # end
   
   
   # def test_campaign_delete!
-  #   client = Campaigning::Client.find_by_name("Client One Company")    
-  #   response = Campaigning::Campaign.delete!(response)
+  #   #client = Campaigning::Client.find_by_name("Client One Company")    
+  #   response = Campaigning::Campaign.delete!("4e5952a0840869b77f05b29b9a7a292b")
   #   puts response.inspect
   # end
   
