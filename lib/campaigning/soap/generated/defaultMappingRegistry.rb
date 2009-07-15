@@ -244,6 +244,14 @@ module DefaultMappingRegistry
   )
 
   EncodedRegistry.register(
+    :class => Campaigning::ArrayOfTemplate,
+    :schema_type => XSD::QName.new(NsApi, "ArrayOfTemplate"),
+    :schema_element => [
+      ["template", ["Campaigning::Template[]", XSD::QName.new(NsApi, "Template")], [0, nil]]
+    ]
+  )
+
+  EncodedRegistry.register(
     :class => Campaigning::ArrayOfSubscriberClick,
     :schema_type => XSD::QName.new(NsApi, "ArrayOfSubscriberClick"),
     :schema_element => [
@@ -425,6 +433,17 @@ module DefaultMappingRegistry
       ["costPerRecipient", ["SOAP::SOAPString", XSD::QName.new(NsApi, "CostPerRecipient")], [0, 1]],
       ["designAndSpamTestFee", ["SOAP::SOAPString", XSD::QName.new(NsApi, "DesignAndSpamTestFee")], [0, 1]],
       ["accessLevel", ["SOAP::SOAPInt", XSD::QName.new(NsApi, "AccessLevel")]]
+    ]
+  )
+
+  LiteralRegistry.register(
+    :class => Campaigning::Template,
+    :schema_type => XSD::QName.new(NsApi, "Template"),
+    :schema_element => [
+      ["templateID", ["SOAP::SOAPString", XSD::QName.new(NsApi, "TemplateID")], [0, 1]],
+      ["name", ["SOAP::SOAPString", XSD::QName.new(NsApi, "Name")], [0, 1]],
+      ["previewURL", ["SOAP::SOAPString", XSD::QName.new(NsApi, "PreviewURL")], [0, 1]],
+      ["screenshotURL", ["SOAP::SOAPString", XSD::QName.new(NsApi, "ScreenshotURL")], [0, 1]]
     ]
   )
 
@@ -954,6 +973,23 @@ module DefaultMappingRegistry
   )
 
   LiteralRegistry.register(
+    :class => Campaigning::ClientGetTemplates,
+    :schema_name => XSD::QName.new(NsApi, "Client.GetTemplates"),
+    :schema_element => [
+      ["apiKey", ["SOAP::SOAPString", XSD::QName.new(NsApi, "ApiKey")], [0, 1]],
+      ["clientID", ["SOAP::SOAPString", XSD::QName.new(NsApi, "ClientID")], [0, 1]]
+    ]
+  )
+
+  LiteralRegistry.register(
+    :class => Campaigning::ClientGetTemplatesResponse,
+    :schema_name => XSD::QName.new(NsApi, "Client.GetTemplatesResponse"),
+    :schema_element => [
+      ["client_GetTemplatesResult", [nil, XSD::QName.new(NsApi, "Client.GetTemplatesResult")], [0, 1]]
+    ]
+  )
+
+  LiteralRegistry.register(
     :class => Campaigning::ClientCreate,
     :schema_name => XSD::QName.new(NsApi, "Client.Create"),
     :schema_element => [
@@ -1280,6 +1316,82 @@ module DefaultMappingRegistry
     :schema_name => XSD::QName.new(NsApi, "Campaign.DeleteResponse"),
     :schema_element => [
       ["campaign_DeleteResult", ["Campaigning::Result", XSD::QName.new(NsApi, "Campaign.DeleteResult")], [0, 1]]
+    ]
+  )
+
+  LiteralRegistry.register(
+    :class => Campaigning::TemplateCreate,
+    :schema_name => XSD::QName.new(NsApi, "Template.Create"),
+    :schema_element => [
+      ["apiKey", ["SOAP::SOAPString", XSD::QName.new(NsApi, "ApiKey")], [0, 1]],
+      ["clientID", ["SOAP::SOAPString", XSD::QName.new(NsApi, "ClientID")], [0, 1]],
+      ["templateName", ["SOAP::SOAPString", XSD::QName.new(NsApi, "TemplateName")], [0, 1]],
+      ["hTMLPageURL", ["SOAP::SOAPString", XSD::QName.new(NsApi, "HTMLPageURL")], [0, 1]],
+      ["zipFileURL", ["SOAP::SOAPString", XSD::QName.new(NsApi, "ZipFileURL")], [0, 1]],
+      ["screenshotURL", ["SOAP::SOAPString", XSD::QName.new(NsApi, "ScreenshotURL")], [0, 1]]
+    ]
+  )
+
+  LiteralRegistry.register(
+    :class => Campaigning::TemplateCreateResponse,
+    :schema_name => XSD::QName.new(NsApi, "Template.CreateResponse"),
+    :schema_element => [
+      ["template_CreateResult", [nil, XSD::QName.new(NsApi, "Template.CreateResult")], [0, 1]]
+    ]
+  )
+
+  LiteralRegistry.register(
+    :class => Campaigning::TemplateGetDetail,
+    :schema_name => XSD::QName.new(NsApi, "Template.GetDetail"),
+    :schema_element => [
+      ["apiKey", ["SOAP::SOAPString", XSD::QName.new(NsApi, "ApiKey")], [0, 1]],
+      ["templateID", ["SOAP::SOAPString", XSD::QName.new(NsApi, "TemplateID")], [0, 1]]
+    ]
+  )
+
+  LiteralRegistry.register(
+    :class => Campaigning::TemplateGetDetailResponse,
+    :schema_name => XSD::QName.new(NsApi, "Template.GetDetailResponse"),
+    :schema_element => [
+      ["template_GetDetailResult", [nil, XSD::QName.new(NsApi, "Template.GetDetailResult")], [0, 1]]
+    ]
+  )
+
+  LiteralRegistry.register(
+    :class => Campaigning::TemplateUpdate,
+    :schema_name => XSD::QName.new(NsApi, "Template.Update"),
+    :schema_element => [
+      ["apiKey", ["SOAP::SOAPString", XSD::QName.new(NsApi, "ApiKey")], [0, 1]],
+      ["templateID", ["SOAP::SOAPString", XSD::QName.new(NsApi, "TemplateID")], [0, 1]],
+      ["templateName", ["SOAP::SOAPString", XSD::QName.new(NsApi, "TemplateName")], [0, 1]],
+      ["hTMLPageURL", ["SOAP::SOAPString", XSD::QName.new(NsApi, "HTMLPageURL")], [0, 1]],
+      ["zipFileURL", ["SOAP::SOAPString", XSD::QName.new(NsApi, "ZipFileURL")], [0, 1]],
+      ["screenshotURL", ["SOAP::SOAPString", XSD::QName.new(NsApi, "ScreenshotURL")], [0, 1]]
+    ]
+  )
+
+  LiteralRegistry.register(
+    :class => Campaigning::TemplateUpdateResponse,
+    :schema_name => XSD::QName.new(NsApi, "Template.UpdateResponse"),
+    :schema_element => [
+      ["template_UpdateResult", ["Campaigning::Result", XSD::QName.new(NsApi, "Template.UpdateResult")], [0, 1]]
+    ]
+  )
+
+  LiteralRegistry.register(
+    :class => Campaigning::TemplateDelete,
+    :schema_name => XSD::QName.new(NsApi, "Template.Delete"),
+    :schema_element => [
+      ["apiKey", ["SOAP::SOAPString", XSD::QName.new(NsApi, "ApiKey")], [0, 1]],
+      ["templateID", ["SOAP::SOAPString", XSD::QName.new(NsApi, "TemplateID")], [0, 1]]
+    ]
+  )
+
+  LiteralRegistry.register(
+    :class => Campaigning::TemplateDeleteResponse,
+    :schema_name => XSD::QName.new(NsApi, "Template.DeleteResponse"),
+    :schema_element => [
+      ["template_DeleteResult", ["Campaigning::Result", XSD::QName.new(NsApi, "Template.DeleteResult")], [0, 1]]
     ]
   )
 

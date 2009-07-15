@@ -215,6 +215,25 @@ class ClientAccessAndBilling
   end
 end
 
+# {http://api.createsend.com/api/}Template
+#   templateID - SOAP::SOAPString
+#   name - SOAP::SOAPString
+#   previewURL - SOAP::SOAPString
+#   screenshotURL - SOAP::SOAPString
+class Template
+  attr_accessor :templateID
+  attr_accessor :name
+  attr_accessor :previewURL
+  attr_accessor :screenshotURL
+
+  def initialize(templateID = nil, name = nil, previewURL = nil, screenshotURL = nil)
+    @templateID = templateID
+    @name = name
+    @previewURL = previewURL
+    @screenshotURL = screenshotURL
+  end
+end
+
 # {http://api.createsend.com/api/}List
 #   listID - SOAP::SOAPString
 #   name - SOAP::SOAPString
@@ -328,6 +347,10 @@ end
 
 # {http://api.createsend.com/api/}ArrayOfList
 class ArrayOfList < ::Array
+end
+
+# {http://api.createsend.com/api/}ArrayOfTemplate
+class ArrayOfTemplate < ::Array
 end
 
 # {http://api.createsend.com/api/}ArrayOfSubscriberClick
@@ -925,6 +948,29 @@ class ClientGetSuppressionListResponse
   end
 end
 
+# {http://api.createsend.com/api/}Client.GetTemplates
+#   apiKey - SOAP::SOAPString
+#   clientID - SOAP::SOAPString
+class ClientGetTemplates
+  attr_accessor :apiKey
+  attr_accessor :clientID
+
+  def initialize(apiKey = nil, clientID = nil)
+    @apiKey = apiKey
+    @clientID = clientID
+  end
+end
+
+# {http://api.createsend.com/api/}Client.GetTemplatesResponse
+#   client_GetTemplatesResult - (any)
+class ClientGetTemplatesResponse
+  attr_accessor :client_GetTemplatesResult
+
+  def initialize(client_GetTemplatesResult = nil)
+    @client_GetTemplatesResult = client_GetTemplatesResult
+  end
+end
+
 # {http://api.createsend.com/api/}Client.Create
 #   apiKey - SOAP::SOAPString
 #   companyName - SOAP::SOAPString
@@ -1408,6 +1454,122 @@ class CampaignDeleteResponse
 
   def initialize(campaign_DeleteResult = nil)
     @campaign_DeleteResult = campaign_DeleteResult
+  end
+end
+
+# {http://api.createsend.com/api/}Template.Create
+#   apiKey - SOAP::SOAPString
+#   clientID - SOAP::SOAPString
+#   templateName - SOAP::SOAPString
+#   hTMLPageURL - SOAP::SOAPString
+#   zipFileURL - SOAP::SOAPString
+#   screenshotURL - SOAP::SOAPString
+class TemplateCreate
+  attr_accessor :apiKey
+  attr_accessor :clientID
+  attr_accessor :templateName
+  attr_accessor :hTMLPageURL
+  attr_accessor :zipFileURL
+  attr_accessor :screenshotURL
+
+  def initialize(apiKey = nil, clientID = nil, templateName = nil, hTMLPageURL = nil, zipFileURL = nil, screenshotURL = nil)
+    @apiKey = apiKey
+    @clientID = clientID
+    @templateName = templateName
+    @hTMLPageURL = hTMLPageURL
+    @zipFileURL = zipFileURL
+    @screenshotURL = screenshotURL
+  end
+end
+
+# {http://api.createsend.com/api/}Template.CreateResponse
+#   template_CreateResult - (any)
+class TemplateCreateResponse
+  attr_accessor :template_CreateResult
+
+  def initialize(template_CreateResult = nil)
+    @template_CreateResult = template_CreateResult
+  end
+end
+
+# {http://api.createsend.com/api/}Template.GetDetail
+#   apiKey - SOAP::SOAPString
+#   templateID - SOAP::SOAPString
+class TemplateGetDetail
+  attr_accessor :apiKey
+  attr_accessor :templateID
+
+  def initialize(apiKey = nil, templateID = nil)
+    @apiKey = apiKey
+    @templateID = templateID
+  end
+end
+
+# {http://api.createsend.com/api/}Template.GetDetailResponse
+#   template_GetDetailResult - (any)
+class TemplateGetDetailResponse
+  attr_accessor :template_GetDetailResult
+
+  def initialize(template_GetDetailResult = nil)
+    @template_GetDetailResult = template_GetDetailResult
+  end
+end
+
+# {http://api.createsend.com/api/}Template.Update
+#   apiKey - SOAP::SOAPString
+#   templateID - SOAP::SOAPString
+#   templateName - SOAP::SOAPString
+#   hTMLPageURL - SOAP::SOAPString
+#   zipFileURL - SOAP::SOAPString
+#   screenshotURL - SOAP::SOAPString
+class TemplateUpdate
+  attr_accessor :apiKey
+  attr_accessor :templateID
+  attr_accessor :templateName
+  attr_accessor :hTMLPageURL
+  attr_accessor :zipFileURL
+  attr_accessor :screenshotURL
+
+  def initialize(apiKey = nil, templateID = nil, templateName = nil, hTMLPageURL = nil, zipFileURL = nil, screenshotURL = nil)
+    @apiKey = apiKey
+    @templateID = templateID
+    @templateName = templateName
+    @hTMLPageURL = hTMLPageURL
+    @zipFileURL = zipFileURL
+    @screenshotURL = screenshotURL
+  end
+end
+
+# {http://api.createsend.com/api/}Template.UpdateResponse
+#   template_UpdateResult - Campaigning::Result
+class TemplateUpdateResponse
+  attr_accessor :template_UpdateResult
+
+  def initialize(template_UpdateResult = nil)
+    @template_UpdateResult = template_UpdateResult
+  end
+end
+
+# {http://api.createsend.com/api/}Template.Delete
+#   apiKey - SOAP::SOAPString
+#   templateID - SOAP::SOAPString
+class TemplateDelete
+  attr_accessor :apiKey
+  attr_accessor :templateID
+
+  def initialize(apiKey = nil, templateID = nil)
+    @apiKey = apiKey
+    @templateID = templateID
+  end
+end
+
+# {http://api.createsend.com/api/}Template.DeleteResponse
+#   template_DeleteResult - Campaigning::Result
+class TemplateDeleteResponse
+  attr_accessor :template_DeleteResult
+
+  def initialize(template_DeleteResult = nil)
+    @template_DeleteResult = template_DeleteResult
   end
 end
 
