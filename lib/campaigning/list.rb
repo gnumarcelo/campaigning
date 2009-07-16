@@ -8,7 +8,8 @@ module Campaigning
     attr_accessor :listID
     attr_accessor :name
 
-    def initialize(listID = nil, name = nil)
+    def initialize(listID = nil, name = nil, opts={})
+      @apiKey = opts[:apiKey] || CAMPAIGN_MONITOR_API_KEY
       @listID = listID
       @name = name
     end
@@ -24,6 +25,7 @@ module Campaigning
     #                       the help documentation for more details of what this means.
     #   * :confirmationSuccessPage - Successful email confirmations will be redirected to this URL. Ignored if ConfirmOptIn
     #                                  is false. If left blank or omitted a generic confirmation page is used.
+    #   * :apiKey - optional API key to use to make request. Will use CAMPAIGN_MONITOR_API_KEY if not set.
     #*Return*:
     #
     #*Success*: Upon a successful call, this method will return a Campaigning::List object representing the newly created list.
@@ -31,7 +33,7 @@ module Campaigning
     #*Error*: An Exception containing the cause of the error will be raised.
     def self.create!(params)
       response = @@soap.createList(
-      :apiKey => CAMPAIGN_MONITOR_API_KEY,
+      :apiKey => params[:apiKey] || CAMPAIGN_MONITOR_API_KEY,
       :clientID => params[:clientID],
       :title => params[:title],
       :unsubscribePage => params.fetch(:unsubscribePage, ""),
@@ -39,7 +41,7 @@ module Campaigning
       :confirmationSuccessPage => params.fetch(:confirmationSuccessPage, "")
       )      
       new_list_id = handle_response response.list_CreateResult
-      List.new(new_list_id, params[:title])
+      List.new(new_list_id, params[:title], :apiKey=> params[:apiKey])
     end
 
     #Creates a new custom field for a list
@@ -58,7 +60,7 @@ module Campaigning
     #*Error*: An Exception containing the cause of the error will be raised.
     def create_custom_field!(params)      
       response = @@soap.createListCustomField(
-      :apiKey => CAMPAIGN_MONITOR_API_KEY,
+      :apiKey => @apiKey,
       :listID => @listID,
       :fieldName => params[:fieldName],
       :dataType => params[:dataType],
@@ -76,11 +78,14 @@ module Campaigning
     #
     #*Error*: An Exception containing the cause of the error will be raised.
     def delete!
-      List.delete!(@listID)
+      List.delete!(@listID, :apiKey=> @apiKey)
       self.listID, self.name  = nil, nil
     end
 
     #Deletes a list
+    #
+    #Aviable _opts_ arguments are:
+    #   * :apiKey - optional API key to use to make request. Will use CAMPAIGN_MONITOR_API_KEY if not set.
     #
     #*Return*:
     #
@@ -88,8 +93,8 @@ module Campaigning
     #containing a successful message.
     #
     #*Error*: An Exception containing the cause of the error will be raised.
-    def self.delete!(list_id)
-      response = @@soap.deleteList(:apiKey => CAMPAIGN_MONITOR_API_KEY, :listID => list_id)
+    def self.delete!(list_id, opts={})
+      response = @@soap.deleteList(:apiKey => opts[:apiKey] || CAMPAIGN_MONITOR_API_KEY, :listID => list_id)
       handle_response response.list_DeleteResult
     end
 
@@ -102,7 +107,7 @@ module Campaigning
     #
     #*Error*: An Exception containing the cause of the error will be raised.
     def delete_custom_field!(key)
-      response = @@soap.deleteListCustomField(:apiKey => CAMPAIGN_MONITOR_API_KEY, :listID => @listID, :key => '['+key+']')
+      response = @@soap.deleteListCustomField(:apiKey => @apiKey, :listID => @listID, :key => '['+key+']')
       handle_response response.list_DeleteCustomFieldResult
     end
 
@@ -115,7 +120,7 @@ module Campaigning
     #
     #*Error*: An Exception containing the cause of the error will be raised.
     def custom_fields
-      response = @@soap.getListCustomFields(:apiKey => CAMPAIGN_MONITOR_API_KEY, :listID => @listID)
+      response = @@soap.getListCustomFields(:apiKey => @apiKey, :listID => @listID)
       handle_response response.list_GetCustomFieldsResult
     end
 
@@ -128,7 +133,7 @@ module Campaigning
     #
     #*Error*: An Exception containing the cause of the error will be raised.
     def details
-      response = @@soap.getListDetail(:apiKey => CAMPAIGN_MONITOR_API_KEY, :listID => @listID)
+      response = @@soap.getListDetail(:apiKey => @apiKey, :listID => @listID)
       handle_response response.list_GetDetailResult
     end
 
@@ -155,7 +160,7 @@ module Campaigning
     #*Error*: An Exception containing the cause of the error will be raised.
     def find_active_subscribers(joined_at)
       response = @@soap.getSubscribers(
-      :apiKey => CAMPAIGN_MONITOR_API_KEY,
+      :apiKey => @apiKey,
       :listID => @listID,
       :date =>joined_at.strftime('%Y-%m-%d %H:%M:%S')
       )
@@ -175,7 +180,7 @@ module Campaigning
     #*Error*: An Exception containing the cause of the error will be raised.    
     def find_unsubscribed(unjoined_at)
       response = @@soap.getUnsubscribed(
-      :apiKey => CAMPAIGN_MONITOR_API_KEY,
+      :apiKey => @apiKey,
       :listID => @listID,
       :date => unjoined_at.strftime('%Y-%m-%d %H:%M:%S') # TODO: Move that to a helper method
       )
@@ -192,7 +197,7 @@ module Campaigning
     #*Error*: An Exception containing the cause of the error will be raised.    
     def find_single_subscriber(email_address) # TODO: Create a mehod to handle with custom fields returned like (names from "State Name" to "state_name")
       response = @@soap.getSingleSubscriber(
-      :apiKey => CAMPAIGN_MONITOR_API_KEY,
+      :apiKey => @apiKey,
       :listID => @listID,
       :emailAddress => email_address
       )
@@ -218,7 +223,7 @@ module Campaigning
     #*Error*: An Exception containing the cause of the error will be raised.
     def update!(params)
       response = @@soap.updateList(
-      :apiKey => CAMPAIGN_MONITOR_API_KEY,
+      :apiKey => @apiKey,
       :listID => @listID,
       :title => params[:title],
       :unsubscribePage => params.fetch(:unsubscribePage, ""),

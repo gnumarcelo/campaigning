@@ -11,7 +11,8 @@ module Campaigning
     attr_accessor :state
     attr_accessor :customFields
 
-    def initialize(emailAddress = nil, name = nil, date = nil, state = nil, customFields = nil)
+    def initialize(emailAddress = nil, name = nil, date = nil, state = nil, customFields = nil, opts={})
+      @apiKey = opts[:apiKey] || CAMPAIGN_MONITOR_API_KEY
       @emailAddress = emailAddress
       @name = name
       @date = date
@@ -37,7 +38,7 @@ module Campaigning
     #*Error*: An Exception containing the cause of the error will be raised.
     def add!(list_id, custom_fields={})
       params = {
-        :apiKey => CAMPAIGN_MONITOR_API_KEY,
+        :apiKey => @apiKey,
         :listID => list_id,
         :email => @emailAddress,
         :name => @name
@@ -70,7 +71,7 @@ module Campaigning
     #*Error*: An Exception containing the cause of the error will be raised.
     def add_and_resubscribe!(list_id, custom_fields={})
       params = {
-        :apiKey => CAMPAIGN_MONITOR_API_KEY,
+        :apiKey => @apiKey,
         :listID => list_id,
         :email => @emailAddress,
         :name => @name
@@ -99,15 +100,18 @@ module Campaigning
     #
     #*Error*: An Exception containing the cause of the error will be raised.
     def unsubscribe!(list_id)
-      Subscriber.unsubscribe!(@emailAddress, list_id)
+      Subscriber.unsubscribe!(@emailAddress, list_id, :apiKey=> @apiKey)
     end
 
 
     #Changes the status of an Active Subscriber to an Unsubscribed Subscriber who will no longer receive
     #campaigns sent to that Subscriber List (Same that the instance method with the same name).
-    def self.unsubscribe!(email, list_id)
+    #
+    #Aviable _opts_ arguments are:
+    #   * :apiKey - optional API key to use to make request. Will use CAMPAIGN_MONITOR_API_KEY if not set.
+    def self.unsubscribe!(email, list_id, opts={})
       response = @@soap.unsubscribe(
-      :apiKey => CAMPAIGN_MONITOR_API_KEY,
+      :apiKey => opts[:apiKey] || CAMPAIGN_MONITOR_API_KEY,
       :listID => list_id,
       :email => email
       )
@@ -116,13 +120,16 @@ module Campaigning
 
     #Returns True or False as to the existence of the given email address in the list supplied.
     def is_subscribed?(list_id)
-      Subscriber.is_subscribed?(@emailAddress, list_id)
+      Subscriber.is_subscribed?(@emailAddress, list_id, :apiKey=> @apiKey)
     end
 
     #Returns True or False as to the existence of the given email address in the list supplied.
-    def self.is_subscribed?(email, list_id)
+    #
+    #Aviable _opts_ arguments are:
+    #   * :apiKey - optional API key to use to make request. Will use CAMPAIGN_MONITOR_API_KEY if not set.
+    def self.is_subscribed?(email, list_id, opts={})
       response = @@soap.getIsSubscribed(
-      :apiKey => CAMPAIGN_MONITOR_API_KEY,
+      :apiKey => opts[:apiKey] || CAMPAIGN_MONITOR_API_KEY,
       :listID => list_id,
       :email => email
       )

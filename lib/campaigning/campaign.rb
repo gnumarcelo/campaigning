@@ -11,10 +11,11 @@ module Campaigning
     attr_accessor :sentDate
     attr_accessor :totalRecipients
 
-    def initialize(campaignID = nil, subject = nil, sentDate = nil, totalRecipients = nil)
+    def initialize(campaignID = nil, subject = nil, sentDate = nil, totalRecipients = nil, opts={})
+      @apiKey     = opts[:apiKey] || CAMPAIGN_MONITOR_API_KEY
       @campaignID = campaignID
-      @subject = subject
-      @sentDate = sentDate
+      @subject    = subject
+      @sentDate   = sentDate
       @totalRecipients = totalRecipients
     end
     
@@ -35,6 +36,7 @@ module Campaigning
     #   * :textUrl - The URL of the Text content for the new campaign. If no unsubscribe link is found then one will be added automatically.
     #   * :subscriberListIDs - An array of lists to send the campaign to. See http://www.campaignmonitor.com/api/required/#listid for more details.
     #   * :listSegments - An array of Segment Names and their appropriate List ID s to send the campaign to.
+    #   * :apiKey - optional API key to use to make request. Will use CAMPAIGN_MONITOR_API_KEY if not set.
     #
     #*Return*:
     #
@@ -43,7 +45,7 @@ module Campaigning
     #*Error*: An Exception containing the cause of the error will be raised.    
     def self.create!(params)  
         response = @@soap.createCampaign(
-           :apiKey => CAMPAIGN_MONITOR_API_KEY,
+           :apiKey => params[:apiKey] || CAMPAIGN_MONITOR_API_KEY,
            :clientID => params[:clientID],
            :campaignName => params[:campaignName],
            :campaignSubject => params[:campaignSubject],
@@ -57,9 +59,9 @@ module Campaigning
           )
 
         campaign_id = handle_response response.campaign_CreateResult
-        Campaign.new campaign_id
+        Campaign.new( campaign_id, nil, nil, nil, :apiKey=> (params[:apiKey] || CAMPAIGN_MONITOR_API_KEY) )
     end
- 
+    
     #Deletes an existing campaign.
     #
     #*Return*:
@@ -69,11 +71,14 @@ module Campaigning
     #
     #*Error*: An Exception containing the cause of the error will be raised. 
     def delete!
-      Campaign.delete!(@campaignID)
+      Campaign.delete!(@campaignID, :apiKey=> @apiKey)
       self.campaignID, self.subject, self.sentDate, self.totalRecipients  = nil, nil, nil, nil
     end
 
     #Deletes an existing campaign.
+    #
+    #Available _opts_ argument are:
+    #   * :apiKey - optional API key to use to make request. Will use CAMPAIGN_MONITOR_API_KEY if not set.
     #
     #*Return*:
     #
@@ -81,8 +86,8 @@ module Campaigning
     #containing a successful message.
     #
     #*Error*: An Exception containing the cause of the error will be raised.
-    def self.delete!(campaign_id)
-      response = @@soap.deleteCampaign(:apiKey => CAMPAIGN_MONITOR_API_KEY, :campaignID => campaign_id)
+    def self.delete!(campaign_id, opts={})
+      response = @@soap.deleteCampaign(:apiKey => opts[:apiKey] || CAMPAIGN_MONITOR_API_KEY, :campaignID => campaign_id)
       handle_response response.campaign_DeleteResult
     end
     
@@ -96,7 +101,7 @@ module Campaigning
     #
     #*Error*: An Exception containing the cause of the error will be raised.
     def bounces
-      response = @@soap.getCampaignBounces(:apiKey => CAMPAIGN_MONITOR_API_KEY, :campaignID => @campaignID )
+      response = @@soap.getCampaignBounces(:apiKey => @apiKey, :campaignID => @campaignID )
       handle_response response.campaign_GetBouncesResult
     end
     
@@ -108,10 +113,10 @@ module Campaigning
     #
     #*Error*: An Exception containing the cause of the error will be raised.
     def lists
-      response = @@soap.getCampaignLists(:apiKey => CAMPAIGN_MONITOR_API_KEY, :campaignID => @campaignID )
+      response = @@soap.getCampaignLists(:apiKey => @apiKey, :campaignID => @campaignID )
       lists = handle_response response.campaign_GetListsResult
       lists.collect do |list|  
-        List.new(list.listID, list.name)
+        List.new(list.listID, list.name, :apiKey=> @apiKey)
       end
     end
     
@@ -125,7 +130,7 @@ module Campaigning
     #
     #*Error*: An Exception containing the cause of the error will be raised.
     def opens
-      response = @@soap.getCampaignOpens(:apiKey => CAMPAIGN_MONITOR_API_KEY, :campaignID => @campaignID )
+      response = @@soap.getCampaignOpens(:apiKey => @apiKey, :campaignID => @campaignID )
       handle_response response.campaign_GetOpensResult
     end
     
@@ -150,7 +155,7 @@ module Campaigning
     #
     #*Error*: An Exception containing the cause of the error will be raised.
     def subscriber_clicks
-      response = @@soap.getSubscriberClicks(:apiKey => CAMPAIGN_MONITOR_API_KEY, :campaignID => @campaignID )
+      response = @@soap.getSubscriberClicks(:apiKey => @apiKey, :campaignID => @campaignID )
       handle_response response.campaign_GetSubscriberClicksResult
     end
     
@@ -164,7 +169,7 @@ module Campaigning
     #
     #*Error*: An Exception containing the cause of the error will be raised.
     def summary
-      response = @@soap.getCampaignSummary(:apiKey => CAMPAIGN_MONITOR_API_KEY, :campaignID => @campaignID )
+      response = @@soap.getCampaignSummary(:apiKey => @apiKey, :campaignID => @campaignID )
       handle_response response.campaign_GetSummaryResult
     end
     
@@ -177,7 +182,7 @@ module Campaigning
     #
     #*Error*: An Exception containing the cause of the error will be raised.
     def unsubscribes
-      response = @@soap.getCampaignUnsubscribes(:apiKey => CAMPAIGN_MONITOR_API_KEY, :campaignID => @campaignID )
+      response = @@soap.getCampaignUnsubscribes(:apiKey => @apiKey, :campaignID => @campaignID )
       handle_response response.campaign_GetUnsubscribesResult
     end
     
@@ -199,13 +204,13 @@ module Campaigning
     #*Error*: An Exception containing the cause of the error will be raised.
     def send!(params)
       response = @@soap.sendCampaign(
-        :apiKey => CAMPAIGN_MONITOR_API_KEY,
+        :apiKey => @apiKey,
         :campaignID => @campaignID,
         :confirmationEmail => params[:confirmationEmail],
         :sendDate => params[:sendDate]
          )
       handle_response response.campaign_SendResult
     end
-    
+
   end
 end

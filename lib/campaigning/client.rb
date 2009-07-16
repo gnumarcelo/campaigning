@@ -8,9 +8,10 @@ module Campaigning
     attr_accessor :clientID
     attr_accessor :name  
 
-    def initialize(clientID = nil, name = nil)
-      @clientID = clientID
-      @name = name
+    def initialize(clientID = nil, name = nil, opts={})
+      @apiKey     = opts[:apiKey] || CAMPAIGN_MONITOR_API_KEY
+      @clientID   = clientID
+      @name       = name
     end
 
     #Gets a list of all subscriber lists for a client.
@@ -21,9 +22,9 @@ module Campaigning
     #
     #*Error*: An Exception containing the cause of the error will be raised.
     def lists
-      response = @@soap.getClientLists(:apiKey => CAMPAIGN_MONITOR_API_KEY, :clientID => @clientID)
+      response = @@soap.getClientLists(:apiKey => @apiKey, :clientID => @clientID)
       lists = handle_response response.client_GetListsResult
-      lists.collect {|list| List.new(list.listID, list.name)}
+      lists.collect {|list| List.new(list.listID, list.name, :apiKey=> @apiKey)}
     end
 
     #This method find a List by a given name
@@ -43,6 +44,9 @@ module Campaigning
 
     #This method find a Client by a given name
     #
+    #Aviable _opts_ arguments are:
+    #   * :apiKey - optional API key to use to make request. Will use CAMPAIGN_MONITOR_API_KEY if not set.
+    #
     #*Return*:
     #
     #Client FOUND: If it found any client with the given name it will return a Campaigning::Client object containing the found client.
@@ -52,23 +56,26 @@ module Campaigning
     #*Error*: An Exception containing the cause of the error will be raised.
     #-- TODO: Refactor this method and increase performance? 
     #-- TODO: Tha campaign monitor permit two users with the same name, what to do? 
-    def self.find_by_name(name)
-      client_list = Client.get_all_clients 
+    def self.find_by_name(name, opts={})
+      client_list = Client.get_all_clients(opts)
       client_found = client_list.find {|client| name == client.name}
-      Client.new(client_found.clientID, client_found.name) if client_found
+      Client.new(client_found.clientID, client_found.name, :apiKey=> opts[:apiKey]) if client_found
     end
 
     #Gets all clients for a given user (CAMPAIGN_MONITOR_API_KEY).
+    #
+    #Aviable _opts_ arguments are:
+    #   * :apiKey - optional API key to use to make request. Will use CAMPAIGN_MONITOR_API_KEY if not set.
     #
     #*Return*:
     #
     #*Success*: Upon a successful call, this method will return a collection of Campaigning::Client objects.
     #
     #*Error*: An Exception containing the cause of the error will be raised.
-    def self.get_all_clients
-      response = @@soap.getClients(:apiKey => CAMPAIGN_MONITOR_API_KEY)
-      clients = handle_response response.user_GetClientsResult
-      clients.collect {|client| Client.new(client.clientID, client.name)}
+    def self.get_all_clients(opts={})
+      response  = @@soap.getClients(:apiKey => opts[:apiKey] || CAMPAIGN_MONITOR_API_KEY)
+      clients   = handle_response response.user_GetClientsResult
+      clients.collect {|client| Client.new(client.clientID, client.name, :apiKey=> opts[:apiKey])}
     end
 
     #This method creates a brand new client with no access to the application.
@@ -83,6 +90,8 @@ module Campaigning
     #                using the API procedure Campaigning.countries
     #   * :timezone - Client timezone for tracking and reporting data. A valid timezone list is available here or by using the API
     #                  procedure Campaigning.timezones.
+    #   * :apiKey - optional API key to use to make request. Will use CAMPAIGN_MONITOR_API_KEY if not set.
+    #
     #*Return*:
     #
     #*Success*: Upon a successful call, this method will return a Campaigning::Client object representing the newly created client.
@@ -90,14 +99,14 @@ module Campaigning
     #*Error*: An Exception containing the cause of the error will be raised.
     def self.create!(params)
       response = @@soap.createClient(
-      :apiKey => CAMPAIGN_MONITOR_API_KEY,
+      :apiKey => params[:apiKey] || CAMPAIGN_MONITOR_API_KEY,
       :companyName => params[:companyName],
       :contactName => params[:contactName],
       :emailAddress => params[:emailAddress],
       :country => params[:country],
       :timezone => params[:timezone]
       )
-      Client.new( handle_response(response.client_CreateResult), params[:companyName] )
+      Client.new( handle_response(response.client_CreateResult), params[:companyName], :apiKey=> params[:apiKey] )
     end
 
     #Deletes a client from your account.
@@ -109,12 +118,15 @@ module Campaigning
     #
     #*Error*: An Exception containing the cause of the error will be raised.
     def delete!
-      response = Client.delete!(@clientID)
+      response = Client.delete!(@clientID, :apiKey=> @apiKey)
       self.clientID, self.name = nil
       response
     end
 
     #Deletes a client from your account.
+    #
+    #Aviable _opts_ arguments are:
+    #   * :apiKey - optional API key to use to make request. Will use CAMPAIGN_MONITOR_API_KEY if not set.
     #
     #*Return*:
     #
@@ -122,8 +134,8 @@ module Campaigning
     #containing a successful message.
     #
     #*Error*: An Exception containing the cause of the error will be raised.
-    def self.delete!(client_id)
-      response = @@soap.deleteClient(:apiKey => CAMPAIGN_MONITOR_API_KEY, :clientID => client_id)
+    def self.delete!(client_id, opts={})
+      response = @@soap.deleteClient(:apiKey => opts[:apiKey] || CAMPAIGN_MONITOR_API_KEY, :clientID => client_id)
       handle_response response.client_DeleteResult
     end
 
@@ -136,7 +148,7 @@ module Campaigning
     #
     #*Error*: An Exception containing the cause of the error will be raised.
     def segments # TODO: Verify the type return for this method.
-      response = @@soap.getClientSegments(:apiKey => CAMPAIGN_MONITOR_API_KEY, :clientID => @clientID )
+      response = @@soap.getClientSegments(:apiKey => @apiKey, :clientID => @clientID )
       handle_response response.client_GetSegmentsResult
     end
 
@@ -167,10 +179,10 @@ module Campaigning
     #
     #*Error*: An Exception containing the cause of the error will be raised.
     def campaigns
-      response = @@soap.getClientCampaigns(:apiKey => CAMPAIGN_MONITOR_API_KEY, :clientID => @clientID )    
+      response = @@soap.getClientCampaigns(:apiKey => @apiKey, :clientID => @clientID )
       campaign_list = handle_response response.client_GetCampaignsResult
       campaign_list.collect do |campaign|  
-        Campaign.new(campaign.campaignID, campaign.subject, campaign.sentDate, campaign.totalRecipients)
+        Campaign.new(campaign.campaignID, campaign.subject, campaign.sentDate, campaign.totalRecipients, :apiKey=> @apiKey)
       end
     end
 
@@ -204,7 +216,7 @@ module Campaigning
     #
     #*Error*: An Exception containing the cause of the error will be raised.
     def details
-      response = @@soap.getClientDetail(:apiKey => CAMPAIGN_MONITOR_API_KEY, :clientID => @clientID )    
+      response = @@soap.getClientDetail(:apiKey => @apiKey, :clientID => @clientID )
       handle_response response.client_GetDetailResult
     end
 
@@ -216,7 +228,7 @@ module Campaigning
     #
     #*Error*: An Exception containing the cause of the error will be raised.
     def suppression_list
-      response = @@soap.getClientSuppressionList(:apiKey => CAMPAIGN_MONITOR_API_KEY, :clientID => @clientID )
+      response = @@soap.getClientSuppressionList(:apiKey => @apiKey, :clientID => @clientID )
       handle_response response.client_GetSuppressionListResult    
     end
 
@@ -245,7 +257,7 @@ module Campaigning
     #                           rate. Further detail is available at http://help.campaignmonitor.com/topic.aspx?t=118.
     #   * :designAndSpamTestFee - Expressed in the chosen currency's major unit (for example, sending "10" means "$10" if USD is used). Only required
     #                                 if BillingType is set to ClientPaysWithMarkup and client has access to design and spam tests, in which case the fee
-    #                                 should be equal to or higher than the standard rate (identical to the standard DeliveryFee for that currency).  
+    #                                 should be equal to or higher than the standard rate (identical to the standard DeliveryFee for that currency).
     #
     #
     #
@@ -259,7 +271,7 @@ module Campaigning
     #*Error*: An Exception containing the cause of the error will be raised.
     def update_access_and_billing!(params)
       response = @@soap.updateClientAccessAndBilling(
-      :apiKey => CAMPAIGN_MONITOR_API_KEY,
+      :apiKey => @apiKey,
       :clientID => @clientID,
       :accessLevel => params[:accessLevel],
       :username => params.fetch(:username, ""),
@@ -293,7 +305,7 @@ module Campaigning
     #*Error*: An Exception containing the cause of the error will be raised.
     def update_basics!(params)
       response = @@soap.updateClientBasics(
-      :apiKey => CAMPAIGN_MONITOR_API_KEY,
+      :apiKey => @apiKey,
       :clientID => @clientID,
       :companyName => params[:companyName],
       :contactName => params[:contactName],
