@@ -2,11 +2,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{campaigning}
-  s.version = "0.12.1"
+  s.version = "0.13.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Marcelo Menezes"]
-  s.date = %q{2009-07-04}
+  s.date = %q{2009-09-11}
   s.email = %q{gnumarcelo@gmail.com}
   s.extra_rdoc_files = [
     "LICENSE",
@@ -27,11 +27,13 @@ Gem::Specification.new do |s|
     "lib/campaigning/soap/generated/defaultDriver.rb",
     "lib/campaigning/soap/generated/defaultMappingRegistry.rb",
     "lib/campaigning/subscriber.rb",
+    "lib/campaigning/template.rb",
     "test/campaign_test.rb",
     "test/campaigning_test.rb",
     "test/client_test.rb",
     "test/list_test.rb",
     "test/subscriber_test.rb",
+    "test/template_test.rb",
     "test/test_helper.rb"
   ]
   s.has_rdoc = true
@@ -46,6 +48,7 @@ Gem::Specification.new do |s|
     "test/client_test.rb",
     "test/list_test.rb",
     "test/subscriber_test.rb",
+    "test/template_test.rb",
     "test/test_helper.rb"
   ]
 
