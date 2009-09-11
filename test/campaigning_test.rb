@@ -25,12 +25,6 @@ class CampaigningTest < Test::Unit::TestCase
     assert !countries.nil?
   end
   
-  def test_client_get_all_clients
-    clients = Campaigning::Client.get_all_clients
-    assert clients.length > 0
-    #clients.each{ |c| puts c.clientID + " - " + c.name }
-  end
-  
   def test_client_lists
     client = Campaigning::Client.find_by_name("Client One Company")    
     assert client.lists.length > 0

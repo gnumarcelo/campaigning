@@ -149,6 +149,17 @@ module DefaultMappingRegistry
   )
 
   EncodedRegistry.register(
+    :class => Campaigning::Template,
+    :schema_type => XSD::QName.new(NsApi, "Template"),
+    :schema_element => [
+      ["templateID", ["SOAP::SOAPString", XSD::QName.new(NsApi, "TemplateID")], [0, 1]],
+      ["name", ["SOAP::SOAPString", XSD::QName.new(NsApi, "Name")], [0, 1]],
+      ["previewURL", ["SOAP::SOAPString", XSD::QName.new(NsApi, "PreviewURL")], [0, 1]],
+      ["screenshotURL", ["SOAP::SOAPString", XSD::QName.new(NsApi, "ScreenshotURL")], [0, 1]]
+    ]
+  )
+
+  EncodedRegistry.register(
     :class => Campaigning::List,
     :schema_type => XSD::QName.new(NsApi, "List"),
     :schema_element => [
@@ -539,6 +550,14 @@ module DefaultMappingRegistry
     :schema_type => XSD::QName.new(NsApi, "ArrayOfList"),
     :schema_element => [
       ["list", ["Campaigning::List[]", XSD::QName.new(NsApi, "List")], [0, nil]]
+    ]
+  )
+
+  LiteralRegistry.register(
+    :class => Campaigning::ArrayOfTemplate,
+    :schema_type => XSD::QName.new(NsApi, "ArrayOfTemplate"),
+    :schema_element => [
+      ["template", ["Campaigning::Template[]", XSD::QName.new(NsApi, "Template")], [0, nil]]
     ]
   )
 

@@ -13,6 +13,20 @@ module Campaigning
       @clientID   = clientID
       @name       = name
     end
+    
+    #Gets a list of all templates for a client.
+    #
+    #*Return*:
+    #
+    #*Success*: Upon a successful call, this method will return a collection of Campaigning::Template objects.
+    #
+    #*Error*: An Exception containing the cause of the error will be raised.
+    def templates      
+      response = @@soap.getClientTemplates(:apiKey => @apiKey, :clientID => @clientID)
+      templates = handle_response response.client_GetTemplatesResult
+      templates.collect {|template| Template.new(template.templateID, template.name, template.previewURL, template.screenshotURL, :apiKey=> @apiKey)}
+    end
+    
 
     #Gets a list of all subscriber lists for a client.
     #

@@ -1,4 +1,5 @@
 gem "soap4r", "~> 1.5.0"
+require File.expand_path(File.dirname(__FILE__)) + '/template.rb'
 require File.expand_path(File.dirname(__FILE__)) + '/client.rb'
 require File.expand_path(File.dirname(__FILE__)) + '/campaign.rb'
 require File.expand_path(File.dirname(__FILE__)) + '/subscriber.rb'
