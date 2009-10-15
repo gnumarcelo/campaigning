@@ -44,8 +44,7 @@ module Campaigning
   #This method turns the API debug mode to :on and :off, which will display at the console all SOAP requests made to the API server.
   # 
   def self.set_debug_mode(option)
-    option = STDERR if option == :on
-    @@soap.wiredump_dev = option
+    option == :on ? @@soap.wiredump_dev = STDERR : @@soap.wiredump_dev = false
   end
 
   def self.set_endpoint_url(endpoint_url)
