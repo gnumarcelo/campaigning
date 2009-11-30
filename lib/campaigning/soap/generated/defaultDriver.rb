@@ -8,6 +8,14 @@ class ApiSoap < ::SOAP::RPC::Driver
   DefaultEndpointUrl = "http://api.createsend.com/api/api.asmx"
 
   Methods = [
+    [ "http://api.createsend.com/api/User.GetApiKey",
+      "getApiKey",
+      [ ["in", "parameters", ["::SOAP::SOAPElement", "http://api.createsend.com/api/", "User.GetApiKey"]],
+        ["out", "parameters", ["::SOAP::SOAPElement", "http://api.createsend.com/api/", "User.GetApiKeyResponse"]] ],
+      { :request_style =>  :document, :request_use =>  :literal,
+        :response_style => :document, :response_use => :literal,
+        :faults => {} }
+    ],
     [ "http://api.createsend.com/api/Subscriber.AddWithCustomFields",
       "addSubscriberWithCustomFields",
       [ ["in", "parameters", ["::SOAP::SOAPElement", "http://api.createsend.com/api/", "Subscriber.AddWithCustomFields"]],
@@ -140,6 +148,14 @@ class ApiSoap < ::SOAP::RPC::Driver
       "createListCustomField",
       [ ["in", "parameters", ["::SOAP::SOAPElement", "http://api.createsend.com/api/", "List.CreateCustomField"]],
         ["out", "parameters", ["::SOAP::SOAPElement", "http://api.createsend.com/api/", "List.CreateCustomFieldResponse"]] ],
+      { :request_style =>  :document, :request_use =>  :literal,
+        :response_style => :document, :response_use => :literal,
+        :faults => {} }
+    ],
+    [ "http://api.createsend.com/api/List.GetStats",
+      "getListStats",
+      [ ["in", "parameters", ["::SOAP::SOAPElement", "http://api.createsend.com/api/", "List.GetStats"]],
+        ["out", "parameters", ["::SOAP::SOAPElement", "http://api.createsend.com/api/", "List.GetStatsResponse"]] ],
       { :request_style =>  :document, :request_use =>  :literal,
         :response_style => :document, :response_use => :literal,
         :faults => {} }

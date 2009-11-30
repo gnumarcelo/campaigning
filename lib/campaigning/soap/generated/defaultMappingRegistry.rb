@@ -9,23 +9,6 @@ module DefaultMappingRegistry
   NsApi = "http://api.createsend.com/api/"
 
   EncodedRegistry.register(
-    :class => Campaigning::ArrayOfSubscriberCustomField,
-    :schema_type => XSD::QName.new(NsApi, "ArrayOfSubscriberCustomField"),
-    :schema_element => [
-      ["subscriberCustomField", ["Campaigning::SubscriberCustomField[]", XSD::QName.new(NsApi, "SubscriberCustomField")], [0, nil]]
-    ]
-  )
-
-  EncodedRegistry.register(
-    :class => Campaigning::SubscriberCustomField,
-    :schema_type => XSD::QName.new(NsApi, "SubscriberCustomField"),
-    :schema_element => [
-      ["key", ["SOAP::SOAPString", XSD::QName.new(NsApi, "Key")], [0, 1]],
-      ["value", ["SOAP::SOAPString", XSD::QName.new(NsApi, "Value")], [0, 1]]
-    ]
-  )
-
-  EncodedRegistry.register(
     :class => Campaigning::Result,
     :schema_type => XSD::QName.new(NsApi, "Result"),
     :schema_element => [
@@ -174,8 +157,40 @@ module DefaultMappingRegistry
     :schema_element => [
       ["campaignID", ["SOAP::SOAPString", XSD::QName.new(NsApi, "CampaignID")], [0, 1]],
       ["subject", ["SOAP::SOAPString", XSD::QName.new(NsApi, "Subject")], [0, 1]],
+      ["name", ["SOAP::SOAPString", XSD::QName.new(NsApi, "Name")], [0, 1]],
       ["sentDate", ["SOAP::SOAPString", XSD::QName.new(NsApi, "SentDate")], [0, 1]],
       ["totalRecipients", ["SOAP::SOAPInt", XSD::QName.new(NsApi, "TotalRecipients")]]
+    ]
+  )
+
+  EncodedRegistry.register(
+    :class => Campaigning::ListStatistics,
+    :schema_type => XSD::QName.new(NsApi, "ListStatistics"),
+    :schema_element => [
+      ["totalActiveSubscribers", ["SOAP::SOAPInt", XSD::QName.new(NsApi, "TotalActiveSubscribers")]],
+      ["newActiveSubscribersToday", ["SOAP::SOAPInt", XSD::QName.new(NsApi, "NewActiveSubscribersToday")]],
+      ["newActiveSubscribersYesterday", ["SOAP::SOAPInt", XSD::QName.new(NsApi, "NewActiveSubscribersYesterday")]],
+      ["newActiveSubscribersThisWeek", ["SOAP::SOAPInt", XSD::QName.new(NsApi, "NewActiveSubscribersThisWeek")]],
+      ["newActiveSubscribersThisMonth", ["SOAP::SOAPInt", XSD::QName.new(NsApi, "NewActiveSubscribersThisMonth")]],
+      ["newActiveSubscribersThisYear", ["SOAP::SOAPInt", XSD::QName.new(NsApi, "NewActiveSubscribersThisYear")]],
+      ["totalUnsubscribes", ["SOAP::SOAPInt", XSD::QName.new(NsApi, "TotalUnsubscribes")]],
+      ["unsubscribesToday", ["SOAP::SOAPInt", XSD::QName.new(NsApi, "UnsubscribesToday")]],
+      ["unsubscribesYesterday", ["SOAP::SOAPInt", XSD::QName.new(NsApi, "UnsubscribesYesterday")]],
+      ["unsubscribesThisWeek", ["SOAP::SOAPInt", XSD::QName.new(NsApi, "UnsubscribesThisWeek")]],
+      ["unsubscribesThisMonth", ["SOAP::SOAPInt", XSD::QName.new(NsApi, "UnsubscribesThisMonth")]],
+      ["unsubscribesThisYear", ["SOAP::SOAPInt", XSD::QName.new(NsApi, "UnsubscribesThisYear")]],
+      ["totalDeleted", ["SOAP::SOAPInt", XSD::QName.new(NsApi, "TotalDeleted")]],
+      ["deletedToday", ["SOAP::SOAPInt", XSD::QName.new(NsApi, "DeletedToday")]],
+      ["deletedYesterday", ["SOAP::SOAPInt", XSD::QName.new(NsApi, "DeletedYesterday")]],
+      ["deletedThisWeek", ["SOAP::SOAPInt", XSD::QName.new(NsApi, "DeletedThisWeek")]],
+      ["deletedThisMonth", ["SOAP::SOAPInt", XSD::QName.new(NsApi, "DeletedThisMonth")]],
+      ["deletedThisYear", ["SOAP::SOAPInt", XSD::QName.new(NsApi, "DeletedThisYear")]],
+      ["totalBounces", ["SOAP::SOAPInt", XSD::QName.new(NsApi, "TotalBounces")]],
+      ["bouncesToday", ["SOAP::SOAPInt", XSD::QName.new(NsApi, "BouncesToday")]],
+      ["bouncesYesterday", ["SOAP::SOAPInt", XSD::QName.new(NsApi, "BouncesYesterday")]],
+      ["bouncesThisWeek", ["SOAP::SOAPInt", XSD::QName.new(NsApi, "BouncesThisWeek")]],
+      ["bouncesThisMonth", ["SOAP::SOAPInt", XSD::QName.new(NsApi, "BouncesThisMonth")]],
+      ["bouncesThisYear", ["SOAP::SOAPInt", XSD::QName.new(NsApi, "BouncesThisYear")]]
     ]
   )
 
@@ -219,6 +234,23 @@ module DefaultMappingRegistry
       ["date", ["SOAP::SOAPString", XSD::QName.new(NsApi, "Date")], [0, 1]],
       ["state", ["SOAP::SOAPString", XSD::QName.new(NsApi, "State")], [0, 1]],
       ["customFields", ["Campaigning::ArrayOfSubscriberCustomField", XSD::QName.new(NsApi, "CustomFields")], [0, 1]]
+    ]
+  )
+
+  EncodedRegistry.register(
+    :class => Campaigning::ArrayOfSubscriberCustomField,
+    :schema_type => XSD::QName.new(NsApi, "ArrayOfSubscriberCustomField"),
+    :schema_element => [
+      ["subscriberCustomField", ["Campaigning::SubscriberCustomField[]", XSD::QName.new(NsApi, "SubscriberCustomField")], [0, nil]]
+    ]
+  )
+
+  EncodedRegistry.register(
+    :class => Campaigning::SubscriberCustomField,
+    :schema_type => XSD::QName.new(NsApi, "SubscriberCustomField"),
+    :schema_element => [
+      ["key", ["SOAP::SOAPString", XSD::QName.new(NsApi, "Key")], [0, 1]],
+      ["value", ["SOAP::SOAPString", XSD::QName.new(NsApi, "Value")], [0, 1]]
     ]
   )
 
@@ -305,23 +337,6 @@ module DefaultMappingRegistry
   EncodedRegistry.register(
     :class => Campaigning::SubscriberFieldDataType,
     :schema_type => XSD::QName.new(NsApi, "SubscriberFieldDataType")
-  )
-
-  LiteralRegistry.register(
-    :class => Campaigning::ArrayOfSubscriberCustomField,
-    :schema_type => XSD::QName.new(NsApi, "ArrayOfSubscriberCustomField"),
-    :schema_element => [
-      ["subscriberCustomField", ["Campaigning::SubscriberCustomField[]", XSD::QName.new(NsApi, "SubscriberCustomField")], [0, nil]]
-    ]
-  )
-
-  LiteralRegistry.register(
-    :class => Campaigning::SubscriberCustomField,
-    :schema_type => XSD::QName.new(NsApi, "SubscriberCustomField"),
-    :schema_element => [
-      ["key", ["SOAP::SOAPString", XSD::QName.new(NsApi, "Key")], [0, 1]],
-      ["value", ["SOAP::SOAPString", XSD::QName.new(NsApi, "Value")], [0, 1]]
-    ]
   )
 
   LiteralRegistry.register(
@@ -473,8 +488,40 @@ module DefaultMappingRegistry
     :schema_element => [
       ["campaignID", ["SOAP::SOAPString", XSD::QName.new(NsApi, "CampaignID")], [0, 1]],
       ["subject", ["SOAP::SOAPString", XSD::QName.new(NsApi, "Subject")], [0, 1]],
+      ["name", ["SOAP::SOAPString", XSD::QName.new(NsApi, "Name")], [0, 1]],
       ["sentDate", ["SOAP::SOAPString", XSD::QName.new(NsApi, "SentDate")], [0, 1]],
       ["totalRecipients", ["SOAP::SOAPInt", XSD::QName.new(NsApi, "TotalRecipients")]]
+    ]
+  )
+
+  LiteralRegistry.register(
+    :class => Campaigning::ListStatistics,
+    :schema_type => XSD::QName.new(NsApi, "ListStatistics"),
+    :schema_element => [
+      ["totalActiveSubscribers", ["SOAP::SOAPInt", XSD::QName.new(NsApi, "TotalActiveSubscribers")]],
+      ["newActiveSubscribersToday", ["SOAP::SOAPInt", XSD::QName.new(NsApi, "NewActiveSubscribersToday")]],
+      ["newActiveSubscribersYesterday", ["SOAP::SOAPInt", XSD::QName.new(NsApi, "NewActiveSubscribersYesterday")]],
+      ["newActiveSubscribersThisWeek", ["SOAP::SOAPInt", XSD::QName.new(NsApi, "NewActiveSubscribersThisWeek")]],
+      ["newActiveSubscribersThisMonth", ["SOAP::SOAPInt", XSD::QName.new(NsApi, "NewActiveSubscribersThisMonth")]],
+      ["newActiveSubscribersThisYear", ["SOAP::SOAPInt", XSD::QName.new(NsApi, "NewActiveSubscribersThisYear")]],
+      ["totalUnsubscribes", ["SOAP::SOAPInt", XSD::QName.new(NsApi, "TotalUnsubscribes")]],
+      ["unsubscribesToday", ["SOAP::SOAPInt", XSD::QName.new(NsApi, "UnsubscribesToday")]],
+      ["unsubscribesYesterday", ["SOAP::SOAPInt", XSD::QName.new(NsApi, "UnsubscribesYesterday")]],
+      ["unsubscribesThisWeek", ["SOAP::SOAPInt", XSD::QName.new(NsApi, "UnsubscribesThisWeek")]],
+      ["unsubscribesThisMonth", ["SOAP::SOAPInt", XSD::QName.new(NsApi, "UnsubscribesThisMonth")]],
+      ["unsubscribesThisYear", ["SOAP::SOAPInt", XSD::QName.new(NsApi, "UnsubscribesThisYear")]],
+      ["totalDeleted", ["SOAP::SOAPInt", XSD::QName.new(NsApi, "TotalDeleted")]],
+      ["deletedToday", ["SOAP::SOAPInt", XSD::QName.new(NsApi, "DeletedToday")]],
+      ["deletedYesterday", ["SOAP::SOAPInt", XSD::QName.new(NsApi, "DeletedYesterday")]],
+      ["deletedThisWeek", ["SOAP::SOAPInt", XSD::QName.new(NsApi, "DeletedThisWeek")]],
+      ["deletedThisMonth", ["SOAP::SOAPInt", XSD::QName.new(NsApi, "DeletedThisMonth")]],
+      ["deletedThisYear", ["SOAP::SOAPInt", XSD::QName.new(NsApi, "DeletedThisYear")]],
+      ["totalBounces", ["SOAP::SOAPInt", XSD::QName.new(NsApi, "TotalBounces")]],
+      ["bouncesToday", ["SOAP::SOAPInt", XSD::QName.new(NsApi, "BouncesToday")]],
+      ["bouncesYesterday", ["SOAP::SOAPInt", XSD::QName.new(NsApi, "BouncesYesterday")]],
+      ["bouncesThisWeek", ["SOAP::SOAPInt", XSD::QName.new(NsApi, "BouncesThisWeek")]],
+      ["bouncesThisMonth", ["SOAP::SOAPInt", XSD::QName.new(NsApi, "BouncesThisMonth")]],
+      ["bouncesThisYear", ["SOAP::SOAPInt", XSD::QName.new(NsApi, "BouncesThisYear")]]
     ]
   )
 
@@ -518,6 +565,23 @@ module DefaultMappingRegistry
       ["date", ["SOAP::SOAPString", XSD::QName.new(NsApi, "Date")], [0, 1]],
       ["state", ["SOAP::SOAPString", XSD::QName.new(NsApi, "State")], [0, 1]],
       ["customFields", ["Campaigning::ArrayOfSubscriberCustomField", XSD::QName.new(NsApi, "CustomFields")], [0, 1]]
+    ]
+  )
+
+  LiteralRegistry.register(
+    :class => Campaigning::ArrayOfSubscriberCustomField,
+    :schema_type => XSD::QName.new(NsApi, "ArrayOfSubscriberCustomField"),
+    :schema_element => [
+      ["subscriberCustomField", ["Campaigning::SubscriberCustomField[]", XSD::QName.new(NsApi, "SubscriberCustomField")], [0, nil]]
+    ]
+  )
+
+  LiteralRegistry.register(
+    :class => Campaigning::SubscriberCustomField,
+    :schema_type => XSD::QName.new(NsApi, "SubscriberCustomField"),
+    :schema_element => [
+      ["key", ["SOAP::SOAPString", XSD::QName.new(NsApi, "Key")], [0, 1]],
+      ["value", ["SOAP::SOAPString", XSD::QName.new(NsApi, "Value")], [0, 1]]
     ]
   )
 
@@ -604,6 +668,24 @@ module DefaultMappingRegistry
   LiteralRegistry.register(
     :class => Campaigning::SubscriberFieldDataType,
     :schema_type => XSD::QName.new(NsApi, "SubscriberFieldDataType")
+  )
+
+  LiteralRegistry.register(
+    :class => Campaigning::UserGetApiKey,
+    :schema_name => XSD::QName.new(NsApi, "User.GetApiKey"),
+    :schema_element => [
+      ["siteUrl", ["SOAP::SOAPString", XSD::QName.new(NsApi, "SiteUrl")], [0, 1]],
+      ["username", ["SOAP::SOAPString", XSD::QName.new(NsApi, "Username")], [0, 1]],
+      ["password", ["SOAP::SOAPString", XSD::QName.new(NsApi, "Password")], [0, 1]]
+    ]
+  )
+
+  LiteralRegistry.register(
+    :class => Campaigning::UserGetApiKeyResponse,
+    :schema_name => XSD::QName.new(NsApi, "User.GetApiKeyResponse"),
+    :schema_element => [
+      ["user_GetApiKeyResult", [nil, XSD::QName.new(NsApi, "User.GetApiKeyResult")], [0, 1]]
+    ]
   )
 
   LiteralRegistry.register(
@@ -920,6 +1002,23 @@ module DefaultMappingRegistry
     :schema_name => XSD::QName.new(NsApi, "List.CreateCustomFieldResponse"),
     :schema_element => [
       ["list_CreateCustomFieldResult", ["Campaigning::Result", XSD::QName.new(NsApi, "List.CreateCustomFieldResult")], [0, 1]]
+    ]
+  )
+
+  LiteralRegistry.register(
+    :class => Campaigning::ListGetStats,
+    :schema_name => XSD::QName.new(NsApi, "List.GetStats"),
+    :schema_element => [
+      ["apiKey", ["SOAP::SOAPString", XSD::QName.new(NsApi, "ApiKey")], [0, 1]],
+      ["listID", ["SOAP::SOAPString", XSD::QName.new(NsApi, "ListID")], [0, 1]]
+    ]
+  )
+
+  LiteralRegistry.register(
+    :class => Campaigning::ListGetStatsResponse,
+    :schema_name => XSD::QName.new(NsApi, "List.GetStatsResponse"),
+    :schema_element => [
+      ["list_GetStatsResult", [nil, XSD::QName.new(NsApi, "List.GetStatsResult")], [0, 1]]
     ]
   )
 
@@ -1422,7 +1521,6 @@ module DefaultMappingRegistry
       ["message", ["SOAP::SOAPString", XSD::QName.new(NsApi, "Message")], [0, 1]]
     ]
   )
-
 end
 
 end

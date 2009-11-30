@@ -97,6 +97,39 @@ module Campaigning
       response = @@soap.deleteList(:apiKey => opts[:apiKey] || CAMPAIGN_MONITOR_API_KEY, :listID => list_id)
       handle_response response.list_DeleteResult
     end
+    
+    #Gets statistics for a subscriber list
+    #
+    #*Return*:
+    #
+    #*Success*: A successful call to List.GetStats will return a ListStatistics object, consisting of TotalActiveSubscribers,
+    #NewActiveSubscribersToday, NewActiveSubscribersYesterday, NewActiveSubscribersThisWeek, NewActiveSubscribersThisMonth,
+    #NewActiveSubscribersThisYear, TotalUnsubscribes, UnsubscribesToday, UnsubscribesYesterday, UnsubscribesThisWeek,
+    #UnsubscribesThisMonth, UnsubscribesThisYear, TotalDeleted, DeletedToday, DeletedYesterday, DeletedThisWeek, DeletedThisMonth,
+    #DeletedThisYear, TotalBounces, BouncesToday, BouncesYesterday, BouncesThisWeek, BouncesThisMonth and BouncesThisYear.
+    #
+    #*Error*: An Exception containing the cause of the error will be raised.
+    def stats
+      List.stats(@listID, :apiKey=> @apiKey)
+    end
+    
+    
+    #Gets statistics for a subscriber list
+    #
+    #*Return*:
+    #
+    #*Success*: A successful call to List.GetStats will return a ListStatistics object, consisting of TotalActiveSubscribers,
+    #NewActiveSubscribersToday, NewActiveSubscribersYesterday, NewActiveSubscribersThisWeek, NewActiveSubscribersThisMonth,
+    #NewActiveSubscribersThisYear, TotalUnsubscribes, UnsubscribesToday, UnsubscribesYesterday, UnsubscribesThisWeek,
+    #UnsubscribesThisMonth, UnsubscribesThisYear, TotalDeleted, DeletedToday, DeletedYesterday, DeletedThisWeek, DeletedThisMonth,
+    #DeletedThisYear, TotalBounces, BouncesToday, BouncesYesterday, BouncesThisWeek, BouncesThisMonth and BouncesThisYear.
+    #
+    #*Error*: An Exception containing the cause of the error will be raised.
+    def self.stats(list_id, opts={})
+      response = @@soap.getListStats(:apiKey => opts[:apiKey] || CAMPAIGN_MONITOR_API_KEY, :listID => list_id)
+      handle_response response.list_GetStatsResult
+    end
+    
 
     #Deletes a custom field from a list
     #

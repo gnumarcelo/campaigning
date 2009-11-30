@@ -3,23 +3,6 @@ require 'xsd/qname'
 module Campaigning
 
 
-# {http://api.createsend.com/api/}ArrayOfSubscriberCustomField
-class ArrayOfSubscriberCustomField < ::Array
-end
-
-# {http://api.createsend.com/api/}SubscriberCustomField
-#   key - SOAP::SOAPString
-#   value - SOAP::SOAPString
-class SubscriberCustomField
-  attr_accessor :key
-  attr_accessor :value
-
-  def initialize(key = nil, value = nil)
-    @key = key
-    @value = value
-  end
-end
-
 # {http://api.createsend.com/api/}Result
 #   code - SOAP::SOAPInt
 #   message - SOAP::SOAPString
@@ -250,19 +233,101 @@ end
 # {http://api.createsend.com/api/}Campaign
 #   campaignID - SOAP::SOAPString
 #   subject - SOAP::SOAPString
+#   name - SOAP::SOAPString
 #   sentDate - SOAP::SOAPString
 #   totalRecipients - SOAP::SOAPInt
 class Campaign
   attr_accessor :campaignID
   attr_accessor :subject
+  attr_accessor :name
   attr_accessor :sentDate
   attr_accessor :totalRecipients
 
-  def initialize(campaignID = nil, subject = nil, sentDate = nil, totalRecipients = nil)
+  def initialize(campaignID = nil, subject = nil, name = nil, sentDate = nil, totalRecipients = nil)
     @campaignID = campaignID
     @subject = subject
+    @name = name
     @sentDate = sentDate
     @totalRecipients = totalRecipients
+  end
+end
+
+# {http://api.createsend.com/api/}ListStatistics
+#   totalActiveSubscribers - SOAP::SOAPInt
+#   newActiveSubscribersToday - SOAP::SOAPInt
+#   newActiveSubscribersYesterday - SOAP::SOAPInt
+#   newActiveSubscribersThisWeek - SOAP::SOAPInt
+#   newActiveSubscribersThisMonth - SOAP::SOAPInt
+#   newActiveSubscribersThisYear - SOAP::SOAPInt
+#   totalUnsubscribes - SOAP::SOAPInt
+#   unsubscribesToday - SOAP::SOAPInt
+#   unsubscribesYesterday - SOAP::SOAPInt
+#   unsubscribesThisWeek - SOAP::SOAPInt
+#   unsubscribesThisMonth - SOAP::SOAPInt
+#   unsubscribesThisYear - SOAP::SOAPInt
+#   totalDeleted - SOAP::SOAPInt
+#   deletedToday - SOAP::SOAPInt
+#   deletedYesterday - SOAP::SOAPInt
+#   deletedThisWeek - SOAP::SOAPInt
+#   deletedThisMonth - SOAP::SOAPInt
+#   deletedThisYear - SOAP::SOAPInt
+#   totalBounces - SOAP::SOAPInt
+#   bouncesToday - SOAP::SOAPInt
+#   bouncesYesterday - SOAP::SOAPInt
+#   bouncesThisWeek - SOAP::SOAPInt
+#   bouncesThisMonth - SOAP::SOAPInt
+#   bouncesThisYear - SOAP::SOAPInt
+class ListStatistics
+  attr_accessor :totalActiveSubscribers
+  attr_accessor :newActiveSubscribersToday
+  attr_accessor :newActiveSubscribersYesterday
+  attr_accessor :newActiveSubscribersThisWeek
+  attr_accessor :newActiveSubscribersThisMonth
+  attr_accessor :newActiveSubscribersThisYear
+  attr_accessor :totalUnsubscribes
+  attr_accessor :unsubscribesToday
+  attr_accessor :unsubscribesYesterday
+  attr_accessor :unsubscribesThisWeek
+  attr_accessor :unsubscribesThisMonth
+  attr_accessor :unsubscribesThisYear
+  attr_accessor :totalDeleted
+  attr_accessor :deletedToday
+  attr_accessor :deletedYesterday
+  attr_accessor :deletedThisWeek
+  attr_accessor :deletedThisMonth
+  attr_accessor :deletedThisYear
+  attr_accessor :totalBounces
+  attr_accessor :bouncesToday
+  attr_accessor :bouncesYesterday
+  attr_accessor :bouncesThisWeek
+  attr_accessor :bouncesThisMonth
+  attr_accessor :bouncesThisYear
+
+  def initialize(totalActiveSubscribers = nil, newActiveSubscribersToday = nil, newActiveSubscribersYesterday = nil, newActiveSubscribersThisWeek = nil, newActiveSubscribersThisMonth = nil, newActiveSubscribersThisYear = nil, totalUnsubscribes = nil, unsubscribesToday = nil, unsubscribesYesterday = nil, unsubscribesThisWeek = nil, unsubscribesThisMonth = nil, unsubscribesThisYear = nil, totalDeleted = nil, deletedToday = nil, deletedYesterday = nil, deletedThisWeek = nil, deletedThisMonth = nil, deletedThisYear = nil, totalBounces = nil, bouncesToday = nil, bouncesYesterday = nil, bouncesThisWeek = nil, bouncesThisMonth = nil, bouncesThisYear = nil)
+    @totalActiveSubscribers = totalActiveSubscribers
+    @newActiveSubscribersToday = newActiveSubscribersToday
+    @newActiveSubscribersYesterday = newActiveSubscribersYesterday
+    @newActiveSubscribersThisWeek = newActiveSubscribersThisWeek
+    @newActiveSubscribersThisMonth = newActiveSubscribersThisMonth
+    @newActiveSubscribersThisYear = newActiveSubscribersThisYear
+    @totalUnsubscribes = totalUnsubscribes
+    @unsubscribesToday = unsubscribesToday
+    @unsubscribesYesterday = unsubscribesYesterday
+    @unsubscribesThisWeek = unsubscribesThisWeek
+    @unsubscribesThisMonth = unsubscribesThisMonth
+    @unsubscribesThisYear = unsubscribesThisYear
+    @totalDeleted = totalDeleted
+    @deletedToday = deletedToday
+    @deletedYesterday = deletedYesterday
+    @deletedThisWeek = deletedThisWeek
+    @deletedThisMonth = deletedThisMonth
+    @deletedThisYear = deletedThisYear
+    @totalBounces = totalBounces
+    @bouncesToday = bouncesToday
+    @bouncesYesterday = bouncesYesterday
+    @bouncesThisWeek = bouncesThisWeek
+    @bouncesThisMonth = bouncesThisMonth
+    @bouncesThisYear = bouncesThisYear
   end
 end
 
@@ -333,6 +398,23 @@ class Subscriber
   end
 end
 
+# {http://api.createsend.com/api/}ArrayOfSubscriberCustomField
+class ArrayOfSubscriberCustomField < ::Array
+end
+
+# {http://api.createsend.com/api/}SubscriberCustomField
+#   key - SOAP::SOAPString
+#   value - SOAP::SOAPString
+class SubscriberCustomField
+  attr_accessor :key
+  attr_accessor :value
+
+  def initialize(key = nil, value = nil)
+    @key = key
+    @value = value
+  end
+end
+
 # {http://api.createsend.com/api/}ArrayOfSubscriber
 class ArrayOfSubscriber < ::Array
 end
@@ -379,6 +461,32 @@ class SubscriberFieldDataType < ::String
   MultiSelectOne = SubscriberFieldDataType.new("MultiSelectOne")
   Number = SubscriberFieldDataType.new("Number")
   Text = SubscriberFieldDataType.new("Text")
+end
+
+# {http://api.createsend.com/api/}User.GetApiKey
+#   siteUrl - SOAP::SOAPString
+#   username - SOAP::SOAPString
+#   password - SOAP::SOAPString
+class UserGetApiKey
+  attr_accessor :siteUrl
+  attr_accessor :username
+  attr_accessor :password
+
+  def initialize(siteUrl = nil, username = nil, password = nil)
+    @siteUrl = siteUrl
+    @username = username
+    @password = password
+  end
+end
+
+# {http://api.createsend.com/api/}User.GetApiKeyResponse
+#   user_GetApiKeyResult - (any)
+class UserGetApiKeyResponse
+  attr_accessor :user_GetApiKeyResult
+
+  def initialize(user_GetApiKeyResult = nil)
+    @user_GetApiKeyResult = user_GetApiKeyResult
+  end
 end
 
 # {http://api.createsend.com/api/}Subscriber.AddWithCustomFields
@@ -853,6 +961,29 @@ class ListCreateCustomFieldResponse
 
   def initialize(list_CreateCustomFieldResult = nil)
     @list_CreateCustomFieldResult = list_CreateCustomFieldResult
+  end
+end
+
+# {http://api.createsend.com/api/}List.GetStats
+#   apiKey - SOAP::SOAPString
+#   listID - SOAP::SOAPString
+class ListGetStats
+  attr_accessor :apiKey
+  attr_accessor :listID
+
+  def initialize(apiKey = nil, listID = nil)
+    @apiKey = apiKey
+    @listID = listID
+  end
+end
+
+# {http://api.createsend.com/api/}List.GetStatsResponse
+#   list_GetStatsResult - (any)
+class ListGetStatsResponse
+  attr_accessor :list_GetStatsResult
+
+  def initialize(list_GetStatsResult = nil)
+    @list_GetStatsResult = list_GetStatsResult
   end
 end
 

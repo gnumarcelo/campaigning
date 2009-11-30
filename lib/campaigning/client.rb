@@ -196,7 +196,7 @@ module Campaigning
       response = @@soap.getClientCampaigns(:apiKey => @apiKey, :clientID => @clientID )
       campaign_list = handle_response response.client_GetCampaignsResult
       campaign_list.collect do |campaign|  
-        Campaign.new(campaign.campaignID, campaign.subject, campaign.sentDate, campaign.totalRecipients, :apiKey=> @apiKey)
+        Campaign.new(campaign.campaignID, campaign.subject, campaign.name, campaign.sentDate, campaign.totalRecipients, :apiKey=> @apiKey)
       end
     end
 

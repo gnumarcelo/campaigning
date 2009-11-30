@@ -8,13 +8,15 @@ module Campaigning
     include ModuleMixin   
     attr_accessor :campaignID
     attr_accessor :subject
+    attr_accessor :name
     attr_accessor :sentDate
     attr_accessor :totalRecipients
-
-    def initialize(campaignID = nil, subject = nil, sentDate = nil, totalRecipients = nil, opts={})
+    
+    def initialize(campaignID = nil, subject = nil, name = nil, sentDate = nil, totalRecipients = nil, opts={})
       @apiKey     = opts[:apiKey] || CAMPAIGN_MONITOR_API_KEY
       @campaignID = campaignID
       @subject    = subject
+      @name       = name
       @sentDate   = sentDate
       @totalRecipients = totalRecipients
     end
@@ -59,7 +61,7 @@ module Campaigning
           )
 
         campaign_id = handle_response response.campaign_CreateResult
-        Campaign.new( campaign_id, nil, nil, nil, :apiKey=> (params[:apiKey] || CAMPAIGN_MONITOR_API_KEY) )
+        Campaign.new( campaign_id, nil, params[:campaignName], nil, nil, :apiKey=> (params[:apiKey] || CAMPAIGN_MONITOR_API_KEY) )
     end
     
     #Deletes an existing campaign.

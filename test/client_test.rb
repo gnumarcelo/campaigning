@@ -4,6 +4,7 @@ require 'test_helper'
 CAMPAIGN_MONITOR_API_KEY  = '__PUT_YOUR_API_KEY_HERE__'
 
 
+
 class ClientTest < Test::Unit::TestCase
 
 
@@ -17,7 +18,7 @@ class ClientTest < Test::Unit::TestCase
     puts "#{client.name} - #{client.clientID}"
     puts "Templates: #{client.templates.inspect}"
   end
-
+  
   def test_client_get_all_clients
     clients = Campaigning::Client.get_all_clients
     assert clients.length > 0
@@ -61,28 +62,28 @@ class ClientTest < Test::Unit::TestCase
     client = Campaigning::Client.find_by_name("Client One Company")
     puts client.campaigns.inspect
   end
-  
+
   def test_get_client_details
     client = Campaigning::Client.find_by_name("Client One Company")
-    # client_details = client.details
-    # basic_details = client_details.basicDetails
-    # access_and_billing_details = client_details.accessAndBilling
-    # puts "Basic details:"
-    # puts "Client ID: #{basic_details.clientID} - \n
-    #       Company: #{basic_details.companyName} - \n
-    #       Contact: #{basic_details.contactName} - \n
-    #       Country: #{basic_details.country} - \n
-    #       Timezone: #{basic_details.timezone}"
-    # 
-    # puts "Access and Billing Details:"
-    # puts "Username: #{access_and_billing_details.username} - \n 
-    #       Password: #{access_and_billing_details.password} - \n
-    #       Billing Type: #{access_and_billing_details.billingType} - \n
-    #       Currency: #{access_and_billing_details.currency} - \n
-    #       Delivery Fee: #{access_and_billing_details.deliveryFee} - \n
-    #       Cost per Recipient: #{access_and_billing_details.costPerRecipient} - \n
-    #       Design and Span test Fee: #{access_and_billing_details.designAndSpamTestFee} - \n
-    #       Access Level: #{access_and_billing_details.accessLevel}"
+    client_details = client.details
+    basic_details = client_details.basicDetails
+    access_and_billing_details = client_details.accessAndBilling
+    puts "Basic details:"
+    puts "Client ID: #{basic_details.clientID} - \n
+          Company: #{basic_details.companyName} - \n
+          Contact: #{basic_details.contactName} - \n
+          Country: #{basic_details.country} - \n
+          Timezone: #{basic_details.timezone}"
+    
+    puts "Access and Billing Details:"
+    puts "Username: #{access_and_billing_details.username} - \n 
+          Password: #{access_and_billing_details.password} - \n
+          Billing Type: #{access_and_billing_details.billingType} - \n
+          Currency: #{access_and_billing_details.currency} - \n
+          Delivery Fee: #{access_and_billing_details.deliveryFee} - \n
+          Cost per Recipient: #{access_and_billing_details.costPerRecipient} - \n
+          Design and Span test Fee: #{access_and_billing_details.designAndSpamTestFee} - \n
+          Access Level: #{access_and_billing_details.accessLevel}"
   
     assert !client.details.nil?
   

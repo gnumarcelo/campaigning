@@ -150,4 +150,10 @@ list = client.find_list_by_name "List from Sample Exec2"
 list.delete!
 puts "Was my second list deleted successfully: #{list.listID}"
 
+#Get statistics from a List
+client = Campaigning::Client.find_by_name("Client One Company")
+list = client.find_list_by_name "New list to test BLA"
+puts "List statistics: #{list.stats}"
+
+
 
