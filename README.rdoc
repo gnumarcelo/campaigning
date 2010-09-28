@@ -1,6 +1,6 @@
 = Campaigning
 
-This is a Ruby wrapper around CampaignMonitor API(www.campaignmonitor.com/api) using SOAP.
+This is a Ruby (1.8) wrapper around CampaignMonitor API(www.campaignmonitor.com/api) using SOAP.
 
 
 == Pre-requisites
